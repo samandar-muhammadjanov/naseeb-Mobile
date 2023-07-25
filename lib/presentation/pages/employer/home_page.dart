@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:naseeb/presentation/pages/employer/add_post_page.dart';
 import 'package:naseeb/presentation/pages/employer/chat_page.dart';
 import 'package:naseeb/presentation/pages/employer/profile_page.dart';
 import 'package:naseeb/presentation/pages/employer/saved_page.dart';
@@ -31,19 +32,21 @@ class _EmployerHomePageState extends State<EmployerHomePage> {
           icon: SvgPicture.asset("assets/svg/bookmark.svg",
               color: currentIndex == 1 ? kprimaryColor : kgreyColor),
           label: "Saved"),
+      const BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add Post"),
       BottomNavigationBarItem(
           icon: SvgPicture.asset("assets/svg/Chat.svg",
-              color: currentIndex == 2 ? kprimaryColor : kgreyColor),
+              color: currentIndex == 3 ? kprimaryColor : kgreyColor),
           label: "Chat"),
       BottomNavigationBarItem(
           icon: SvgPicture.asset("assets/svg/profile.svg",
-              color: currentIndex == 3 ? kprimaryColor : kgreyColor),
+              color: currentIndex == 4 ? kprimaryColor : kgreyColor),
           label: "Profile"),
     ];
 
     List pages = [
       const EmployerSearchPage(),
       const EmployerSavedPage(),
+      const AddPostPageF(),
       const EmployerChatPage(),
       const EmployerProfilePage()
     ];

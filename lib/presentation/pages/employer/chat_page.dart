@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class EmployerChatPage extends StatelessWidget {
@@ -45,7 +46,9 @@ class EmployerChatPage extends StatelessWidget {
               shrinkWrap: true,
               children: [
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, ChatInsidePage.routeName);
+                  },
                   contentPadding: const EdgeInsets.all(16),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),

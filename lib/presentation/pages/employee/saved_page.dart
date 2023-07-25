@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:naseeb/presentation/pages/employee/details/indside_post_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/indside_post_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class EmployeeSavedPage extends StatelessWidget {

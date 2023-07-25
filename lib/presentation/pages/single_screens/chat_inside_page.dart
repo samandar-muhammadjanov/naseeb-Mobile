@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/utils/colors.dart';
 
-class EmployeeChatInsidePage extends StatelessWidget {
-  const EmployeeChatInsidePage({super.key});
+class ChatInsidePage extends StatelessWidget {
+  const ChatInsidePage({super.key});
   static const routeName = "/employee/chat/1";
   @override
   Widget build(BuildContext context) {

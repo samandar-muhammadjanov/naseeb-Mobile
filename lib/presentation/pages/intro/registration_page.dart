@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:naseeb/domain/models/address_model.dart';
-import 'package:naseeb/presentation/pages/employee/home_page.dart';
-import 'package:naseeb/presentation/pages/employer/home_page.dart';
+import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
 import 'package:naseeb/presentation/pages/intro/auth_page.dart';
-import 'package:naseeb/presentation/pages/screens/map_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/map_page.dart';
 import 'package:naseeb/presentation/widgets/w_button.dart';
 import 'package:naseeb/presentation/widgets/w_date_picker.dart';
 import 'package:naseeb/presentation/widgets/w_textField.dart';
@@ -15,9 +14,23 @@ import 'package:naseeb/utils/colors.dart';
 import 'package:email_validator/email_validator.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key, this.address});
+  const RegistrationPage(
+      {super.key,
+      this.address,
+      this.firstName,
+      this.lastName,
+      this.isMale,
+      this.birthDate,
+      this.email,
+      this.description});
   static const routeName = "/auth/registration";
   final Address? address;
+  final String? firstName;
+  final String? lastName;
+  final bool? isMale;
+  final String? birthDate;
+  final String? email;
+  final String? description;
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
@@ -34,13 +47,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    if (widget.address != null) {
-      setState(() {
-        addressController.text =
-            "${widget.address!.region}, ${widget.address!.city}";
-      });
-    }
     super.initState();
+    firstNameController.text = widget.firstName ?? "";
+    lastNameController.text = widget.lastName ?? "";
+    emailController.text = widget.email ?? "";
+    birthDateController.text = widget.birthDate ?? "";
+    descriptionController.text = widget.description ?? "";
+    isMale = widget.isMale ?? isMale;
+    if (widget.address != null) {
+      addressController.text =
+          "${widget.address!.region}, ${widget.address!.city}";
+    }
   }
 
   @override
@@ -129,11 +146,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 },
                 suffix: IconButton(
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      MapPage.routeName,
-                      (route) => false,
-                    );
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MapPage(
+                            firstName: firstNameController.text,
+                            lastName: lastNameController.text,
+                            email: emailController.text,
+                            birthDate: birthDateController.text,
+                            isMale: isMale,
+                            description: descriptionController.text,
+                          ),
+                        ),
+                        (route) => false);
                   },
                   icon: const Icon(Icons.map),
                 ),
@@ -148,24 +173,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
           final phoneNumber = Hive.box("authData").get("phoneNumber");
           final role = Hive.box("authData").get("role");
 
-          Navigator.pushNamedAndRemoveUntil(
-              context,
-              role == "role_employee"
-                  ? EmployeeHomePage.routeName
-                  : EmployerHomePage.routeName,
-              (route) => false);
-          // if (formKey.currentState!.validate()) {
-          //   print(firstNameController.text);
-          //   print(lastNameController.text);
-          //   print(emailController.text);
-          //   print(isMale);
-          //   print(birthDateController.text);
-          //   print(descriptionController.text);
-          //   print(widget.address!.region);
-          //   print(widget.address!.city);
-          //   print(widget.address!.lat);
-          //   print(widget.address!.long);
-          // }
+          if (formKey.currentState!.validate()) {
+            AuthRepo().registration(
+                lastNameController.text,
+                firstNameController.text,
+                emailController.text,
+                phoneNumber,
+                isMale ? "MALE" : "FAMALE",
+                birthDateController.text,
+                descriptionController.text,
+                role,
+                widget.address,
+                context);
+          }
         }, "Continue"),
       ),
     );

@@ -1,6 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:naseeb/presentation/pages/employee/home_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/app_settings_page.dart';
+import 'package:naseeb/presentation/widgets/w_logout_message.dart';
 import 'package:naseeb/utils/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EmployerProfilePage extends StatelessWidget {
   const EmployerProfilePage({super.key});
@@ -11,7 +17,42 @@ class EmployerProfilePage extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {}, icon: SvgPicture.asset("assets/svg/dots.svg"))
+              onPressed: () {
+                showMenu(
+                  context: context,
+                  color: lightGrey,
+                  position: const RelativeRect.fromLTRB(10, 120, 0, 0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  elevation: 40,
+                  shadowColor: lightGrey.withOpacity(.2),
+                  items: [
+                    PopupMenuItem(
+                      padding: EdgeInsets.zero,
+                      child: ListTile(
+                        onTap: () async {
+                          SharedPreferences preferences =
+                              await SharedPreferences.getInstance();
+                          await preferences.setBool("isEmployee", true);
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              EmployeeHomePage.routeName, (route) => false);
+                        },
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 5),
+                        leading: const Icon(
+                          Icons.rotate_left_outlined,
+                          size: 40,
+                        ),
+                        title: const Text(
+                          "Switch to Employee",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+              icon: SvgPicture.asset("assets/svg/dots.svg"))
         ],
         centerTitle: true,
         title: const Text(
@@ -58,6 +99,9 @@ class EmployerProfilePage extends StatelessWidget {
                   style:
                       TextStyle(color: kgreyColor, fontWeight: FontWeight.w600),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ListTile(
@@ -84,6 +128,8 @@ class EmployerProfilePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: ListTile(
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppSettingsPage.routeName),
                     contentPadding: const EdgeInsets.all(7),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
@@ -108,6 +154,9 @@ class EmployerProfilePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 16),
                   child: ListTile(
+                    onTap: () {
+                      showLogOutMessage(context);
+                    },
                     contentPadding: const EdgeInsets.all(7),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),

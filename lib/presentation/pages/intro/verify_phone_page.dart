@@ -1,19 +1,20 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:naseeb/presentation/pages/intro/select_role_page.dart';
+import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
 import 'package:naseeb/presentation/widgets/w_button.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:pinput/pinput.dart';
 
 class VerifyPhonePage extends StatefulWidget {
   const VerifyPhonePage(
-      {super.key, required this.phoneNumber, required this.code});
+      {super.key,
+      required this.phoneNumber,
+      required this.code,
+      required this.user});
   static const routeName = "/auth/verify";
   final String phoneNumber;
   final String code;
+  final String user;
   @override
   State<VerifyPhonePage> createState() => _VerifyPhonePageState();
 }
@@ -21,6 +22,7 @@ class VerifyPhonePage extends StatefulWidget {
 class _VerifyPhonePageState extends State<VerifyPhonePage> {
   bool isVerifying = false;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController codeController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -79,12 +81,15 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                   }
                   return null;
                 },
+                controller: codeController,
                 preFilledWidget: const Text('0'),
                 separator: const SizedBox(width: 21),
                 autofocus: true,
                 length: 5,
                 onCompleted: (value) async {
-                  showVerifyDialog(context);
+                  // showVerifyDialog(context);
+                  AuthRepo.codeVerify(widget.phoneNumber, codeController.text,
+                      context, widget.user);
                 },
                 focusedPinTheme: PinTheme(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -114,7 +119,9 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                 height: 28.42,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  AuthRepo.resendCode(widget.phoneNumber, context);
+                },
                 child: SizedBox(
                   height: 30,
                   child: Center(
@@ -138,89 +145,14 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
               const Spacer(),
               wButton(() {
                 if (formKey.currentState!.validate()) {
-                  showVerifyDialog(context);
+                  AuthRepo.codeVerify(widget.phoneNumber, codeController.text,
+                      context, widget.user);
                 }
               }, "Verify and Continue")
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Future<dynamic> showVerifyDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(builder: (context, setState) {
-          Future.delayed(const Duration(seconds: 2), () {
-            if (mounted) {
-              setState(() {
-                isVerifying = true;
-              });
-            }
-          });
-          return BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-            child: AlertDialog(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              contentPadding: EdgeInsets.zero,
-              title: isVerifying
-                  ? SvgPicture.asset("assets/svg/success.svg")
-                  : const SpinKitCircle(
-                      color: korangeColor,
-                      size: 70,
-                    ),
-              content: SizedBox(
-                height: 82,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 13,
-                    ),
-                    Text(
-                      isVerifying ? "Success" : "Verifying",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xff1F1F39),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 9,
-                    ),
-                    Text(
-                      isVerifying
-                          ? "Congratulations, you have\ncompleted your registration!"
-                          : "Verifying your phone",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Color(0xff858597),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              actions: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 36),
-                  child: wButton(() {
-                    if (isVerifying) {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, SelectRolePage.routeName, (route) => false);
-                    }
-                  }, "Done",
-                      color: isVerifying ? MyColor.kSuccessColor : kgreyColor),
-                )
-              ],
-            ),
-          );
-        });
-      },
     );
   }
 }

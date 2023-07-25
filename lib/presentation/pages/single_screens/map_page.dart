@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:naseeb/domain/models/address_model.dart';
 import 'package:naseeb/domain/repositories/location_service.dart';
 import 'package:naseeb/presentation/pages/intro/registration_page.dart';
@@ -14,8 +15,22 @@ import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage(
+      {super.key,
+      this.firstName,
+      this.lastName,
+      this.isMale,
+      this.birthDate,
+      this.email,
+      this.description});
   static const routeName = "/map";
+  final String? firstName;
+  final String? lastName;
+  final bool? isMale;
+  final String? birthDate;
+  final String? email;
+  final String? description;
+
   @override
   State<MapPage> createState() => _MapPageState();
 }
@@ -190,14 +205,20 @@ class _MapPageState extends State<MapPage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegistrationPage(
-                              address: address,
-                            ),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegistrationPage(
+                            address: address,
+                            firstName: widget.firstName,
+                            lastName: widget.lastName,
+                            isMale: widget.isMale,
+                            birthDate: widget.birthDate,
+                            description: widget.description,
+                            email: widget.email,
                           ),
-                          (route) => false);
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         primary:

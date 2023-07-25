@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:naseeb/presentation/pages/employee/details/chat_inside_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class InsidePostPage extends StatelessWidget {
@@ -129,7 +129,7 @@ class InsidePostPage extends StatelessWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
-                  Navigator.pushNamed(context, EmployeeChatInsidePage.routeName);
+                  Navigator.pushNamed(context, ChatInsidePage.routeName);
                 },
                 child: Ink(
                   height: 56,

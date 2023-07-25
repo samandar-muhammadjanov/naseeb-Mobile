@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
-import 'package:naseeb/presentation/pages/intro/verify_phone_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class AuthPage extends StatefulWidget {

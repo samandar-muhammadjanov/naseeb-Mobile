@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:naseeb/presentation/pages/employee/details/certificates_page.dart';
-import 'package:naseeb/presentation/pages/employee/details/chat_inside_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/create_cv_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/education_page.dart';
-import 'package:naseeb/presentation/pages/employee/details/indside_post_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/indside_post_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/language_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/main_information_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/salary_page.dart';
@@ -14,7 +14,8 @@ import 'package:naseeb/presentation/pages/intro/auth_page.dart';
 import 'package:naseeb/presentation/pages/intro/onboarding_page.dart';
 import 'package:naseeb/presentation/pages/intro/registration_page.dart';
 import 'package:naseeb/presentation/pages/intro/select_role_page.dart';
-import 'package:naseeb/presentation/pages/screens/map_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/app_settings_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/map_page.dart';
 
 class AppRoute {
   Route? onGenerateRoute(RouteSettings routeSettings) {
@@ -71,9 +72,9 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (context) => const SalaryPage(),
         );
-      case EmployeeChatInsidePage.routeName:
+      case ChatInsidePage.routeName:
         return MaterialPageRoute(
-          builder: (context) => const EmployeeChatInsidePage(),
+          builder: (context) => const ChatInsidePage(),
         );
       case InsidePostPage.routeName:
         return MaterialPageRoute(
@@ -82,6 +83,10 @@ class AppRoute {
       case EmployerHomePage.routeName:
         return MaterialPageRoute(
           builder: (context) => const EmployerHomePage(),
+        );
+      case AppSettingsPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const AppSettingsPage(),
         );
       default:
         break;

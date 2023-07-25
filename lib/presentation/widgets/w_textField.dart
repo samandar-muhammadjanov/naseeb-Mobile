@@ -12,10 +12,14 @@ class WTextField extends StatelessWidget {
       this.hintText,
       this.suffix,
       this.maxLines,
-      this.controller});
+      this.controller,
+      this.onEditingComplete,
+      this.onFieldSubmitted});
   final String title;
   final String? Function(String?)? validator;
   final Function()? onTap;
+  final Function(String)? onFieldSubmitted;
+  final Function()? onEditingComplete;
   final String? hintText;
   final Widget? suffix;
   final int? maxLines;
@@ -33,10 +37,13 @@ class WTextField extends StatelessWidget {
           height: 14,
         ),
         TextFormField(
+          textInputAction: TextInputAction.done,
           controller: controller,
           maxLines: maxLines,
           onTap: onTap,
           validator: validator,
+          onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onFieldSubmitted,
           decoration: InputDecoration(
             hintText: hintText,
             suffixIcon: suffix,
