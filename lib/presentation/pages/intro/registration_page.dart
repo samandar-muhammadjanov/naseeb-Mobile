@@ -1,0 +1,301 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:naseeb/domain/models/address_model.dart';
+import 'package:naseeb/presentation/pages/employee/home_page.dart';
+import 'package:naseeb/presentation/pages/employer/home_page.dart';
+import 'package:naseeb/presentation/pages/intro/auth_page.dart';
+import 'package:naseeb/presentation/pages/screens/map_page.dart';
+import 'package:naseeb/presentation/widgets/w_button.dart';
+import 'package:naseeb/presentation/widgets/w_date_picker.dart';
+import 'package:naseeb/presentation/widgets/w_textField.dart';
+import 'package:naseeb/utils/colors.dart';
+import 'package:email_validator/email_validator.dart';
+
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key, this.address});
+  static const routeName = "/auth/registration";
+  final Address? address;
+  @override
+  State<RegistrationPage> createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
+  bool isMale = true;
+  DateTime date = DateTime.now();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController birthDateController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    if (widget.address != null) {
+      setState(() {
+        addressController.text =
+            "${widget.address!.region}, ${widget.address!.city}";
+      });
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context, AuthPage.routeName, (route) => false);
+          },
+          icon: SvgPicture.asset("assets/svg/Arrow---Left.svg"),
+        ),
+        centerTitle: true,
+        title: const Text(
+          "Registration",
+          style: TextStyle(
+              color: Color(0xff1F1F39),
+              fontSize: 28,
+              fontWeight: FontWeight.w700),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              WTextField(
+                title: 'Enter Your First Name',
+                controller: firstNameController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter Your First Name";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              WTextField(
+                title: "Enter Your Last Name",
+                controller: lastNameController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter Your Last Name";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10),
+              selectGender(),
+              const SizedBox(height: 10),
+              selectBirthDate(context),
+              const SizedBox(height: 10),
+              WTextField(
+                title: "Enter Your Email",
+                controller: emailController,
+                validator: (value) =>
+                    EmailValidator.validate(value!) ? null : "Not valid email",
+              ),
+              const SizedBox(height: 10),
+              WTextField(
+                title: "Enter About Yourself",
+                maxLines: 5,
+                validator: (value) {
+                  if (value!.isEmpty || value.length < 10) {
+                    return "Enter About Yourself";
+                  }
+                  return null;
+                },
+                controller: descriptionController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              WTextField(
+                controller: addressController,
+                title: "Enter Your Address",
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Not valid address";
+                  }
+                  return null;
+                },
+                suffix: IconButton(
+                  onPressed: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      MapPage.routeName,
+                      (route) => false,
+                    );
+                  },
+                  icon: const Icon(Icons.map),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: wButton(() {
+          final phoneNumber = Hive.box("authData").get("phoneNumber");
+          final role = Hive.box("authData").get("role");
+
+          Navigator.pushNamedAndRemoveUntil(
+              context,
+              role == "role_employee"
+                  ? EmployeeHomePage.routeName
+                  : EmployerHomePage.routeName,
+              (route) => false);
+          // if (formKey.currentState!.validate()) {
+          //   print(firstNameController.text);
+          //   print(lastNameController.text);
+          //   print(emailController.text);
+          //   print(isMale);
+          //   print(birthDateController.text);
+          //   print(descriptionController.text);
+          //   print(widget.address!.region);
+          //   print(widget.address!.city);
+          //   print(widget.address!.lat);
+          //   print(widget.address!.long);
+          // }
+        }, "Continue"),
+      ),
+    );
+  }
+
+  Column selectBirthDate(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Enter your Birth Date',
+          style: TextStyle(color: kgreyColor),
+        ),
+        const SizedBox(
+          height: 14,
+        ),
+        TextFormField(
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Not valid birthdate";
+            }
+            return null;
+          },
+          onTap: () => showDate(
+            date: date,
+            context: context,
+            birthDate: birthDateController,
+            lastDate: DateTime.now(),
+            firstDate: DateTime(1970),
+          ),
+          controller: birthDateController,
+          keyboardType: TextInputType.datetime,
+          decoration: InputDecoration(
+            hintText: 'yil/oy/kun',
+            suffixIcon: IconButton(
+                onPressed: () {
+                  showDate(
+                    date: date,
+                    context: context,
+                    birthDate: birthDateController,
+                    lastDate: DateTime.now(),
+                    firstDate: DateTime(1970),
+                  );
+                },
+                icon: const Icon(Icons.calendar_month)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(
+                color: kgreyColor,
+              ),
+            ),
+            fillColor: fieldFocusColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column selectGender() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Enter your Gender',
+          style: TextStyle(color: kgreyColor),
+        ),
+        const SizedBox(
+          height: 14,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    isMale = true;
+                  });
+                },
+                child: Ink(
+                  height: 56,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: isMale ? kprimaryColor : kgreyColor, width: 1.5),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Male",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: isMale ? kprimaryColor : kgreyColor),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 22,
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    isMale = false;
+                  });
+                },
+                child: Ink(
+                  height: 56,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: !isMale ? MyColor.salary : kgreyColor,
+                          width: 1.5),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Center(
+                    child: Text(
+                      "Female",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: !isMale ? MyColor.salary : kgreyColor),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
