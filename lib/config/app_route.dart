@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:naseeb/presentation/pages/employee/details/certificates_page.dart';
+import 'package:naseeb/presentation/pages/employer/detail/inside_employee_profile_page.dart';
+import 'package:naseeb/presentation/pages/employer/detail/inside_post_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/create_cv_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/education_page.dart';
-import 'package:naseeb/presentation/pages/single_screens/indside_post_page.dart';
+import 'package:naseeb/presentation/pages/employee/details/indside_post_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/language_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/main_information_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/salary_page.dart';
@@ -76,9 +78,9 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (context) => const ChatInsidePage(),
         );
-      case InsidePostPage.routeName:
+      case InsidePostForEmployeePage.routeName:
         return MaterialPageRoute(
-          builder: (context) => const InsidePostPage(),
+          builder: (context) => const InsidePostForEmployeePage(),
         );
       case EmployerHomePage.routeName:
         return MaterialPageRoute(
@@ -87,6 +89,14 @@ class AppRoute {
       case AppSettingsPage.routeName:
         return MaterialPageRoute(
           builder: (context) => const AppSettingsPage(),
+        );
+      case InsidePostPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const InsidePostPage(),
+        );
+      case InsideEmployeeProfilePage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const InsideEmployeeProfilePage(),
         );
       default:
         break;

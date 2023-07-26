@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:naseeb/presentation/pages/employer/detail/resume_item.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
-class InsidePostPage extends StatelessWidget {
-  const InsidePostPage({super.key});
-  static const routeName = "/employee/post";
+class InsideEmployeeProfilePage extends StatelessWidget {
+  const InsideEmployeeProfilePage({super.key});
+  static const routeName = '/employer/inside-employee';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +25,14 @@ class InsidePostPage extends StatelessWidget {
         centerTitle: true,
         title: Container(
           height: 22,
-          width: 70,
+          width: 96,
           alignment: Alignment.center,
           decoration: const BoxDecoration(
               color: fieldFocusColor,
               borderRadius: BorderRadius.all(Radius.circular(6))),
           child: const Center(
             child: Text(
-              "Active job",
+              "Active job finding",
               style: TextStyle(
                 color: kprimaryColor,
                 fontSize: 12,
@@ -43,56 +44,62 @@ class InsidePostPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: double.infinity,
-              height: 200,
+              height: 344,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15), color: kgreyColor),
+                  color: kgreyColor, borderRadius: BorderRadius.circular(15)),
               child: const Icon(
                 Icons.image,
                 color: white,
-                size: 40,
+                size: 50,
               ),
             ),
             const SizedBox(
               height: 20,
             ),
             const Text(
-              'Mexanik Kerak',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-                'Pariatur irure anim esse in excepteur do qui aliquip qui qui. Velit tempor cupidatat veniam consectetur reprehenderit sit magna tempor. Eiusmod est elit incididunt sunt dolor occaecat cillum duis id proident culpa. Aliquip exercitation exercitation magna eiusmod dolore elit commodo anim deserunt dolor nulla. Fugiat ipsum sint est minim nostrud labore aliqua magna exercitation minim et. Dolor ullamco voluptate nisi occaecat ut. Commodo amet sint amet culpa elit aliqua culpa do.'),
-            const SizedBox(
-              height: 10,
+              "Jasur Nigmanov",
+              style: TextStyle(
+                  color: kprimaryColor,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700),
             ),
             const Text(
-              "E'lon beruvchi",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              "Graphic Designer",
+              style: TextStyle(color: kgreyColor, fontWeight: FontWeight.w600),
             ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15), color: kgreyColor),
-              ),
-              title: const Text(
-                "Jasur Nigmanov",
-                style: TextStyle(
-                    color: Color(0xff171725), fontWeight: FontWeight.w700),
-              ),
-              subtitle: const Text("Yunusobod t. Toshkent sh. O'zbekiston"),
-            )
+            SizedBox(
+              height: 17,
+            ),
+            WMainInformation(
+                title: "Main Informations",
+                subtitle: "Male • 25 years old • Tashkent",
+                body: ""),
+            SizedBox(
+              height: 10,
+            ),
+            WWorkExperience(),
+            SizedBox(
+              height: 10,
+            ),
+            WEducation(),
+            SizedBox(
+              height: 10,
+            ),
+            WLanguage(),
+            SizedBox(
+              height: 10,
+            ),
+            WCertificate(),
+            SizedBox(
+              height: 10,
+            ),
+            WSalary()
           ],
         ),
       ),

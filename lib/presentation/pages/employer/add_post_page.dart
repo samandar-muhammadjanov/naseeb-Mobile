@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:naseeb/presentation/pages/single_screens/indside_post_page.dart';
+import 'package:naseeb/presentation/pages/employer/detail/inside_post_page.dart';
 import 'package:naseeb/presentation/widgets/w_textField.dart';
 import 'package:naseeb/utils/colors.dart';
 

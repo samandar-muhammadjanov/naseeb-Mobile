@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:naseeb/presentation/pages/employer/detail/inside_employee_profile_page.dart';
 import 'package:naseeb/presentation/widgets/w_indicator.dart';
 import 'package:naseeb/utils/colors.dart';
 
@@ -115,9 +116,12 @@ class EmployerSavedPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6)),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, InsideEmployeeProfilePage.routeName);
+                  },
                   child: const Text(
-                    'View Post',
+                    'View Profile',
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,

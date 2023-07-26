@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:naseeb/presentation/pages/single_screens/indside_post_page.dart';
+import 'package:naseeb/presentation/pages/employee/details/indside_post_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class EmployeeSearchPage extends StatelessWidget {
@@ -34,7 +34,7 @@ class EmployeeSearchPage extends StatelessWidget {
               children: [
                 ListTile(
                   onTap: () =>
-                      Navigator.pushNamed(context, InsidePostPage.routeName),
+                      Navigator.pushNamed(context, InsidePostForEmployeePage.routeName),
                   contentPadding: EdgeInsets.zero,
                   trailing: IconButton(
                     onPressed: () {},
@@ -75,7 +75,7 @@ class EmployeeSearchPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6)),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, InsidePostPage.routeName);
+                      Navigator.pushNamed(context, InsidePostForEmployeePage.routeName);
                     },
                     child: const Text(
                       'View Post',
