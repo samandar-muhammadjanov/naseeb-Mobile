@@ -96,16 +96,17 @@ void showCustomDialog(
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "sfPro"),
                 ),
                 const SizedBox(height: 5),
                 Expanded(
                   child: Text(
                     body,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: kgreyColor, fontSize: 14),
+                    style: const TextStyle(
+                        color: kgreyColor, fontSize: 14, fontFamily: "sfPro"),
                   ),
                 ),
               ],
@@ -134,7 +135,8 @@ void showCustomDialog(
                   child: Center(
                     child: Text(
                       textButton,
-                      style: const TextStyle(fontSize: 16, color: white),
+                      style: const TextStyle(
+                          fontSize: 16, color: white, fontFamily: "sfPro"),
                     ),
                   ),
                 ),

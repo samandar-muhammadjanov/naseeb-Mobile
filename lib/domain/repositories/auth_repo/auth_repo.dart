@@ -113,8 +113,7 @@ class AuthRepo {
 
     http.Response response =
         await http.Response.fromStream(await request.send());
-    print(response.body);
-    print(response.statusCode);
+    final body = jsonDecode(response.body);
     SharedPreferences preferences = await SharedPreferences.getInstance();
     if (response.statusCode == 201) {
       isLogined = true;
@@ -128,7 +127,14 @@ class AuthRepo {
               : EmployerHomePage.routeName,
           (route) => false);
     } else {
-      print(response.reasonPhrase);
+      showCustomDialog(
+          context: context,
+          status: Image.asset("assets/images/close.png", width: 80,),
+          title: "Error!",
+          body: body["message"],
+          textButton: "Done",
+          onTap: () => Navigator.pop(context),
+          btnColor: MyColor.salary);
     }
   }
 }

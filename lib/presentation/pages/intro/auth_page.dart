@@ -1,9 +1,11 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
 import 'package:naseeb/utils/colors.dart';
 
@@ -26,13 +28,18 @@ class _AuthPageState extends State<AuthPage> {
   final TextEditingController authController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             SystemNavigator.pop();
           },
-          icon: SvgPicture.asset("assets/svg/Arrow---Left.svg"),
+          icon: SvgPicture.asset(
+            "assets/svg/Arrow---Left.svg",
+            color: isDarkMode ? white : black,
+          ),
         ),
       ),
       body: Form(
@@ -42,13 +49,14 @@ class _AuthPageState extends State<AuthPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(
+              Center(
                 child: Text(
                   "Authentication",
                   style: TextStyle(
-                      color: Color(0xff1F1F39),
+                      color: isDarkMode ? white : Color(0xff1F1F39),
                       fontSize: 28,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "sfPro"),
                 ),
               ),
               const SizedBox(
@@ -56,7 +64,7 @@ class _AuthPageState extends State<AuthPage> {
               ),
               const Text(
                 'Enter your phone number',
-                style: TextStyle(color: kgreyColor),
+                style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               const SizedBox(
                 height: 14,
@@ -74,9 +82,9 @@ class _AuthPageState extends State<AuthPage> {
                 onTap: () => setState(() => isFocused = true),
                 onFieldSubmitted: (va) => setState(() => isFocused = false),
                 style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    fontFamily: "sfPro"),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -84,7 +92,7 @@ class _AuthPageState extends State<AuthPage> {
                         color: kgreyColor,
                       ),
                     ),
-                    fillColor: fieldFocusColor,
+                    fillColor: fieldFocusColor.withOpacity(isDarkMode ? .2 : 1),
                     filled: isFocused),
               ),
               const Spacer(),
@@ -113,7 +121,8 @@ class _AuthPageState extends State<AuthPage> {
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: white),
+                                color: white,
+                                fontFamily: "sfPro"),
                           ),
                   ),
                 ),

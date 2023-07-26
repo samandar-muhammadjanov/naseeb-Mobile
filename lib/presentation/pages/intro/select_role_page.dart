@@ -1,6 +1,8 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/presentation/pages/intro/registration_page.dart';
 import 'package:naseeb/presentation/widgets/w_button.dart';
 import 'package:naseeb/utils/colors.dart';
@@ -17,18 +19,21 @@ class _SelectRolePageState extends State<SelectRolePage> {
   bool isEmployee = true;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            const Text(
+            Text(
               "Choose Job Type",
               style: TextStyle(
-                  color: Color(0xff1F1F39),
+                  color: isDarkMode ? white : const Color(0xff1F1F39),
                   fontSize: 28,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "sfPro"),
             ),
             const SizedBox(
               height: 11,
@@ -36,7 +41,7 @@ class _SelectRolePageState extends State<SelectRolePage> {
             const Text(
               "Lorem ipsum dolor sit amet, consectetur\nadipiscing elit. Ut et massa mi.",
               textAlign: TextAlign.center,
-              style: TextStyle(color: kgreyColor),
+              style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -50,13 +55,15 @@ class _SelectRolePageState extends State<SelectRolePage> {
                         });
                       },
                       child: Container(
+                        height: 216,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 19, vertical: 30),
                         decoration: BoxDecoration(
                             border: Border.all(
                               color: isEmployee
                                   ? MyColor.job
-                                  : const Color(0xffEEEEEE),
+                                  : const Color(0xffEEEEEE)
+                                      .withOpacity(isDarkMode ? .2 : 1),
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(15)),
@@ -66,12 +73,15 @@ class _SelectRolePageState extends State<SelectRolePage> {
                             const SizedBox(
                               height: 26,
                             ),
-                            const Text(
+                            Text(
                               "Find a job",
                               style: TextStyle(
-                                  color: Color(0xff171725),
+                                  color: isDarkMode
+                                      ? white
+                                      : const Color(0xff171725),
                                   fontSize: 18,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: "sfPro"),
                             ),
                             const SizedBox(
                               height: 6,
@@ -81,7 +91,8 @@ class _SelectRolePageState extends State<SelectRolePage> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: kgreyColor,
-                                  fontWeight: FontWeight.w400),
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "sfPro"),
                             )
                           ],
                         ),
@@ -99,13 +110,15 @@ class _SelectRolePageState extends State<SelectRolePage> {
                         });
                       },
                       child: Container(
+                        height: 216,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 19, vertical: 30),
                         decoration: BoxDecoration(
                             border: Border.all(
                               color: !isEmployee
                                   ? MyColor.type
-                                  : const Color(0xffeeeeee),
+                                  : const Color(0xffeeeeee)
+                                      .withOpacity(isDarkMode ? .2 : 1),
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(15)),
@@ -115,20 +128,27 @@ class _SelectRolePageState extends State<SelectRolePage> {
                             const SizedBox(
                               height: 26,
                             ),
-                            const Text(
+                            Text(
                               "Find a employee",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Color(0xff171725),
+                                  color: isDarkMode
+                                      ? white
+                                      : const Color(0xff171725),
                                   fontSize: 18,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: "sfPro"),
                             ),
                             const SizedBox(
                               height: 6,
                             ),
-                            const Text("Find eployees\n",
-                                style: TextStyle(
-                                    color: kgreyColor,
-                                    fontWeight: FontWeight.w400))
+                            const Expanded(
+                              child: Text("Find eployees\n",
+                                  style: TextStyle(
+                                      color: kgreyColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "sfPro")),
+                            )
                           ],
                         ),
                       ),

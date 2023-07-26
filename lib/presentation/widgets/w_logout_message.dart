@@ -1,12 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/presentation/pages/intro/auth_page.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 showLogOutMessage(BuildContext context) {
+  bool isDarkMode =
+      ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
   showCupertinoDialog(
     context: context,
     builder: (context) {
@@ -19,7 +23,7 @@ showLogOutMessage(BuildContext context) {
             padding: const EdgeInsets.all(16),
             width: double.infinity,
             decoration: BoxDecoration(
-              color: white,
+              color: isDarkMode ? const Color(0xff2b2d3a) : white,
               borderRadius: BorderRadius.circular(6),
             ),
             child: Column(

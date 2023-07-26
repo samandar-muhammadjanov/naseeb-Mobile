@@ -19,6 +19,7 @@ class EmployerSavedPage extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 18,
+            fontFamily: "sfPro",
           ),
         ),
       ),
@@ -54,12 +55,14 @@ class EmployerSavedPage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xff171725)),
+                        fontFamily: "sfPro"),
                   ),
                   subtitle: const Text(
                     "Graphic Designer",
                     style: TextStyle(
-                        fontWeight: FontWeight.w600, color: kgreyColor),
+                        fontWeight: FontWeight.w600,
+                        color: kgreyColor,
+                        fontFamily: "sfPro"),
                   ),
                   trailing: IconButton(
                     onPressed: () {},
@@ -106,7 +109,7 @@ class EmployerSavedPage extends StatelessWidget {
                 ),
                 const Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. sit amet, consectetur adipiscing elit...",
-                  style: TextStyle(color: kgreyColor),
+                  style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -123,9 +126,9 @@ class EmployerSavedPage extends StatelessWidget {
                   child: const Text(
                     'View Profile',
                     style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                    ),
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "sfPro"),
                   ),
                 )
               ],

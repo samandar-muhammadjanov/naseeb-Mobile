@@ -1,8 +1,10 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, deprecated_member_use
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/domain/models/address_model.dart';
 import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
 import 'package:naseeb/presentation/pages/intro/auth_page.dart';
@@ -62,6 +64,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -69,13 +73,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
             Navigator.pushNamedAndRemoveUntil(
                 context, AuthPage.routeName, (route) => false);
           },
-          icon: SvgPicture.asset("assets/svg/Arrow---Left.svg"),
+          icon: SvgPicture.asset(
+            "assets/svg/Arrow---Left.svg",
+            color: isDarkMode ? white : black,
+          ),
         ),
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Registration",
           style: TextStyle(
-              color: Color(0xff1F1F39),
+              color: isDarkMode ? white : const Color(0xff1F1F39),
               fontSize: 28,
               fontWeight: FontWeight.w700),
         ),
@@ -197,7 +204,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       children: [
         const Text(
           'Enter your Birth Date',
-          style: TextStyle(color: kgreyColor),
+          style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
         ),
         const SizedBox(
           height: 14,
@@ -220,6 +227,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           keyboardType: TextInputType.datetime,
           decoration: InputDecoration(
             hintText: 'yil/oy/kun',
+            hintStyle: TextStyle(fontFamily: "sfPro"),
             suffixIcon: IconButton(
                 onPressed: () {
                   showDate(
@@ -250,7 +258,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       children: [
         const Text(
           'Enter your Gender',
-          style: TextStyle(color: kgreyColor),
+          style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
         ),
         const SizedBox(
           height: 14,
@@ -278,7 +286,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isMale ? kprimaryColor : kgreyColor),
+                          color: isMale ? kprimaryColor : kgreyColor,
+                          fontFamily: "sfPro"),
                     ),
                   ),
                 ),
@@ -307,7 +316,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: !isMale ? MyColor.salary : kgreyColor),
+                          color: !isMale ? MyColor.salary : kgreyColor,
+                          fontFamily: "sfPro"),
                     ),
                   ),
                 ),

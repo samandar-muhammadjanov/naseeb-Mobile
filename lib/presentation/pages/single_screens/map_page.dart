@@ -2,10 +2,12 @@
 
 import 'dart:convert';
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/domain/models/address_model.dart';
 import 'package:naseeb/domain/repositories/location_service.dart';
 import 'package:naseeb/presentation/pages/intro/registration_page.dart';
@@ -120,6 +122,19 @@ class _MapPageState extends State<MapPage> {
   bool isVisible = false;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
+
+    Future<void> _setMapStyle() async {
+      // Load the custom map style JSON from the assets folder
+      String darkStyle = await DefaultAssetBundle.of(context)
+          .loadString('assets/map_style_dark.json');
+      String lightStyle = await DefaultAssetBundle.of(context)
+          .loadString('assets/map_style_light.json');
+      // Apply the custom style to the Google Map
+      googleMapController.setMapStyle(isDarkMode ? darkStyle : lightStyle);
+    }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -131,6 +146,7 @@ class _MapPageState extends State<MapPage> {
             mapType: MapType.normal,
             onMapCreated: (GoogleMapController controller) {
               googleMapController = controller;
+              _setMapStyle();
             },
           ),
           SafeArea(
@@ -155,7 +171,9 @@ class _MapPageState extends State<MapPage> {
                       prefixIcon: const Icon(Icons.search),
                       filled: true,
                       hintText: "Search Location",
-                      fillColor: Colors.grey.shade300,
+                      hintStyle: const TextStyle(fontFamily: "sfPro"),
+                      fillColor:
+                          isDarkMode ? const Color(0xff2b2d3a) : Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide.none,
@@ -168,25 +186,31 @@ class _MapPageState extends State<MapPage> {
                       margin: const EdgeInsets.only(top: 10),
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
+                          color: isDarkMode
+                              ? const Color(0xff2b2d3a)
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: _placesList
-                            .map((e) => ListTile(
-                                  onTap: () async {
-                                    setState(() {
-                                      searchController.text = e["description"];
-                                      isVisible = false;
-                                    });
-                                    var place = await LocationService()
-                                        .getPlace(searchController.text,
-                                            _sessionToken);
-                                    _goToPlace(place);
-                                  },
-                                  contentPadding: EdgeInsets.zero,
-                                  title: Text(e['description']),
-                                ))
+                            .map(
+                              (e) => ListTile(
+                                onTap: () async {
+                                  setState(() {
+                                    searchController.text = e["description"];
+                                    isVisible = false;
+                                  });
+                                  var place = await LocationService().getPlace(
+                                      searchController.text, _sessionToken);
+                                  _goToPlace(place);
+                                },
+                                contentPadding: EdgeInsets.zero,
+                                title: Text(
+                                  e['description'],
+                                  style: const TextStyle(fontFamily: "sfPro"),
+                                ),
+                              ),
+                            )
                             .toList(),
                       ),
                     ),
@@ -227,7 +251,10 @@ class _MapPageState extends State<MapPage> {
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 0,
                         shadowColor: Colors.white),
-                    child: const Text("Select Address"),
+                    child: const Text(
+                      "Select Address",
+                      style: TextStyle(fontFamily: "sfPro"),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -242,7 +269,10 @@ class _MapPageState extends State<MapPage> {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
-                  child: const Icon(Icons.my_location_rounded),
+                  child: const Icon(
+                    Icons.my_location_rounded,
+                    color: white,
+                  ),
                 )
               ],
             ),

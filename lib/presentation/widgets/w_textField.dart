@@ -31,7 +31,7 @@ class WTextField extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(color: kgreyColor),
+          style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
         ),
         const SizedBox(
           height: 14,

@@ -24,11 +24,11 @@ class StatusIndicator extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              color: textColor,
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              overflow: TextOverflow.ellipsis,
-            ),
+                color: textColor,
+                fontFamily: "sfPro",
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis),
           ),
         ),
       ),

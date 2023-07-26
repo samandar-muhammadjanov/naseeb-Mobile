@@ -53,6 +53,7 @@ dependencies:
   image_picker: ^1.0.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  animated_theme_switcher: ^2.0.8
 
 dev_dependencies:
   flutter_test:
@@ -81,7 +82,8 @@ flutter:
     - assets/images/
     - assets/fonts/
     - assets/svg/
-
+    - assets/map_style_dark.json
+    - assets/map_style_light.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

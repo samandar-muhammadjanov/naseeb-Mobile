@@ -1,5 +1,7 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
 import 'package:naseeb/presentation/widgets/w_button.dart';
 import 'package:naseeb/utils/colors.dart';
@@ -41,13 +43,18 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: SvgPicture.asset("assets/svg/Arrow---Left.svg")),
+            icon: SvgPicture.asset(
+              "assets/svg/Arrow---Left.svg",
+              color: isDarkMode ? white : black,
+            )),
       ),
       body: Form(
         key: formKey,
@@ -55,13 +62,14 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const Center(
+              Center(
                 child: Text(
                   "Verify Phone",
                   style: TextStyle(
-                      color: Color(0xff1F1F39),
+                      color: isDarkMode ? white : Color(0xff1F1F39),
                       fontSize: 28,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "sfPro"),
                 ),
               ),
               const SizedBox(
@@ -69,7 +77,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
               ),
               Text(
                 "Code is sent to ${widget.phoneNumber}",
-                style: const TextStyle(color: kgreyColor),
+                style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               const SizedBox(
                 height: 35.8,
@@ -82,7 +90,10 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                   return null;
                 },
                 controller: codeController,
-                preFilledWidget: const Text('0'),
+                preFilledWidget: const Text(
+                  '0',
+                  style: TextStyle(fontFamily: "sfPro"),
+                ),
                 separator: const SizedBox(width: 21),
                 autofocus: true,
                 length: 5,
@@ -96,7 +107,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                     height: 65,
                     width: 57,
                     decoration: BoxDecoration(
-                        color: fieldFocusColor,
+                        color: fieldFocusColor.withOpacity(isDarkMode ? .2 : 1),
                         border: Border.all(color: kprimaryColor),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(17)))),

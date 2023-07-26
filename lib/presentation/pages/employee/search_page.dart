@@ -15,7 +15,8 @@ class EmployeeSearchPage extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           "Search",
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+          style: TextStyle(
+              fontWeight: FontWeight.w700, fontSize: 18, fontFamily: 'sfPro'),
         ),
       ),
       body: ListView(
@@ -33,8 +34,8 @@ class EmployeeSearchPage extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  onTap: () =>
-                      Navigator.pushNamed(context, InsidePostForEmployeePage.routeName),
+                  onTap: () => Navigator.pushNamed(
+                      context, InsidePostForEmployeePage.routeName),
                   contentPadding: EdgeInsets.zero,
                   trailing: IconButton(
                     onPressed: () {},
@@ -46,12 +47,14 @@ class EmployeeSearchPage extends StatelessWidget {
                   title: const Text(
                     "Mexanik kerak",
                     style: TextStyle(
-                        color: Color(0xff171725), fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w700, fontFamily: "sfPro"),
                   ),
                   subtitle: const Text(
                     "500 000 so'm",
                     style: TextStyle(
-                        fontWeight: FontWeight.w600, color: kgreyColor),
+                        fontWeight: FontWeight.w600,
+                        color: kgreyColor,
+                        fontFamily: "sfPro"),
                   ),
                 ),
                 Container(
@@ -75,12 +78,14 @@ class EmployeeSearchPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6)),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, InsidePostForEmployeePage.routeName);
+                      Navigator.pushNamed(
+                          context, InsidePostForEmployeePage.routeName);
                     },
                     child: const Text(
                       'View Post',
                       style: TextStyle(
                         fontSize: 10,
+                        fontFamily: "sfPro",
                         fontWeight: FontWeight.w500,
                       ),
                     ))

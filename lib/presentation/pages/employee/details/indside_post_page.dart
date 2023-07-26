@@ -35,6 +35,7 @@ class InsidePostForEmployeePage extends StatelessWidget {
               style: TextStyle(
                 color: kprimaryColor,
                 fontSize: 12,
+                fontFamily: "sfPro",
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -64,19 +65,27 @@ class InsidePostForEmployeePage extends StatelessWidget {
             ),
             const Text(
               'Mexanik Kerak',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "sfPro"),
             ),
             const SizedBox(
               height: 10,
             ),
             const Text(
-                'Pariatur irure anim esse in excepteur do qui aliquip qui qui. Velit tempor cupidatat veniam consectetur reprehenderit sit magna tempor. Eiusmod est elit incididunt sunt dolor occaecat cillum duis id proident culpa. Aliquip exercitation exercitation magna eiusmod dolore elit commodo anim deserunt dolor nulla. Fugiat ipsum sint est minim nostrud labore aliqua magna exercitation minim et. Dolor ullamco voluptate nisi occaecat ut. Commodo amet sint amet culpa elit aliqua culpa do.'),
+              'Pariatur irure anim esse in excepteur do qui aliquip qui qui. Velit tempor cupidatat veniam consectetur reprehenderit sit magna tempor. Eiusmod est elit incididunt sunt dolor occaecat cillum duis id proident culpa. Aliquip exercitation exercitation magna eiusmod dolore elit commodo anim deserunt dolor nulla. Fugiat ipsum sint est minim nostrud labore aliqua magna exercitation minim et. Dolor ullamco voluptate nisi occaecat ut. Commodo amet sint amet culpa elit aliqua culpa do.',
+              style: TextStyle(fontFamily: "sfPro"),
+            ),
             const SizedBox(
               height: 10,
             ),
             const Text(
               "E'lon beruvchi",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "sfPro"),
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -88,10 +97,13 @@ class InsidePostForEmployeePage extends StatelessWidget {
               ),
               title: const Text(
                 "Jasur Nigmanov",
-                style: TextStyle(
-                    color: Color(0xff171725), fontWeight: FontWeight.w700),
+                style:
+                    TextStyle(fontWeight: FontWeight.w700, fontFamily: "sfPro"),
               ),
-              subtitle: const Text("Yunusobod t. Toshkent sh. O'zbekiston"),
+              subtitle: const Text(
+                "Yunusobod t. Toshkent sh. O'zbekiston",
+                style: TextStyle(fontFamily: "sfPro"),
+              ),
             )
           ],
         ),
@@ -116,6 +128,7 @@ class InsidePostForEmployeePage extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
+                          fontFamily: "sfPro",
                           color: kprimaryColor),
                     ),
                   ),
@@ -142,6 +155,7 @@ class InsidePostForEmployeePage extends StatelessWidget {
                       "Chat",
                       style: TextStyle(
                           fontSize: 16,
+                          fontFamily: "sfPro",
                           fontWeight: FontWeight.w600,
                           color: white),
                     ),

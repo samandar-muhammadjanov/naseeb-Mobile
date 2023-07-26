@@ -15,7 +15,8 @@ class EmployeeChatPage extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           "Chats",
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+          style: TextStyle(
+              fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
         ),
       ),
       body: Padding(
@@ -32,7 +33,8 @@ class EmployeeChatPage extends StatelessWidget {
                     ),
                   ),
                   hintText: "Search...",
-                  hintStyle: const TextStyle(color: kgreyColor, fontSize: 16),
+                  hintStyle: const TextStyle(
+                      color: kgreyColor, fontSize: 16, fontFamily: "sfPro"),
                   border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: kgreyColor.withOpacity(.2),
@@ -47,8 +49,7 @@ class EmployeeChatPage extends StatelessWidget {
               children: [
                 ListTile(
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, ChatInsidePage.routeName);
+                    Navigator.pushNamed(context, ChatInsidePage.routeName);
                   },
                   contentPadding: const EdgeInsets.all(16),
                   shape: RoundedRectangleBorder(
@@ -71,9 +72,10 @@ class EmployeeChatPage extends StatelessWidget {
                   title: const Text(
                     "Jasur Nigmanov",
                     style: TextStyle(
-                        color: Color(0xff171725), fontWeight: FontWeight.w700),
+                        fontFamily: "sfPro", fontWeight: FontWeight.w700),
                   ),
-                  subtitle: const Text("Lorem ipsum dolor sit amet..."),
+                  subtitle: const Text("Lorem ipsum dolor sit amet...",
+                      style: TextStyle(fontFamily: "sfPro")),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -82,6 +84,7 @@ class EmployeeChatPage extends StatelessWidget {
                         style: TextStyle(
                             color: kgreyColor,
                             fontSize: 12,
+                            fontFamily: "sfPro",
                             fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(

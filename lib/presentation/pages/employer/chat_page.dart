@@ -15,7 +15,8 @@ class EmployerChatPage extends StatelessWidget {
         centerTitle: true,
         title: const Text(
           "Chats",
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+          style: TextStyle(
+              fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
         ),
       ),
       body: Padding(
@@ -32,7 +33,8 @@ class EmployerChatPage extends StatelessWidget {
                     ),
                   ),
                   hintText: "Search...",
-                  hintStyle: const TextStyle(color: kgreyColor, fontSize: 16),
+                  hintStyle: const TextStyle(
+                      color: kgreyColor, fontSize: 16, fontFamily: "sfPro"),
                   border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: kgreyColor.withOpacity(.2),
@@ -67,9 +69,12 @@ class EmployerChatPage extends StatelessWidget {
                   title: const Text(
                     "Jasur Nigmanov",
                     style: TextStyle(
-                        color: Color(0xff171725), fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w700, fontFamily: "sfPro"),
                   ),
-                  subtitle: const Text("Lorem ipsum dolor sit amet..."),
+                  subtitle: const Text(
+                    "Lorem ipsum dolor sit amet...",
+                    style: TextStyle(fontFamily: "sfPro"),
+                  ),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -78,7 +83,8 @@ class EmployerChatPage extends StatelessWidget {
                         style: TextStyle(
                             color: kgreyColor,
                             fontSize: 12,
-                            fontWeight: FontWeight.w600),
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "sfPro"),
                       ),
                       const SizedBox(
                         height: 6,

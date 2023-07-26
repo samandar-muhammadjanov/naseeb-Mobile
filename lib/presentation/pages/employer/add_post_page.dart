@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/presentation/pages/employer/detail/inside_post_page.dart';
 import 'package:naseeb/presentation/widgets/w_textField.dart';
 import 'package:naseeb/utils/colors.dart';
@@ -21,12 +23,15 @@ class _AddPostPageFState extends State<AddPostPageF> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
           "Add Posts",
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+          style: TextStyle(
+              fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
         ),
       ),
       body: Column(
@@ -61,13 +66,14 @@ class _AddPostPageFState extends State<AddPostPageF> {
                       title: const Text(
                         "Mexanik kerak",
                         style: TextStyle(
-                            color: Color(0xff171725),
-                            fontWeight: FontWeight.w700),
+                            fontFamily: "sfPro", fontWeight: FontWeight.w700),
                       ),
                       subtitle: const Text(
                         "500 000 so'm",
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, color: kgreyColor),
+                            fontWeight: FontWeight.w600,
+                            color: kgreyColor,
+                            fontFamily: "sfPro"),
                       ),
                     ),
                     Container(
@@ -97,9 +103,9 @@ class _AddPostPageFState extends State<AddPostPageF> {
                         child: const Text(
                           'View Post',
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                          ),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "sfPro"),
                         ))
                   ],
                 ),
@@ -132,7 +138,8 @@ class _AddPostPageFState extends State<AddPostPageF> {
                           child: Material(
                             color: Colors.transparent,
                             child: Container(
-                              color: white,
+                              color:
+                                  isDarkMode ? const Color(0xff2b2d3a) : white,
                               width: double.infinity,
                               child: ListView(
                                 padding: const EdgeInsets.all(16),
@@ -147,7 +154,8 @@ class _AddPostPageFState extends State<AddPostPageF> {
                                         "Add Post",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 18),
+                                            fontSize: 18,
+                                            fontFamily: "sfPro"),
                                       ),
                                       IconButton(
                                           onPressed: () =>
@@ -221,10 +229,11 @@ class _AddPostPageFState extends State<AddPostPageF> {
                                                   "Choose photo from \nyour gallery",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                    color: white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
+                                                      color: white,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "sfPro"),
                                                 )
                                               ],
                                             ),
@@ -234,24 +243,26 @@ class _AddPostPageFState extends State<AddPostPageF> {
                                     height: 10,
                                   ),
                                   ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        setState(() {
-                                          image = null;
-                                        });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          minimumSize:
-                                              const Size(double.infinity, 50),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15))),
-                                      child: const Text(
-                                        "Add",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      ))
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        image = null;
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize:
+                                            const Size(double.infinity, 50),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15))),
+                                    child: const Text(
+                                      "Add",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          fontFamily: "sfPro"),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -265,7 +276,7 @@ class _AddPostPageFState extends State<AddPostPageF> {
                   alignment: Alignment.center,
                   height: 50,
                   decoration: BoxDecoration(
-                      color: fieldFocusColor,
+                      color: fieldFocusColor.withOpacity(isDarkMode ? .2 : 1),
                       borderRadius: BorderRadius.circular(15)),
                   width: double.infinity,
                   child: const Text(
@@ -273,7 +284,8 @@ class _AddPostPageFState extends State<AddPostPageF> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        color: kprimaryColor),
+                        color: kprimaryColor,
+                        fontFamily: "sfPro"),
                   ),
                 ),
               ),
