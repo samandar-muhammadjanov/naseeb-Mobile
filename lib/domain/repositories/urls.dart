@@ -6,3 +6,5 @@ const CODE_SEND = 'auth/code_send';
 const CODE_VERIFY = 'auth/check_code';
 const REGISTER = "auth/register";
 const AUTH = "auth/authenticate";
+const GET_EMPLOYEES = 'posters/search_employee/';
+const GET_EMPLOYEES_ID = 'employee/';

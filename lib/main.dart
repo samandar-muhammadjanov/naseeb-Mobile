@@ -1,7 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:naseeb/blocs/bloc_imports.dart';
 import 'package:naseeb/config/app_route.dart';
-import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/config/theme_service.dart';
 import 'package:naseeb/presentation/pages/employee/home_page.dart';
 import 'package:naseeb/presentation/pages/employer/home_page.dart';
@@ -41,16 +41,23 @@ class MyApp extends StatelessWidget {
     return ThemeProvider(
         initTheme: theme,
         builder: (context, themee) {
-          return MaterialApp(
-            title: 'Naseeb',
-            theme: themee,
-            onGenerateRoute: AppRoute().onGenerateRoute,
-            home: ThemeSwitchingArea(
-                child: !isLogined!
-                    ? const OnboardingPage()
-                    : isEmployee!
-                        ? const EmployeeHomePage()
-                        : const EmployerHomePage()),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => EmployerBloc(),
+              )
+            ],
+            child: MaterialApp(
+              title: 'Naseeb',
+              theme: themee,
+              onGenerateRoute: AppRoute().onGenerateRoute,
+              home: ThemeSwitchingArea(
+                  child: !isLogined!
+                      ? const OnboardingPage()
+                      : isEmployee!
+                          ? const EmployeeHomePage()
+                          : const EmployerHomePage()),
+            ),
           );
         });
   }

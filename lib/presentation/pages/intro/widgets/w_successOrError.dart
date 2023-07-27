@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_returning_null_for_void
+// ignore_for_file: avoid_returning_null_for_void, use_build_context_synchronously
 
 import 'dart:ui';
 
@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
+import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
+import 'package:naseeb/presentation/pages/employee/home_page.dart';
+import 'package:naseeb/presentation/pages/employer/home_page.dart';
 import 'package:naseeb/presentation/pages/intro/select_role_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
@@ -13,7 +16,7 @@ showSuccessOrError(BuildContext context, Response response, String user,
     String phone, dynamic body) async {
   bool isLoading = false;
   isLoading = true;
-  final spinKit = const SpinKitCircle(
+  const spinKit = SpinKitCircle(
     size: 70,
     color: Colors.orange,
   );
@@ -42,13 +45,19 @@ showSuccessOrError(BuildContext context, Response response, String user,
             title: "Success",
             body: "Congratulations, you have completed your registration!",
             textButton: "Done",
-            onTap: () {
+            onTap: () async {
               if (user == "new user") {
                 Navigator.pushNamedAndRemoveUntil(
                     context, SelectRolePage.routeName, (route) => false);
               } else if (user == "OK") {
-                // Navigator.pushNamedAndRemoveUntil(
-                //     context, SelectRolePage.routeName, (route) => false);
+                final data = await AuthRepo().auth(phone);
+                final role = data["data"]["user"]["roles"][0];
+                Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    role == "role_employer"
+                        ? EmployerHomePage.routeName
+                        : EmployeeHomePage.routeName,
+                    (route) => false);
               }
             },
             btnColor: MyColor.kSuccessColor);

@@ -118,6 +118,8 @@ class AuthRepo {
     if (response.statusCode == 201) {
       isLogined = true;
       await preferences.setBool("isLogined", isLogined);
+      await preferences.setString("accessToken", body['data']['token']);
+
       await preferences.setBool(
           "isEmployee", role == "role_employee" ? true : false);
       Navigator.pushNamedAndRemoveUntil(
@@ -129,12 +131,36 @@ class AuthRepo {
     } else {
       showCustomDialog(
           context: context,
-          status: Image.asset("assets/images/close.png", width: 80,),
+          status: Image.asset(
+            "assets/images/close.png",
+            width: 80,
+          ),
           title: "Error!",
           body: body["message"],
           textButton: "Done",
           onTap: () => Navigator.pop(context),
           btnColor: MyColor.salary);
+    }
+  }
+
+  Future<dynamic> auth(String phone) async {
+    var request = http.MultipartRequest('GET', Uri.parse(BASE_URL + AUTH));
+    request.fields.addAll({'phone': phone.split(" ").join()});
+
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+    final body = jsonDecode(response.body);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final role = body["data"]["user"]["roles"][0];
+    if (response.statusCode == 201) {
+      isLogined = true;
+      await preferences.setBool("isLogined", isLogined);
+      await preferences.setString("accessToken", body['data']['token']);
+      await preferences.setBool(
+          "isEmployee", role == "role_employee" ? true : false);
+      return body;
+    } else {
+      return throw Exception(body["message"]);
     }
   }
 }
