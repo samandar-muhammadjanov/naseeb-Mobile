@@ -26,7 +26,7 @@ class RegistrationPage extends StatefulWidget {
       this.email,
       this.description});
   static const routeName = "/auth/registration";
-  final Address? address;
+  final AddressModel? address;
   final String? firstName;
   final String? lastName;
   final bool? isMale;
@@ -227,7 +227,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           keyboardType: TextInputType.datetime,
           decoration: InputDecoration(
             hintText: 'yil/oy/kun',
-            hintStyle: TextStyle(fontFamily: "sfPro"),
+            hintStyle: const TextStyle(fontFamily: "sfPro"),
             suffixIcon: IconButton(
                 onPressed: () {
                   showDate(

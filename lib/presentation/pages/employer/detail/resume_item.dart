@@ -1,5 +1,7 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/presentation/pages/employer/detail/w_pdf.dart';
 import 'package:naseeb/utils/colors.dart';
 import '../../../../domain/models/get_employee_detail_model.dart';
@@ -26,6 +28,8 @@ class _WMainInformationState extends State<WMainInformation> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -43,25 +47,40 @@ class _WMainInformationState extends State<WMainInformation> {
         children: [
           Text(
             widget.title,
-            style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w700, fontFamily: "sfPro"),
+            style: TextStyle(
+                color: isDarkMode ? white : black,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                fontFamily: "sfPro"),
           ),
           const SizedBox(height: 12),
           Text(
             widget.subtitle,
-            style: const TextStyle(fontFamily: "sfPro"),
+            style: TextStyle(
+                color: isDarkMode ? white : black, fontFamily: "sfPro"),
           ),
           const SizedBox(height: 15),
           ShaderMask(
             blendMode: BlendMode.srcIn,
             shaderCallback: (Rect bounds) => LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [black, (isShort) ? black.withOpacity(0.1) : black])
-                .createShader(bounds),
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  isDarkMode ? white : black,
+                  (isShort)
+                      ? isDarkMode
+                          ? white.withOpacity(0.1)
+                          : black.withOpacity(0.1)
+                      : isDarkMode
+                          ? white
+                          : black,
+                ]).createShader(bounds),
             child: Text(
               widget.state.registerResponse.description,
-              style: const TextStyle(fontSize: 14, fontFamily: "sfPro"),
+              style: TextStyle(
+                  color: isDarkMode ? white : black,
+                  fontSize: 14,
+                  fontFamily: "sfPro"),
               maxLines: (isShort) ? 5 : null,
             ),
           ),
@@ -114,6 +133,8 @@ class _WWorkExperienceState extends State<WWorkExperience> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -141,8 +162,14 @@ class _WWorkExperienceState extends State<WWorkExperience> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        black,
-                        (isFullVisible) ? black : black.withOpacity(0.1)
+                        isDarkMode ? white : black,
+                        (isFullVisible)
+                            ? isDarkMode
+                                ? white.withOpacity(0.1)
+                                : black.withOpacity(0.1)
+                            : isDarkMode
+                                ? white
+                                : black,
                       ]).createShader(bounds),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,8 +181,8 @@ class _WWorkExperienceState extends State<WWorkExperience> {
                       : item.end.year - item.begin.year;
                   return RichText(
                     text: TextSpan(
-                      style: const TextStyle(
-                          color: Colors.black,
+                      style: TextStyle(
+                          color: isDarkMode ? white : black,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           fontFamily: "sfPro"),
@@ -225,6 +252,8 @@ class _WEducationState extends State<WEducation> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -252,8 +281,14 @@ class _WEducationState extends State<WEducation> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        black,
-                        (isFullVisible) ? black : black.withOpacity(0.1)
+                        isDarkMode ? white : black,
+                        (isFullVisible)
+                            ? isDarkMode
+                                ? white.withOpacity(0.1)
+                                : black.withOpacity(0.1)
+                            : isDarkMode
+                                ? white
+                                : black,
                       ]).createShader(bounds),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,6 +364,8 @@ class _WLanguageState extends State<WLanguage> {
   bool isFullVisible = false;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -356,8 +393,14 @@ class _WLanguageState extends State<WLanguage> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  black,
-                  (isFullVisible) ? black : black.withOpacity(0.1)
+                  isDarkMode ? white : black,
+                  (isFullVisible)
+                      ? isDarkMode
+                          ? white.withOpacity(0.1)
+                          : black.withOpacity(0.1)
+                      : isDarkMode
+                          ? white
+                          : black,
                 ]).createShader(bounds),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -423,6 +466,8 @@ class _WCertificateState extends State<WCertificate> {
   bool isFullVisible = false;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -444,25 +489,36 @@ class _WCertificateState extends State<WCertificate> {
                 fontSize: 16, fontWeight: FontWeight.w700, fontFamily: "sfPro"),
           ),
           const SizedBox(height: 12),
-          RichText(
-            text: const TextSpan(
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "sfPro"),
-              children: [
-                TextSpan(text: 'Graphic design\n'),
-                TextSpan(text: 'Course teacher - Palonchi Pistonchiyev\n'),
-                TextSpan(
-                  text: '16 February 2022 year',
-                  style: TextStyle(color: kgreyColor),
-                ),
-              ],
-            ),
+          Column(
+            children:
+                List.generate(widget.item.certificateFile.length, (index) {
+              final item = widget.item.certificateFile[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                          color: isDarkMode ? white : black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "sfPro"),
+                      children: [
+                        TextSpan(text: '${item.name}\n'),
+                        TextSpan(
+                          text:
+                              '${DateFormat("dd MMMM yyyy").format(item.date)} year',
+                          style: const TextStyle(color: kgreyColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  WPdf(data: item),
+                ],
+              );
+            }),
           ),
-          const SizedBox(height: 10),
-          WPdf(data: widget.item.certificateFile.first),
           const SizedBox(height: 10),
           Visibility(
               visible: isFullVisible,
@@ -509,8 +565,8 @@ class _WCertificateState extends State<WCertificate> {
 }
 
 class WSalary extends StatefulWidget {
-  const WSalary({super.key});
-
+  const WSalary({super.key, required this.item});
+  final Data item;
   @override
   State<WSalary> createState() => _WSalaryState();
 }
@@ -519,6 +575,8 @@ class _WSalaryState extends State<WSalary> {
   bool isFullVisible = false;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -546,22 +604,27 @@ class _WSalaryState extends State<WSalary> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  black,
-                  (isFullVisible) ? black : black.withOpacity(0.1)
+                  isDarkMode ? white : black,
+                  (isFullVisible)
+                      ? isDarkMode
+                          ? white.withOpacity(0.1)
+                          : black.withOpacity(0.1)
+                      : isDarkMode
+                          ? white
+                          : black,
                 ]).createShader(bounds),
             child: RichText(
-              text: const TextSpan(
-                style: TextStyle(
+              text: TextSpan(
+                style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     fontFamily: "sfPro"),
                 children: [
-                  TextSpan(text: '800\$\n\n'),
                   TextSpan(
-                    text:
-                        'Lorem ipsum dolor sit amet. Qui dicta sequi aut ipsa aliquid qui nulla reprehenderit At tenetur placeat ab inventore nihil. Cum soluta consequatur cum sint facere sed voluptatibus dolores qui iusto alias ad optio aspernatur eos obcaecati doloribus et galisum quasi. Est distinctio quam nam quia impedit ut velit dolores. Non quia dolore aut nulla architecto qui nobis iusto et rerum placeat et dolore laborum qui quae voluptatum.A adipisci suscipit et perspiciatis minima et tempore velit. Aut iste esse sit nobis omnis ut aliquid harum aut voluptatem assumenda eos unde voluptates qui dolorem sint et repellat saepe. awfiu fwaifhaw ',
-                  )
+                      text:
+                          '${widget.item.salaryResponse.money.toStringAsFixed(0)}\$\n\n'),
+                  TextSpan(text: widget.item.salaryResponse.formOfService)
                 ],
               ),
               maxLines: (isFullVisible) ? null : 4,

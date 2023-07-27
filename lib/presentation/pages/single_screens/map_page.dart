@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names, deprecated_member_use
+// ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names, deprecated_member_use, no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'dart:convert';
 
@@ -93,7 +93,7 @@ class _MapPageState extends State<MapPage> {
   }
 
   String userLoc = '';
-  late Address address;
+  late AddressModel address;
   void getUserLocation() async {
     Position position = await _determinePosition(context);
 
@@ -296,7 +296,7 @@ class _MapPageState extends State<MapPage> {
       ),
     );
     setState(() {
-      address = Address(region[0], region[1], lat.toString(), lng.toString());
+      address = AddressModel(region[0], region[1], lat.toString(), lng.toString());
       markers.clear();
       markers.add(
         Marker(
@@ -340,7 +340,7 @@ class _MapPageState extends State<MapPage> {
         await placemarkFromCoordinates(position.latitude, position.longitude);
     setState(() {
       userLoc = "${placemarks[0].locality}, ${placemarks[0].subLocality}";
-      address = Address(placemarks[0].locality, placemarks[0].subLocality,
+      address = AddressModel(placemarks[0].locality, placemarks[0].subLocality,
           position.latitude.toString(), position.longitude.toString());
     });
 

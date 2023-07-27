@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
                 child: Text(
                   "Authentication",
                   style: TextStyle(
-                      color: isDarkMode ? white : Color(0xff1F1F39),
+                      color: isDarkMode ? white : const Color(0xff1F1F39),
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
                       fontFamily: "sfPro"),

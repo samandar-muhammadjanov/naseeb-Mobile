@@ -1,8 +1,10 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unnecessary_this, avoid_single_cascade_in_expression_statements
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
+import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/presentation/pages/employer/detail/inside_employee_profile_page.dart';
 import 'package:naseeb/presentation/widgets/w_indicator.dart';
 import 'package:naseeb/presentation/widgets/w_loading.dart';
@@ -21,20 +23,10 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
 
   final labels = ['0', '15', '25', '45', '65', '85', '100'];
 
-  Widget buildLabel({
-    required String label,
-    required Color color,
-  }) =>
-      Text(
-        label,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "sfPro")
-            .copyWith(color: color),
-      );
-
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode =
+        ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -75,14 +67,17 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                       children: Utils.modelBuilder(
                         labels,
                         (index, label) {
-                          const selectedColor = Colors.black;
-                          final unselectedColor = Colors.black.withOpacity(0.3);
-                          final isSelected =
-                              index >= values.start && index <= values.end;
-                          final color =
-                              isSelected ? selectedColor : unselectedColor;
-
-                          return buildLabel(label: label, color: color);
+                          return Text(
+                            label,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "sfPro")
+                                .copyWith(
+                              color: isDarkMode ? white : black,
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -215,7 +210,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                       ? const SizedBox()
                       : StatusIndicator(
                           background: MyColor.experienceBackground,
-                          text: "${experienceYear} years",
+                          text: "$experienceYear years",
                           textColor: MyColor.experience),
                   const SizedBox(
                     width: 5,
