@@ -11,13 +11,9 @@ import 'package:pinput/pinput.dart';
 
 class VerifyPhonePage extends StatefulWidget {
   const VerifyPhonePage(
-      {super.key,
-      required this.phoneNumber,
-      required this.code,
-      required this.user});
+      {super.key, required this.phoneNumber, required this.user});
   static const routeName = "/auth/verify";
   final String phoneNumber;
-  final String code;
   final String user;
   @override
   State<VerifyPhonePage> createState() => _VerifyPhonePageState();
@@ -27,21 +23,6 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
   bool isVerifying = false;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController codeController = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(
-      Duration.zero,
-      () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 4),
-            content: Text("Your code ${widget.code}"),
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

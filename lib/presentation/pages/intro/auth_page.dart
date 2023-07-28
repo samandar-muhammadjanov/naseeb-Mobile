@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -65,21 +66,16 @@ class _AuthPageState extends State<AuthPage> {
                 height: 27,
               ),
               const Text(
-                'Enter your phone number',
+                'Enter your email',
                 style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               const SizedBox(
                 height: 14,
               ),
               TextFormField(
-                inputFormatters: [maskFormatter],
-                validator: (value) {
-                  if (value!.isEmpty || value.length < 17) {
-                    return "Not valid phone number";
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.phone,
+                validator: (value) =>
+                    EmailValidator.validate(value!) ? null : "Not Valid Email",
+                keyboardType: TextInputType.emailAddress,
                 controller: authController,
                 onTap: () => setState(() => isFocused = true),
                 onFieldSubmitted: (va) => setState(() => isFocused = false),
@@ -103,7 +99,7 @@ class _AuthPageState extends State<AuthPage> {
                 onTap: () {
                   if (formKey.currentState!.validate()) {
                     Hive.box("authData")
-                        .put('phoneNumber', authController.text);
+                        .put('email', authController.text);
                     loading();
                   }
                 },

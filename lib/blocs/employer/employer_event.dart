@@ -14,3 +14,5 @@ class GetEmployeeById extends EmployerEvent {
   final id;
   GetEmployeeById(this.id);
 }
+
+class GetAllPosts extends EmployerEvent {}

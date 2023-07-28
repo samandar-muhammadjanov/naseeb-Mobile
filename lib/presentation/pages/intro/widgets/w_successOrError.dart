@@ -13,7 +13,7 @@ import 'package:naseeb/presentation/pages/intro/select_role_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 showSuccessOrError(BuildContext context, Response response, String user,
-    String phone, dynamic body) async {
+    String email, dynamic body) async {
   bool isLoading = false;
   isLoading = true;
   const spinKit = SpinKitCircle(
@@ -50,7 +50,7 @@ showSuccessOrError(BuildContext context, Response response, String user,
                 Navigator.pushNamedAndRemoveUntil(
                     context, SelectRolePage.routeName, (route) => false);
               } else if (user == "OK") {
-                final data = await AuthRepo().auth(phone);
+                final data = await AuthRepo().auth(email);
                 final role = data["data"]["user"]["roles"][0];
                 Navigator.pushNamedAndRemoveUntil(
                     context,

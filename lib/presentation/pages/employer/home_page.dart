@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:naseeb/presentation/pages/employer/add_post_page.dart';
+import 'package:naseeb/presentation/pages/employer/post_page.dart';
 import 'package:naseeb/presentation/pages/employer/chat_page.dart';
 import 'package:naseeb/presentation/pages/employer/profile_page.dart';
 import 'package:naseeb/presentation/pages/employer/saved_page.dart';
@@ -46,7 +46,7 @@ class _EmployerHomePageState extends State<EmployerHomePage> {
     List pages = [
       const EmployerSearchPage(),
       const EmployerSavedPage(),
-      const AddPostPageF(),
+      const PostPage(),
       const EmployerChatPage(),
       const EmployerProfilePage()
     ];

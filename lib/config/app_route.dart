@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naseeb/presentation/pages/employee/details/certificates_page.dart';
+import 'package:naseeb/presentation/pages/employer/detail/add_post_page.dart';
 import 'package:naseeb/presentation/pages/employer/detail/inside_employee_profile_page.dart';
 import 'package:naseeb/presentation/pages/employer/detail/inside_post_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
@@ -97,6 +98,10 @@ class AppRoute {
       case InsideEmployeeProfilePage.routeName:
         return MaterialPageRoute(
           builder: (context) => const InsideEmployeeProfilePage(),
+        );
+      case AddPostPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const AddPostPage(),
         );
       default:
         break;

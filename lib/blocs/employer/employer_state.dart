@@ -18,6 +18,11 @@ class EmployeeDetailLoaded extends EmployerState {
   EmployeeDetailLoaded(this.employee);
 }
 
+class AllPostsLoaded extends EmployerState {
+  final Posts posts;
+  AllPostsLoaded(this.posts);
+}
+
 class EmployerError extends EmployerState {
   final String error;
   EmployerError(

@@ -42,7 +42,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   DateTime date = DateTime.now();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController birthDateController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -52,7 +52,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.initState();
     firstNameController.text = widget.firstName ?? "";
     lastNameController.text = widget.lastName ?? "";
-    emailController.text = widget.email ?? "";
+    phoneController.text = widget.email ?? "";
     birthDateController.text = widget.birthDate ?? "";
     descriptionController.text = widget.description ?? "";
     isMale = widget.isMale ?? isMale;
@@ -84,7 +84,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
           style: TextStyle(
               color: isDarkMode ? white : const Color(0xff1F1F39),
               fontSize: 28,
-              fontWeight: FontWeight.w700),
+              fontWeight: FontWeight.w700,
+              fontFamily: "sfPro"),
         ),
       ),
       body: SingleChildScrollView(
@@ -122,10 +123,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
               selectBirthDate(context),
               const SizedBox(height: 10),
               WTextField(
-                title: "Enter Your Email",
-                controller: emailController,
-                validator: (value) =>
-                    EmailValidator.validate(value!) ? null : "Not valid email",
+                title: "Enter Your Phone Number",
+                controller: phoneController,
+                validator: (value) {
+                  if (value!.isEmpty || value.length < 10) {
+                    return "Enter About Yourself";
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 10),
               WTextField(
@@ -159,7 +164,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           builder: (context) => MapPage(
                             firstName: firstNameController.text,
                             lastName: lastNameController.text,
-                            email: emailController.text,
+                            email: phoneController.text,
                             birthDate: birthDateController.text,
                             isMale: isMale,
                             description: descriptionController.text,
@@ -177,14 +182,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: wButton(() {
-          final phoneNumber = Hive.box("authData").get("phoneNumber");
+          final phoneNumber = Hive.box("authData").get("email");
           final role = Hive.box("authData").get("role");
 
           if (formKey.currentState!.validate()) {
             AuthRepo().registration(
                 lastNameController.text,
                 firstNameController.text,
-                emailController.text,
+                phoneController.text,
                 phoneNumber,
                 isMale ? "MALE" : "FAMALE",
                 birthDateController.text,

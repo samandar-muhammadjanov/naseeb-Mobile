@@ -13,21 +13,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo {
   bool isLogined = false;
-  static Future<void> codeSend(String phone, BuildContext context) async {
+  static Future<void> codeSend(String email, BuildContext context) async {
     var request =
         http.MultipartRequest('POST', Uri.parse(BASE_URL + CODE_SEND));
-    request.fields.addAll({'phone': phone.split(" ").join()});
+    request.fields.addAll({'email': email});
 
     http.Response response =
         await http.Response.fromStream(await request.send());
     final body = jsonDecode(response.body);
+    print(body);
     if (response.statusCode == 200) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => VerifyPhonePage(
-            phoneNumber: phone,
-            code: body["data"]["code"],
+            phoneNumber: email,
             user: body["message"],
           ),
         ),
@@ -35,7 +35,10 @@ class AuthRepo {
     } else {
       showCustomDialog(
           context: context,
-          status: Image.asset("assets/images/close.png"),
+          status: Image.asset(
+            "assets/images/close.png",
+            width: 70,
+          ),
           title: "Error!",
           body: body["message"],
           textButton: "Done",
@@ -49,33 +52,23 @@ class AuthRepo {
         http.MultipartRequest('POST', Uri.parse(BASE_URL + CODE_SEND));
     request.fields.addAll({'phone': phone.split(" ").join()});
 
-    http.Response response =
-        await http.Response.fromStream(await request.send());
-    final body = jsonDecode(response.body);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 4),
-        content: Text("Your code ${body["data"]["code"]}"),
-      ),
-    );
+    await http.Response.fromStream(await request.send());
   }
 
   static Future<void> codeVerify(
-      String phone, String code, BuildContext context, String user) async {
+      String email, String code, BuildContext context, String user) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST', Uri.parse(BASE_URL + CODE_VERIFY));
-    request.body = json.encode(
-        {"phone": phone.split(" ").join().split("+").join(), "code": code});
+    request.body = json.encode({"email": email, "code": code});
     request.headers.addAll(headers);
 
     http.Response response =
         await http.Response.fromStream(await request.send());
     final body = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      showSuccessOrError(context, response, user, phone, body);
+      showSuccessOrError(context, response, user, email, body);
     } else {
-      showSuccessOrError(context, response, user, phone, body);
+      showSuccessOrError(context, response, user, email, body);
     }
   }
 
@@ -96,7 +89,7 @@ class AuthRepo {
       "lastName": lastName,
       "firstName": firstName,
       "email": email,
-      "phone": phone.split(" ").join(),
+      "phone": phone,
       "genderEnum": gender,
       "bornYear": birthDate,
       "description": description,
@@ -143,9 +136,9 @@ class AuthRepo {
     }
   }
 
-  Future<dynamic> auth(String phone) async {
+  Future<dynamic> auth(String email) async {
     var request = http.MultipartRequest('GET', Uri.parse(BASE_URL + AUTH));
-    request.fields.addAll({'phone': phone.split(" ").join()});
+    request.fields.addAll({'email': email});
 
     http.Response response =
         await http.Response.fromStream(await request.send());

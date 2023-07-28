@@ -42,6 +42,7 @@ class WTextField extends StatelessWidget {
           maxLines: maxLines,
           onTap: onTap,
           validator: validator,
+          style: const TextStyle(fontFamily: "sfPro"),
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           decoration: InputDecoration(

@@ -106,6 +106,7 @@ class EmployerRepo {
 
     http.Response response =
         await http.Response.fromStream(await request.send());
+    print(response.body);
     if (response.statusCode == 200) {
       Posts posts = postsFromJson(response.body);
       return posts;

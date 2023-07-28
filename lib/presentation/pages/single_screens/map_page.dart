@@ -10,6 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/domain/models/address_model.dart';
 import 'package:naseeb/domain/repositories/location_service.dart';
+import 'package:naseeb/presentation/pages/employer/detail/add_post_page.dart';
 import 'package:naseeb/presentation/pages/intro/registration_page.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:uuid/uuid.dart';
@@ -23,7 +24,8 @@ class MapPage extends StatefulWidget {
       this.isMale,
       this.birthDate,
       this.email,
-      this.description});
+      this.description,
+      this.isForPost});
   static const routeName = "/map";
   final String? firstName;
   final String? lastName;
@@ -31,7 +33,7 @@ class MapPage extends StatefulWidget {
   final String? birthDate;
   final String? email;
   final String? description;
-
+  final bool? isForPost;
   @override
   State<MapPage> createState() => _MapPageState();
 }
@@ -228,20 +230,30 @@ class _MapPageState extends State<MapPage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RegistrationPage(
-                            address: address,
-                            firstName: widget.firstName,
-                            lastName: widget.lastName,
-                            isMale: widget.isMale,
-                            birthDate: widget.birthDate,
-                            description: widget.description,
-                            email: widget.email,
+                      if (widget.isForPost!) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddPostPage(
+                                address: address,
+                              ),
+                            ));
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegistrationPage(
+                              address: address,
+                              firstName: widget.firstName,
+                              lastName: widget.lastName,
+                              isMale: widget.isMale,
+                              birthDate: widget.birthDate,
+                              description: widget.description,
+                              email: widget.email,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         primary:
@@ -296,7 +308,8 @@ class _MapPageState extends State<MapPage> {
       ),
     );
     setState(() {
-      address = AddressModel(region[0], region[1], lat.toString(), lng.toString());
+      address =
+          AddressModel(region[0], region[1], lat.toString(), lng.toString());
       markers.clear();
       markers.add(
         Marker(

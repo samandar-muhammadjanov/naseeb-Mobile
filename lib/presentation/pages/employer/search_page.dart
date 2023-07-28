@@ -101,7 +101,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
         ),
       ),
       body: BlocProvider(
-        create: (context) => EmployerBloc()..add(GetEmployees(4, 10)),
+        create: (context) => EmployerBloc()..add(GetEmployees(1, 10)),
         child:
             BlocBuilder<EmployerBloc, EmployerState>(builder: (context, state) {
           if (state is EmployerInitial) {
