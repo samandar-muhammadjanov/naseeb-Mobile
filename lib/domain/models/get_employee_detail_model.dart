@@ -291,7 +291,7 @@ class RegisterResponse {
   DateTime bornYear;
   String description;
   Address address;
-  EFile responseFile;
+  dynamic responseFile;
 
   RegisterResponse({
     required this.id,
@@ -323,7 +323,7 @@ class RegisterResponse {
         bornYear: DateTime.parse(json["bornYear"]),
         description: json["description"],
         address: Address.fromJson(json["address"]),
-        responseFile: EFile.fromJson(json["responseFile"]),
+        responseFile: json["responseFile"],
       );
 
   Map<String, dynamic> toJson() => {

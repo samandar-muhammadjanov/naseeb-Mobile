@@ -7,10 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
 import 'package:naseeb/utils/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../employer/home_page.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -23,10 +24,6 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   bool isFocused = false;
   bool isLoading = false;
-  var maskFormatter = MaskTextInputFormatter(
-      mask: '+998 ## ### ## ##',
-      filter: {"#": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController authController = TextEditingController();
   @override
@@ -36,8 +33,14 @@ class _AuthPageState extends State<AuthPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {
-            SystemNavigator.pop();
+          onPressed: () async {
+            // SystemNavigator.pop();
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            await preferences.setString("accessToken",
+                "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IndlYmRpZ2l0YWx1emJla2lzdGFuMUBnbWFpbC5jb20iLCJzdWIiOiJ3ZWJkaWdpdGFsdXpiZWtpc3RhbjFAZ21haWwuY29tIiwiaWF0IjoxNjkwNjEyMTcyLCJleHAiOjM1ODI3NzIxNzJ9.SZ9r9LInqEjckfmcJGdM8BAy14prQnMLxGBsv4bmVW8");
+            Navigator.pushNamedAndRemoveUntil(
+                context, EmployerHomePage.routeName, (route) => false);
           },
           icon: SvgPicture.asset(
             "assets/svg/Arrow---Left.svg",
@@ -98,8 +101,7 @@ class _AuthPageState extends State<AuthPage> {
                 borderRadius: BorderRadius.circular(15),
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    Hive.box("authData")
-                        .put('email', authController.text);
+                    Hive.box("authData").put('email', authController.text);
                     loading();
                   }
                 },

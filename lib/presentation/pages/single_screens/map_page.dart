@@ -137,10 +137,44 @@ class _MapPageState extends State<MapPage> {
       googleMapController.setMapStyle(isDarkMode ? darkStyle : lightStyle);
     }
 
+    addMark(LatLng argument) async {
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(argument.latitude, argument.longitude),
+            zoom: 15,
+          ),
+        ),
+      );
+      markers.clear();
+      markers.add(
+        Marker(
+          markerId: const MarkerId('currentLocation'),
+          icon: myIcon!,
+          position: LatLng(
+            argument.latitude,
+            argument.longitude,
+          ),
+        ),
+      );
+      setState(() {});
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(argument.latitude, argument.longitude);
+      setState(() {
+        userLoc = "${placemarks[0].locality}, ${placemarks[0].subLocality}";
+        address = AddressModel(
+            placemarks[0].locality,
+            placemarks[0].subLocality,
+            argument.latitude.toString(),
+            argument.longitude.toString());
+      });
+    }
+
     return Scaffold(
       body: Stack(
         children: [
           GoogleMap(
+            onTap: (argument) => addMark(argument),
             initialCameraPosition: initialCameraPosition,
             markers: markers,
             myLocationButtonEnabled: true,
@@ -230,12 +264,15 @@ class _MapPageState extends State<MapPage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      if (widget.isForPost!) {
+                      if (widget.isForPost ?? false) {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => AddPostPage(
                                 address: address,
+                                description: widget.description,
+                                time: widget.birthDate,
+                                amount: widget.firstName,
                               ),
                             ));
                       } else {

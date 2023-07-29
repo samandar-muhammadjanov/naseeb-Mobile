@@ -18,6 +18,13 @@ class LocationService {
     return placeId;
   }
 
+  Future<void> getPlaceFromLatLng(latitude, longitude) async {
+    var response = await http.get(Uri.parse(
+        "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$kPLACES_API_KEY"));
+    var json = convert.jsonDecode(response.body);
+    print(json);
+  }
+
   Future<Map<String, dynamic>> getPlace(
       String input, String sessionToken) async {
     final placeId = await getPlaceId(input, sessionToken);

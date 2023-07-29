@@ -10,15 +10,24 @@ import 'package:naseeb/presentation/pages/employer/search_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class EmployerHomePage extends StatefulWidget {
-  const EmployerHomePage({super.key});
+  const EmployerHomePage({super.key, this.index});
   static const routeName = '/home/employer';
-
+  final int? index;
   @override
   State<EmployerHomePage> createState() => _EmployerHomePageState();
 }
 
 class _EmployerHomePageState extends State<EmployerHomePage> {
   int currentIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.index != null) {
+      currentIndex = widget.index!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<BottomNavigationBarItem> items = [

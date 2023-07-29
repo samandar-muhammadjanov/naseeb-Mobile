@@ -13,7 +13,6 @@ import 'package:naseeb/presentation/widgets/w_button.dart';
 import 'package:naseeb/presentation/widgets/w_date_picker.dart';
 import 'package:naseeb/presentation/widgets/w_textField.dart';
 import 'package:naseeb/utils/colors.dart';
-import 'package:email_validator/email_validator.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage(
@@ -182,15 +181,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: wButton(() {
-          final phoneNumber = Hive.box("authData").get("email");
+          final email = Hive.box("authData").get("email");
           final role = Hive.box("authData").get("role");
 
           if (formKey.currentState!.validate()) {
             AuthRepo().registration(
                 lastNameController.text,
                 firstNameController.text,
+                email,
                 phoneController.text,
-                phoneNumber,
                 isMale ? "MALE" : "FAMALE",
                 birthDateController.text,
                 descriptionController.text,

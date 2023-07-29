@@ -10,3 +10,5 @@ const GET_EMPLOYEES = 'posters/search_employee/';
 const GET_EMPLOYEES_ID = 'employee/';
 const ADD_POST = 'posters/save';
 const GET_ALL_POST = 'posters/my_posters';
+const DELETE_POST = "posters/delete/";
+const UPLOAD_PHOTO_POST = "posters/upload_file";

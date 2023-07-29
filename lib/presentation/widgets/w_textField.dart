@@ -14,7 +14,8 @@ class WTextField extends StatelessWidget {
       this.maxLines,
       this.controller,
       this.onEditingComplete,
-      this.onFieldSubmitted});
+      this.onFieldSubmitted,
+      this.type});
   final String title;
   final String? Function(String?)? validator;
   final Function()? onTap;
@@ -24,6 +25,7 @@ class WTextField extends StatelessWidget {
   final Widget? suffix;
   final int? maxLines;
   final TextEditingController? controller;
+  final TextInputType? type;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,6 +39,7 @@ class WTextField extends StatelessWidget {
           height: 14,
         ),
         TextFormField(
+          keyboardType: type,
           textInputAction: TextInputAction.done,
           controller: controller,
           maxLines: maxLines,

@@ -1,14 +1,18 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:naseeb/domain/models/get_employee_detail_model.dart';
 import 'package:naseeb/domain/models/get_employee_model.dart';
 import 'package:naseeb/domain/models/post_model.dart';
 import 'package:naseeb/domain/repositories/urls.dart';
+import 'package:naseeb/presentation/pages/employer/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/address_model.dart';
+import 'package:dio/dio.dart';
 
 class EmployerRepo {
   Future<SharedPreferences> preference() async {
@@ -27,7 +31,8 @@ class EmployerRepo {
 
     http.Response response =
         await http.Response.fromStream(await request.send());
-    if (response.statusCode == 200) {
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
       GetEmployee getEmployees = getEmployeeFromJson(response.body);
       return getEmployees;
     } else {
@@ -45,22 +50,19 @@ class EmployerRepo {
 
     http.Response response =
         await http.Response.fromStream(await request.send());
+        print(response.body);
     if (response.statusCode == 200) {
       GetEmployeeDetail employeeDetail =
           getEmployeeDetailFromJson(response.body);
+
       return employeeDetail;
     } else {
-      return throw Exception(response.body);
+      return throw Exception(response.statusCode);
     }
   }
 
-  Future<void> addPost(
-    description,
-    time,
-    amount,
-    categoryId,
-    AddressModel address,
-  ) async {
+  Future<void> addPost(description, time, amount, categoryId,
+      AddressModel address, BuildContext context) async {
     final prefs = await preference();
     final token = prefs.getString("accessToken");
     var headers = {
@@ -79,7 +81,7 @@ class EmployerRepo {
         "latitude": address.lat,
         "longitude": address.long
       },
-      "posterSampleIdList": [1, 2]
+      "posterSampleID": []
     });
     request.headers.addAll(headers);
 
@@ -89,6 +91,13 @@ class EmployerRepo {
 
     if (response.statusCode == 200) {
       print(response.body);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EmployerHomePage(
+              index: 2,
+            ),
+          ));
     } else {
       print(response.reasonPhrase);
     }
@@ -113,5 +122,51 @@ class EmployerRepo {
     } else {
       return throw Exception(response.body);
     }
+  }
+
+  Future<void> deletePost(ID, BuildContext context) async {
+    final prefs = await preference();
+    final token = prefs.getString("accessToken");
+    var headers = {'Authorization': 'Bearer $token'};
+    var request =
+        http.Request('DELETE', Uri.parse(BASE_URL + DELETE_POST + ID));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EmployerHomePage(
+              index: 2,
+            ),
+          ));
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  Future<void> uploadPhotoForPost(File path) async {
+    final prefs = await preference();
+    final token = prefs.getString("accessToken");
+    var headers = {'Authorization': 'Bearer $token'};
+    var request =
+        http.MultipartRequest('POST', Uri.parse(BASE_URL + UPLOAD_PHOTO_POST));
+    request.headers.addAll(headers);
+    request.files.add(await http.MultipartFile.fromPath('file', path.path));
+    var response = await http.Response.fromStream(await request.send());
+    final body = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print(body["data"]);
+    } else {
+      print('Error uploading file: ${response.reasonPhrase}');
+    }
+    // if (response.statusCode == 200) {
+    //   return body["data"][0];
+    // } else {
+    //   return throw Exception(response.body);
+    // }
   }
 }

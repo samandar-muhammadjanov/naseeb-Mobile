@@ -1,10 +1,12 @@
 // ignore_for_file: deprecated_member_use, unnecessary_this, avoid_single_cascade_in_expression_statements
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
 import 'package:naseeb/config/app_theme.dart';
+import 'package:naseeb/presentation/pages/employer/detail/add_post_page.dart';
 import 'package:naseeb/presentation/pages/employer/detail/inside_employee_profile_page.dart';
 import 'package:naseeb/presentation/widgets/w_indicator.dart';
 import 'package:naseeb/presentation/widgets/w_loading.dart';
@@ -27,89 +29,159 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
   Widget build(BuildContext context) {
     bool isDarkMode =
         ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Search",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 18,
-            fontFamily: "sfPro",
+    return BlocProvider(
+      create: (context) => EmployerBloc()..add(GetEmployees(1, 10)),
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            "Search",
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              fontFamily: "sfPro",
+            ),
           ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size(double.infinity, 80),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18),
-                child: Text(
-                  "Select Radius (km)",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: kgreyColor,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "sfPro"),
+          bottom: PreferredSize(
+            preferredSize: const Size(double.infinity, 80),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  child: Text(
+                    "Select Radius (km)",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: kgreyColor,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "sfPro"),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: Utils.modelBuilder(
-                        labels,
-                        (index, label) {
-                          return Text(
-                            label,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: "sfPro")
-                                .copyWith(
-                              color: isDarkMode ? white : black,
-                            ),
-                          );
-                        },
+                const SizedBox(
+                  height: 5,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: Utils.modelBuilder(
+                          labels,
+                          (index, label) {
+                            return Text(
+                              label,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "sfPro")
+                                  .copyWith(
+                                color: isDarkMode ? white : black,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                  RangeSlider(
-                      values: values,
-                      min: 0,
-                      max: 100,
-                      divisions: 10,
-                      onChanged: (value) {
-                        setState(() {
-                          this.values = value;
-                        });
-                        context.read<EmployerBloc>()
-                          ..add(GetEmployees(4, value.end.toStringAsFixed(0)));
-                      }),
-                ],
-              )
-            ],
+                    BlocBuilder<EmployerBloc, EmployerState>(
+                      builder: (context, state) {
+                        return RangeSlider(
+                            values: values,
+                            min: 0,
+                            max: 100,
+                            divisions: 10,
+                            onChanged: (value) {
+                              setState(() {
+                                this.values = value;
+                              });
+                              if (state is EmployerLoaded) {
+                                context.read<EmployerBloc>().add(GetEmployees(
+                                    1, value.end.toStringAsFixed(0)));
+                              }
+                            });
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
-      ),
-      body: BlocProvider(
-        create: (context) => EmployerBloc()..add(GetEmployees(1, 10)),
-        child:
+        body:
             BlocBuilder<EmployerBloc, EmployerState>(builder: (context, state) {
           if (state is EmployerInitial) {
             return buildLoading();
           } else if (state is EmployerLoading) {
             return buildLoading();
           } else if (state is EmployerLoaded) {
-            return _buildEmployees(context, state);
+            if ((state.employees.data as List).isEmpty) {
+              return const Center(
+                child: Text(
+                  "Xodimlar ushbu radius yoki e'loningiz bo'yicha mavjud emas!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'sfPro'),
+                ),
+              );
+            }
+            if (state.employees.data == null) {
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Sizda e'lon mavjud emas avval\ne'lon joylashtiring",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'sfPro'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: DottedBorder(
+                      borderType: BorderType.RRect,
+                      radius: const Radius.circular(15),
+                      color: kprimaryColor,
+                      strokeWidth: 2,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                              context, AddPostPage.routeName);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: fieldFocusColor
+                                  .withOpacity(isDarkMode ? .2 : 1),
+                              borderRadius: BorderRadius.circular(15)),
+                          width: double.infinity,
+                          child: const Text(
+                            "Add Post",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: kprimaryColor,
+                                fontFamily: "sfPro"),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ));
+            } else {
+              return _buildEmployees(context, state);
+            }
           } else if (state is EmployerError) {
             return Center(child: Text(state.error));
           } else {
@@ -124,16 +196,19 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(16),
-      itemCount: state.employees.data.length,
+      itemCount: state.employees.data == null
+          ? [].length
+          : (state.employees.data as List).length,
       separatorBuilder: (context, index) => const SizedBox(
         height: 10,
       ),
       itemBuilder: (context, index) {
         final item = state.employees.data[index];
-        final experienceYear = item.experienceResponses.isEmpty
+        final experienceYear = (item['experienceResponses'] as List).isEmpty
             ? ''
-            : item.experienceResponses[0].end.year -
-                item.experienceResponses[0].begin.year;
+            : (item['experienceResponses'][0]["end"] as DateTime).year -
+                (item['experienceResponses'][0]["begin"] as DateTime).year;
+
         return Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -152,11 +227,11 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: kgreyColor),
-                  child: item.registerResponse.responseFile != null
+                  child: item["registerResponse"]["responseFile"] != null
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
-                            item.registerResponse.responseFile["url"],
+                            item["registerResponse"]["responseFile"]["url"],
                             fit: BoxFit.cover,
                           ),
                         )
@@ -166,14 +241,14 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                         ),
                 ),
                 title: Text(
-                  "${item.registerResponse.firstName} ${item.registerResponse.lastName}",
+                  "${item["registerResponse"]["firstName"]} ${item["registerResponse"]["lastName"]}",
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       fontFamily: "sfPro"),
                 ),
                 subtitle: Text(
-                  item.categoryResponse.nameUz,
+                  item["categoryResponse"]["nameUz"],
                   style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: kgreyColor,
@@ -189,11 +264,11 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
               ),
               Row(
                 children: [
-                  item.experienceResponses.isEmpty
+                  (item["experienceResponses"] as List).isEmpty
                       ? const SizedBox()
                       : StatusIndicator(
                           background: fieldFocusColor,
-                          text: item.experienceResponses[0].asWho,
+                          text: item["experienceResponses"][0]["asWho"],
                           textColor: kprimaryColor,
                         ),
                   const SizedBox(
@@ -201,12 +276,12 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   ),
                   StatusIndicator(
                       background: MyColor.typeBk,
-                      text: item.workType,
+                      text: item["workType"],
                       textColor: MyColor.type),
                   const SizedBox(
                     width: 5,
                   ),
-                  item.experienceResponses.isEmpty
+                  (item["experienceResponses"] as List).isEmpty
                       ? const SizedBox()
                       : StatusIndicator(
                           background: MyColor.experienceBackground,
@@ -220,7 +295,8 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   ),
                   StatusIndicator(
                       background: MyColor.salartBackground,
-                      text: "\$${item.salaryResponse.money.toStringAsFixed(0)}",
+                      text:
+                          "\$${(item['salaryResponse']['money'] as double).toStringAsFixed(0)}",
                       textColor: MyColor.salary),
                 ],
               ),
@@ -228,7 +304,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                 height: 15,
               ),
               Text(
-                item.description,
+                item["description"],
                 style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               ElevatedButton(
@@ -244,7 +320,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => InsideEmployeeProfilePage(
-                          id: item.id.toString(),
+                          id: item["id"].toString(),
                         ),
                       ));
                 },

@@ -3,29 +3,43 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:naseeb/domain/models/address_model.dart';
-import 'package:naseeb/presentation/pages/employee/home_page.dart';
+import 'package:naseeb/domain/repositories/employer_repo/employer_repo.dart';
 import 'package:naseeb/presentation/pages/employer/home_page.dart';
-import 'package:naseeb/presentation/pages/employer/post_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/map_page.dart';
+import 'package:naseeb/presentation/widgets/w_date_picker.dart';
 import 'package:naseeb/presentation/widgets/w_textField.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:naseeb/utils/extantions.dart';
 
 class AddPostPage extends StatefulWidget {
-  const AddPostPage({super.key, this.address});
+  const AddPostPage(
+      {super.key, this.address, this.description, this.amount, this.time});
   static const routeName = "/employer/add_post";
   final AddressModel? address;
+  final String? description;
+  final String? amount;
+  final String? time;
+
   @override
   State<AddPostPage> createState() => _AddPostPageState();
 }
 
 class _AddPostPageState extends State<AddPostPage> {
   File? image;
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
 
   TextEditingController addressController = TextEditingController();
+  DateTime date = DateTime.now();
   @override
   void initState() {
     super.initState();
+    setState(() {
+      descriptionController.text = widget.description ?? "";
+      amountController.text = widget.amount ?? "";
+      timeController.text = widget.time ?? "";
+    });
     if (widget.address != null) {
       addressController.text =
           "${widget.address!.region}, ${widget.address!.city}";
@@ -58,19 +72,56 @@ class _AddPostPageState extends State<AddPostPage> {
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         children: [
-          const WTextField(title: "Descrition"),
-          const SizedBox(
-            height: 10,
+          WTextField(
+            title: "Descrition",
+            controller: descriptionController,
           ),
-          const WTextField(title: "Amount"),
-          const SizedBox(
-            height: 10,
-          ),
-          const WTextField(title: "Time"),
           const SizedBox(
             height: 10,
           ),
           WTextField(
+            title: "Amount",
+            controller: amountController,
+            type: TextInputType.number,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          WTextField(
+            title: "Time",
+            controller: timeController,
+            onTap: () {
+              showDate(
+                  date: date,
+                  context: context,
+                  birthDate: timeController,
+                  lastDate: DateTime(2030),
+                  firstDate: DateTime.now());
+            },
+            suffix: IconButton(
+                onPressed: () {
+                  showDate(
+                      date: date,
+                      context: context,
+                      birthDate: timeController,
+                      lastDate: DateTime(2030),
+                      firstDate: DateTime.now());
+                },
+                icon: const Icon(Icons.date_range_outlined)),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          WTextField(
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MapPage(
+                      isForPost: true,
+                    ),
+                  ));
+            },
             controller: addressController,
             title: "Address",
             suffix: IconButton(
@@ -78,8 +129,11 @@ class _AddPostPageState extends State<AddPostPage> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MapPage(
+                        builder: (context) => MapPage(
                           isForPost: true,
+                          description: descriptionController.text,
+                          birthDate: timeController.text,
+                          firstName: amountController.text,
                         ),
                       ));
                 },
@@ -149,10 +203,13 @@ class _AddPostPageState extends State<AddPostPage> {
           ),
           ElevatedButton(
             onPressed: () {
-              // Navigator.pop(context);
-              // setState(() {
-              //   image = null;
-              // });
+              EmployerRepo().addPost(
+                  descriptionController.text,
+                  timeController.text,
+                  amountController.text,
+                  1,
+                  widget.address!,
+                  context);
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 50),
