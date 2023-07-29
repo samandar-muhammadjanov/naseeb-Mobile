@@ -50,7 +50,7 @@ class EmployerRepo {
 
     http.Response response =
         await http.Response.fromStream(await request.send());
-        print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       GetEmployeeDetail employeeDetail =
           getEmployeeDetailFromJson(response.body);
@@ -152,21 +152,22 @@ class EmployerRepo {
     final prefs = await preference();
     final token = prefs.getString("accessToken");
     var headers = {'Authorization': 'Bearer $token'};
-    var request =
-        http.MultipartRequest('POST', Uri.parse(BASE_URL + UPLOAD_PHOTO_POST));
-    request.headers.addAll(headers);
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://176.57.189.202:8082/api/posters/upload_file'),
+    );
     request.files.add(await http.MultipartFile.fromPath('file', path.path));
-    var response = await http.Response.fromStream(await request.send());
-    final body = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      print(body["data"]);
-    } else {
-      print('Error uploading file: ${response.reasonPhrase}');
+    request.headers.addAll(headers);
+
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+      } else {
+        print(response.reasonPhrase);
+      }
+    } catch (e) {
+      print('Error: $e');
     }
-    // if (response.statusCode == 200) {
-    //   return body["data"][0];
-    // } else {
-    //   return throw Exception(response.body);
-    // }
   }
 }

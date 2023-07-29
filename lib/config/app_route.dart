@@ -3,6 +3,7 @@ import 'package:naseeb/presentation/pages/employee/details/certificates_page.dar
 import 'package:naseeb/presentation/pages/employer/detail/add_post_page.dart';
 import 'package:naseeb/presentation/pages/employer/detail/inside_employee_profile_page.dart';
 import 'package:naseeb/presentation/pages/employer/detail/inside_post_page.dart';
+import 'package:naseeb/presentation/pages/employer/detail/profile_settings_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/create_cv_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/education_page.dart';
@@ -102,6 +103,10 @@ class AppRoute {
       case AddPostPage.routeName:
         return MaterialPageRoute(
           builder: (context) => const AddPostPage(),
+        );
+      case ProfileSettingsPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const ProfileSettingsPage(),
         );
       default:
         break;

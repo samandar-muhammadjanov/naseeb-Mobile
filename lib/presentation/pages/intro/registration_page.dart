@@ -13,6 +13,7 @@ import 'package:naseeb/presentation/widgets/w_button.dart';
 import 'package:naseeb/presentation/widgets/w_date_picker.dart';
 import 'package:naseeb/presentation/widgets/w_textField.dart';
 import 'package:naseeb/utils/colors.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage(
@@ -61,6 +62,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '+998 ## ### ## ##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
   @override
   Widget build(BuildContext context) {
     bool isDarkMode =
@@ -124,6 +129,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
               WTextField(
                 title: "Enter Your Phone Number",
                 controller: phoneController,
+                formatter: [maskFormatter],
+                type: TextInputType.phone,
                 validator: (value) {
                   if (value!.isEmpty || value.length < 10) {
                     return "Enter About Yourself";
@@ -189,7 +196,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 lastNameController.text,
                 firstNameController.text,
                 email,
-                phoneController.text,
+                phoneController.text.split(" ").join(),
                 isMale ? "MALE" : "FAMALE",
                 birthDateController.text,
                 descriptionController.text,

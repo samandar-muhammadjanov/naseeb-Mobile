@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class WTextField extends StatelessWidget {
@@ -15,7 +16,8 @@ class WTextField extends StatelessWidget {
       this.controller,
       this.onEditingComplete,
       this.onFieldSubmitted,
-      this.type});
+      this.type,
+      this.formatter});
   final String title;
   final String? Function(String?)? validator;
   final Function()? onTap;
@@ -26,6 +28,7 @@ class WTextField extends StatelessWidget {
   final int? maxLines;
   final TextEditingController? controller;
   final TextInputType? type;
+  final List<TextInputFormatter>? formatter;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,6 +42,7 @@ class WTextField extends StatelessWidget {
           height: 14,
         ),
         TextFormField(
+          inputFormatters: formatter,
           keyboardType: type,
           textInputAction: TextInputAction.done,
           controller: controller,

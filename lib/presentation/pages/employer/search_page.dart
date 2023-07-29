@@ -117,18 +117,6 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
           } else if (state is EmployerLoading) {
             return buildLoading();
           } else if (state is EmployerLoaded) {
-            if ((state.employees.data as List).isEmpty) {
-              return const Center(
-                child: Text(
-                  "Xodimlar ushbu radius yoki e'loningiz bo'yicha mavjud emas!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'sfPro'),
-                ),
-              );
-            }
             if (state.employees.data == null) {
               return Center(
                   child: Column(
@@ -179,6 +167,17 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   )
                 ],
               ));
+            } else if ((state.employees.data as List).isEmpty) {
+              return const Center(
+                child: Text(
+                  "Xodimlar ushbu radius yoki e'loningiz bo'yicha mavjud emas!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'sfPro'),
+                ),
+              );
             } else {
               return _buildEmployees(context, state);
             }

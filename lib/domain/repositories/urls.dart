@@ -12,3 +12,4 @@ const ADD_POST = 'posters/save';
 const GET_ALL_POST = 'posters/my_posters';
 const DELETE_POST = "posters/delete/";
 const UPLOAD_PHOTO_POST = "posters/upload_file";
+const ABOUT_USER = "user/about_me";

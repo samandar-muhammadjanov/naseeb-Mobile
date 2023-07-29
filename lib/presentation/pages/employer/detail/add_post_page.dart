@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:naseeb/domain/models/address_model.dart';
 import 'package:naseeb/domain/repositories/employer_repo/employer_repo.dart';
 import 'package:naseeb/presentation/pages/employer/home_page.dart';
@@ -44,6 +45,14 @@ class _AddPostPageState extends State<AddPostPage> {
       addressController.text =
           "${widget.address!.region}, ${widget.address!.city}";
     }
+  }
+
+  Future pickImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+    final imageTemporary = File(image.path);
+    setState(() => this.image = imageTemporary);
+    EmployerRepo().uploadPhotoForPost(imageTemporary);
   }
 
   @override
@@ -155,10 +164,7 @@ class _AddPostPageState extends State<AddPostPage> {
           ),
           InkWell(
             onTap: () async {
-              final image = await pickImage();
-              setState(() {
-                this.image = image;
-              });
+              pickImage();
             },
             child: Container(
               height: 200,

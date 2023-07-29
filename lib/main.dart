@@ -45,6 +45,9 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider(
                 create: (context) => EmployerBloc(),
+              ),
+              BlocProvider(
+                create: (context) => UserBloc()..add(GetUserDataEvent()),
               )
             ],
             child: MaterialApp(
