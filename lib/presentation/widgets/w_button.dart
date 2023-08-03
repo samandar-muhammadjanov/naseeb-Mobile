@@ -7,7 +7,7 @@ Widget wButton(Function()? onTap, String text,
     onTap: onTap,
     child: Ink(
       height: 56,
-      width: 343,
+      width: double.infinity,
       decoration:
           BoxDecoration(color: color, borderRadius: BorderRadius.circular(15)),
       child: Center(

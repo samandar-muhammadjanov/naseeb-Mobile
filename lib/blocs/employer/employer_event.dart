@@ -16,3 +16,8 @@ class GetEmployeeById extends EmployerEvent {
 }
 
 class GetAllPosts extends EmployerEvent {}
+
+class GetPostDetail extends EmployerEvent {
+  final String id;
+  GetPostDetail(this.id);
+}

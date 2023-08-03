@@ -28,7 +28,7 @@ void _showDialog(Widget child, BuildContext context) {
 showDate(
     {required DateTime date,
     required BuildContext context,
-    required TextEditingController birthDate,
+    required TextEditingController dateController,
     required DateTime lastDate,
     required DateTime firstDate}) {
   Platform.isIOS
@@ -40,7 +40,7 @@ showDate(
             // This is called when the user changes the date.
             onDateTimeChanged: (DateTime newDate) {
               date = newDate;
-              birthDate.text = DateFormat('yyyy-MM-dd').format(date);
+              dateController.text = DateFormat('yyyy-MM-dd').format(date);
             },
           ),
           context)
@@ -50,7 +50,9 @@ showDate(
               firstDate: firstDate,
               lastDate: lastDate)
           .then((value) {
-          date = value!;
-          birthDate.text = DateFormat('yyyy-MM-dd').format(date);
+          if (value != null) {
+            date = value;
+            dateController.text = DateFormat('yyyy-MM-dd').format(date);
+          }
         });
 }

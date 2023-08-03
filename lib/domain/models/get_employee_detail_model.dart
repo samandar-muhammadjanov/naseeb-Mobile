@@ -68,9 +68,9 @@ class Data {
         id: json["id"],
         description: json["description"],
         workType: json["workType"],
-        website: json["website"],
-        workTimeBegin: json["workTimeBegin"],
-        workTimeEnd: json["workTimeEnd"],
+        website: json["website"] ?? "",
+        workTimeBegin: json["workTimeBegin"] ?? "",
+        workTimeEnd: json["workTimeEnd"] ?? "",
         languagesResponse: List<LanguagesResponse>.from(
             json["languagesResponse"]
                 .map((x) => LanguagesResponse.fromJson(x))),

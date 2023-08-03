@@ -2,14 +2,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 import 'package:naseeb/domain/repositories/urls.dart';
-import 'package:naseeb/presentation/pages/employee/home_page.dart';
 import 'package:naseeb/presentation/pages/employer/home_page.dart';
 import 'package:naseeb/presentation/pages/intro/verify_phone_page.dart';
 import 'package:naseeb/presentation/pages/intro/widgets/w_successOrError.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../presentation/pages/intro/create_employee_profile_page.dart';
 
 class AuthRepo {
   bool isLogined = false;
@@ -112,13 +113,15 @@ class AuthRepo {
       isLogined = true;
       await preferences.setBool("isLogined", isLogined);
       await preferences.setString("accessToken", body['data']['token']);
-
+      await preferences.setInt("userId", body["data"]["user"]["id"]);
       await preferences.setBool(
           "isEmployee", role == "role_employee" ? true : false);
+      Hive.box("authData").put("userId", body["data"]["user"]["id"]);
+
       Navigator.pushNamedAndRemoveUntil(
           context,
           role == "role_employee"
-              ? EmployeeHomePage.routeName
+              ? CreateEmployeeProfilePage.routeName
               : EmployerHomePage.routeName,
           (route) => false);
     } else {
@@ -148,7 +151,9 @@ class AuthRepo {
     if (response.statusCode == 201) {
       isLogined = true;
       await preferences.setBool("isLogined", isLogined);
+      await preferences.setInt("userId", body["data"]["user"]["id"]);
       await preferences.setString("accessToken", body['data']['token']);
+      Hive.box("authData").put("userId", body["data"]["user"]["id"]);
       await preferences.setBool(
           "isEmployee", role == "role_employee" ? true : false);
       return body;
@@ -156,4 +161,10 @@ class AuthRepo {
       return throw Exception(body["message"]);
     }
   }
+}
+
+Future<int> returnId() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+
+  return preferences.getInt("userId")!;
 }

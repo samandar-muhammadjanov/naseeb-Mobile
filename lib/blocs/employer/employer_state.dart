@@ -23,6 +23,11 @@ class AllPostsLoaded extends EmployerState {
   AllPostsLoaded(this.posts);
 }
 
+class PostDetailLoaded extends EmployerState {
+  final PostById post;
+  PostDetailLoaded(this.post);
+}
+
 class EmployerError extends EmployerState {
   final String error;
   EmployerError(

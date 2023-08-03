@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
 import 'package:naseeb/config/app_theme.dart';
-import 'package:naseeb/presentation/pages/employee/home_page.dart';
+import 'package:naseeb/domain/repositories/employee_repo/employee_repo.dart';
 import 'package:naseeb/presentation/pages/employer/detail/profile_settings_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/app_settings_page.dart';
 import 'package:naseeb/presentation/widgets/w_loading.dart';
 import 'package:naseeb/presentation/widgets/w_logout_message.dart';
 import 'package:naseeb/utils/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class EmployerProfilePage extends StatelessWidget {
   const EmployerProfilePage({super.key});
@@ -37,11 +36,7 @@ class EmployerProfilePage extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       child: ListTile(
                         onTap: () async {
-                          SharedPreferences preferences =
-                              await SharedPreferences.getInstance();
-                          await preferences.setBool("isEmployee", true);
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              EmployeeHomePage.routeName, (route) => false);
+                          EmployeeRepo().checkToEmployee(context);
                         },
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 5),
@@ -70,20 +65,23 @@ class EmployerProfilePage extends StatelessWidget {
               fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
         ),
       ),
-      body: BlocBuilder<UserBloc, UserState>(
-        builder: (context, state) {
-          if (state is UserInitial) {
-            return buildLoading();
-          } else if (state is UserLoading) {
-            return buildLoading();
-          } else if (state is UserLoaded) {
-            return buildBody(context, isDarkMode, state);
-          } else if (state is UserError) {
-            return Text(state.error);
-          } else {
-            return buildLoading();
-          }
-        },
+      body: BlocProvider(
+        create: (context) => UserBloc()..add(GetUserDataEvent()),
+        child: BlocBuilder<UserBloc, UserState>(
+          builder: (context, state) {
+            if (state is UserInitial) {
+              return buildLoading();
+            } else if (state is UserLoading) {
+              return buildLoading();
+            } else if (state is UserLoaded) {
+              return buildBody(context, isDarkMode, state);
+            } else if (state is UserError) {
+              return Text(state.error);
+            } else {
+              return buildLoading();
+            }
+          },
+        ),
       ),
     );
   }

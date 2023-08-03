@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names, deprecated_member_use, no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/domain/models/address_model.dart';
 import 'package:naseeb/domain/repositories/location_service.dart';
 import 'package:naseeb/presentation/pages/employer/detail/add_post_page.dart';
+import 'package:naseeb/presentation/pages/employer/detail/profile_settings_page.dart';
 import 'package:naseeb/presentation/pages/intro/registration_page.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:uuid/uuid.dart';
@@ -25,7 +27,10 @@ class MapPage extends StatefulWidget {
       this.birthDate,
       this.email,
       this.description,
-      this.isForPost});
+      this.isForPost,
+      this.isForUser,
+      this.images,
+      this.file});
   static const routeName = "/map";
   final String? firstName;
   final String? lastName;
@@ -34,6 +39,9 @@ class MapPage extends StatefulWidget {
   final String? email;
   final String? description;
   final bool? isForPost;
+  final bool? isForUser;
+  final List? images;
+  final File? file;
   @override
   State<MapPage> createState() => _MapPageState();
 }
@@ -161,10 +169,11 @@ class _MapPageState extends State<MapPage> {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(argument.latitude, argument.longitude);
       setState(() {
-        userLoc = "${placemarks[0].locality}, ${placemarks[0].subLocality}";
+        userLoc =
+            "${placemarks.first.locality}, ${placemarks.first.subLocality}";
         address = AddressModel(
-            placemarks[0].locality,
-            placemarks[0].subLocality,
+            placemarks.first.locality,
+            placemarks.first.subLocality,
             argument.latitude.toString(),
             argument.longitude.toString());
       });
@@ -273,8 +282,18 @@ class _MapPageState extends State<MapPage> {
                                 description: widget.description,
                                 time: widget.birthDate,
                                 amount: widget.firstName,
+                                images: widget.images,
+                                file: widget.file,
                               ),
                             ));
+                      } else if (widget.isForUser ?? false) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ProfileSettingsPage(address: address),
+                          ),
+                        );
                       } else {
                         Navigator.push(
                           context,

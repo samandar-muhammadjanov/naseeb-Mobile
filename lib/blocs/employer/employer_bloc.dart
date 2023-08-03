@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:naseeb/domain/models/get_employee_detail_model.dart';
 import 'package:naseeb/domain/models/get_employee_model.dart';
+import 'package:naseeb/domain/models/post_detail_model.dart';
 import 'package:naseeb/domain/models/post_model.dart';
+import 'package:naseeb/domain/repositories/employee_repo/employee_repo.dart';
 import 'package:naseeb/domain/repositories/employer_repo/employer_repo.dart';
 
 part 'employer_event.dart';
@@ -26,7 +28,7 @@ class EmployerBloc extends Bloc<EmployerEvent, EmployerState> {
     on<GetEmployeeById>((event, emit) async {
       try {
         emit(EmployerLoading());
-        final getEmployee = await repositories.getEmployeeDetail(event.id);
+        final getEmployee = await EmployeeRepo().getEmployeeDetail(event.id);
         emit(EmployeeDetailLoaded(getEmployee));
       } catch (e) {
         emit(
@@ -41,6 +43,20 @@ class EmployerBloc extends Bloc<EmployerEvent, EmployerState> {
         emit(AllPostsLoaded(posts));
       } catch (e) {
         emit(EmployerError(e.toString()));
+      }
+    });
+
+    on<GetPostDetail>((event, emit) async {
+      try {
+        emit(EmployerLoading());
+        final post = await repositories.getPostDetail(event.id);
+        emit(PostDetailLoaded(post));
+      } catch (e) {
+        emit(
+          EmployerError(
+            e.toString(),
+          ),
+        );
       }
     });
   }

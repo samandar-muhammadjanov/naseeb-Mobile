@@ -158,12 +158,15 @@ class _SelectRolePageState extends State<SelectRolePage> {
               ),
             ),
             const Spacer(),
-            wButton(() {
-              Hive.box("authData")
-                  .put('role', isEmployee ? "role_employee" : "role_employer");
-              Navigator.pushNamedAndRemoveUntil(
-                  context, RegistrationPage.routeName, (route) => false);
-            }, "Continue"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: wButton(() {
+                Hive.box("authData").put(
+                    'role', isEmployee ? "role_employee" : "role_employer");
+                Navigator.pushNamedAndRemoveUntil(
+                    context, RegistrationPage.routeName, (route) => false);
+              }, "Continue"),
+            ),
             const SizedBox(
               height: 40,
             )

@@ -17,7 +17,8 @@ class WTextField extends StatelessWidget {
       this.onEditingComplete,
       this.onFieldSubmitted,
       this.type,
-      this.formatter});
+      this.formatter,
+      this.onChanged});
   final String title;
   final String? Function(String?)? validator;
   final Function()? onTap;
@@ -29,6 +30,7 @@ class WTextField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType? type;
   final List<TextInputFormatter>? formatter;
+  final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,6 +49,7 @@ class WTextField extends StatelessWidget {
           textInputAction: TextInputAction.done,
           controller: controller,
           maxLines: maxLines,
+          onChanged: onChanged,
           onTap: onTap,
           validator: validator,
           style: const TextStyle(fontFamily: "sfPro"),

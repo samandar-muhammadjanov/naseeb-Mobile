@@ -230,7 +230,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           onTap: () => showDate(
             date: date,
             context: context,
-            birthDate: birthDateController,
+            dateController: birthDateController,
             lastDate: DateTime.now(),
             firstDate: DateTime(1970),
           ),
@@ -244,7 +244,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   showDate(
                     date: date,
                     context: context,
-                    birthDate: birthDateController,
+                    dateController: birthDateController,
                     lastDate: DateTime.now(),
                     firstDate: DateTime(1970),
                   );

@@ -5,6 +5,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/config/app_theme.dart';
+import 'package:naseeb/domain/repositories/unic_repo/unic_repo.dart';
 import 'package:naseeb/presentation/pages/employee/details/create_cv_page.dart';
 import 'package:naseeb/presentation/pages/employer/home_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/app_settings_page.dart';
@@ -55,6 +56,7 @@ class EmployeeProfilePage extends StatelessWidget {
                         SharedPreferences preferences =
                             await SharedPreferences.getInstance();
                         await preferences.setBool("isEmployee", false);
+                        UnicRepo().changeRole("role_employer");
                         Navigator.pushNamedAndRemoveUntil(context,
                             EmployerHomePage.routeName, (route) => false);
                       },
