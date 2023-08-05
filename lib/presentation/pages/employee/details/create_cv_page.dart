@@ -1,9 +1,10 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
+import 'package:naseeb/presentation/pages/employee/details/category_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/certificates_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/education_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/language_page.dart';
@@ -20,43 +21,11 @@ class CreateCVPage extends StatelessWidget {
   var box = Hive.box("authData").get("employeeId");
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> items = [
-      {
-        "icon": 'assets/svg/main_info.svg',
-        "title": "Main information",
-        "routeName": MainInformationPage.routeName
-      },
-      {
-        "icon": 'assets/svg/work_experience.svg',
-        "title": "Work experience",
-        "routeName": WorkExperiencePage.routeName
-      },
-      {
-        "icon": 'assets/svg/education.svg',
-        "title": "Education",
-        "routeName": EducationPage.routeName
-      },
-      {
-        "icon": 'assets/svg/language.svg',
-        "title": "Language",
-        "routeName": LanguagePage.routeName
-      },
-      {
-        "icon": 'assets/svg/certificate.svg',
-        "title": "Certificates",
-        "routeName": CertificatesPage.routeName
-      },
-      {
-        "icon": 'assets/svg/salary.svg',
-        "title": "Salary",
-        "routeName": SalaryPage.routeName
-      },
-    ];
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Create CV/Resume",
+          "Profile Settings",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -74,7 +43,7 @@ class CreateCVPage extends StatelessWidget {
             } else if (state is EmployerLoading) {
               return buildLoading();
             } else if (state is EmployeeDetailLoaded) {
-              return buildBody(context, items, state);
+              return buildBody(context, state);
             } else if (state is EmployerError) {
               return Center(
                 child: Text(state.error),
@@ -88,9 +57,46 @@ class CreateCVPage extends StatelessWidget {
     );
   }
 
-  Column buildBody(BuildContext context, List<Map<String, dynamic>> items,
-      EmployeeDetailLoaded state) {
+  Column buildBody(BuildContext context, EmployeeDetailLoaded state) {
     final item = state.employee!.data;
+    List<Map<String, dynamic>> items = [
+      {
+        "icon": 'assets/svg/main_info.svg',
+        "title": "Main information",
+        "routeName": MainInformationPage()
+      },
+      {
+        "icon": 'assets/svg/work_experience.svg',
+        "title": "Work experience",
+        "routeName": WorkExperiencePage()
+      },
+      {
+        "icon": 'assets/svg/education.svg',
+        "title": "Education",
+        "routeName": EducationPage()
+      },
+      {
+        "icon": 'assets/svg/language.svg',
+        "title": "Language",
+        "routeName": LanguagePage()
+      },
+      {
+        "icon": 'assets/svg/certificate.svg',
+        "title": "Certificates",
+        "routeName": CertificatesPage()
+      },
+      {
+        "icon": 'assets/svg/salary.svg',
+        "title": "Salary",
+        "routeName": SalaryPage()
+      },
+      {
+        "icon": 'assets/svg/category.svg',
+        "title": "Category",
+        "routeName": CategoryPage(),
+      },
+    ];
+
     double? persentOfComplation = item.languagesResponse.isEmpty &&
             item.experienceResponses.isEmpty &&
             item.educationResponse.isEmpty &&
@@ -125,7 +131,7 @@ class CreateCVPage extends StatelessWidget {
                 ),
               ),
               const Text(
-                'Complete your resume',
+                'Complete your profile',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -160,12 +166,20 @@ class CreateCVPage extends StatelessWidget {
             final item = items[index];
             return ListTile(
               onTap: () async {
-                Navigator.pushNamed(context, item['routeName']);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => item['routeName'],
+                    ));
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                   side: const BorderSide(color: kgreyColor)),
-              leading: SvgPicture.asset(item['icon']),
+              leading: SvgPicture.asset(
+                item['icon'],
+                width: item["icon"] == "assets/svg/salary.svg" ? 14 : 24,
+                color: kprimaryColor,
+              ),
               title: Text(
                 item['title'],
                 style: const TextStyle(

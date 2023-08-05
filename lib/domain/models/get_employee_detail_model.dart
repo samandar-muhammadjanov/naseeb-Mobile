@@ -35,9 +35,6 @@ class Data {
   int id;
   String description;
   String workType;
-  String website;
-  String workTimeBegin;
-  String workTimeEnd;
   List<LanguagesResponse> languagesResponse;
   List<ExperienceResponse> experienceResponses;
   List<EducationResponse> educationResponse;
@@ -51,9 +48,6 @@ class Data {
     required this.id,
     required this.description,
     required this.workType,
-    required this.website,
-    required this.workTimeBegin,
-    required this.workTimeEnd,
     required this.languagesResponse,
     required this.experienceResponses,
     required this.educationResponse,
@@ -68,9 +62,6 @@ class Data {
         id: json["id"],
         description: json["description"],
         workType: json["workType"],
-        website: json["website"] ?? "",
-        workTimeBegin: json["workTimeBegin"] ?? "",
-        workTimeEnd: json["workTimeEnd"] ?? "",
         languagesResponse: List<LanguagesResponse>.from(
             json["languagesResponse"]
                 .map((x) => LanguagesResponse.fromJson(x))),
@@ -93,9 +84,6 @@ class Data {
         "id": id,
         "description": description,
         "workType": workType,
-        "website": website,
-        "workTimeBegin": workTimeBegin,
-        "workTimeEnd": workTimeEnd,
         "languagesResponse":
             List<dynamic>.from(languagesResponse.map((x) => x.toJson())),
         "experienceResponses":
@@ -266,7 +254,7 @@ class LanguagesResponse {
         level: json["level"],
         name: json["name"],
         description: json["description"],
-        certificateName: json["certificateName"],
+        certificateName: json["certificateName"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

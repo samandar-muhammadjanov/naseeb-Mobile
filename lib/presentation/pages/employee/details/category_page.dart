@@ -7,19 +7,22 @@ import 'package:naseeb/presentation/widgets/w_loading.dart';
 import 'package:naseeb/presentation/widgets/w_textField.dart';
 import 'package:naseeb/utils/colors.dart';
 
-class SalaryPage extends StatelessWidget {
-  SalaryPage({super.key});
-  static const routeName = '/employee/salary';
+class CategoryPage extends StatelessWidget {
+  CategoryPage({super.key});
   final box = Hive.box("authData").get("employeeId");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Salary",
+          "Certificates",
           style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.w700, fontFamily: "sfPro"),
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            fontFamily: "sfPro",
+          ),
         ),
       ),
       body: BlocProvider(
@@ -33,7 +36,7 @@ class SalaryPage extends StatelessWidget {
               return buildLoading();
             } else if (state is EmployeeDetailLoaded) {
               return Body(
-                salary: state.employee!.data.salaryResponse,
+                category: state.employee!.data.categoryResponse,
               );
             } else if (state is EmployerError) {
               return Center(
@@ -50,54 +53,39 @@ class SalaryPage extends StatelessWidget {
 }
 
 class Body extends StatefulWidget {
-  const Body({
-    super.key,
-    required this.salary,
-  });
-  final SalaryResponse salary;
+  const Body({super.key, required this.category});
+  final CategoryResponse category;
 
   @override
   State<Body> createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  @override
-  void initState() {
-    super.initState();
-    final item = widget.salary;
-    priceController.text = "${item.money.toStringAsFixed(0)}\$";
-  }
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
+  List<bool>? _isOpen;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: wButton(() => null, "Save", color: kgreyColor),
+        child: wButton(() {}, "Save", color: kprimaryColor),
       ),
-      body: Form(
-        key: formKey,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          physics: const BouncingScrollPhysics(),
-          child: Column(
+      body: Column(
+        children: [
+          ExpansionPanelList(
             children: [
-              WTextField(
-                title: "Price",
-                controller: priceController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Not valid field";
-                  }
-                  return null;
-                },
-              ),
+              ExpansionPanel(
+                isExpanded: _isOpen?[0] ?? false,
+                headerBuilder: (context, isExpanded) => Text("Hello"),
+                body: Text("Open"),
+              )
             ],
-          ),
-        ),
+            expansionCallback: (panelIndex, isExpanded) {
+              setState(() {
+                _isOpen?[panelIndex] = isExpanded;
+              });
+            },
+          )
+        ],
       ),
     );
   }

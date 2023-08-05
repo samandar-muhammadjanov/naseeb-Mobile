@@ -60,23 +60,23 @@ class AppRoute {
         );
       case WorkExperiencePage.routeName:
         return MaterialPageRoute(
-          builder: (context) => const WorkExperiencePage(),
+          builder: (context) => WorkExperiencePage(),
         );
       case EducationPage.routeName:
         return MaterialPageRoute(
-          builder: (context) => const EducationPage(),
+          builder: (context) => EducationPage(),
         );
       case LanguagePage.routeName:
         return MaterialPageRoute(
-          builder: (context) => const LanguagePage(),
+          builder: (context) => LanguagePage(),
         );
       case CertificatesPage.routeName:
         return MaterialPageRoute(
-          builder: (context) => const CertificatesPage(),
+          builder: (context) => CertificatesPage(),
         );
       case SalaryPage.routeName:
         return MaterialPageRoute(
-          builder: (context) => const SalaryPage(),
+          builder: (context) => SalaryPage(),
         );
       case ChatInsidePage.routeName:
         return MaterialPageRoute(

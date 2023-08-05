@@ -20,6 +20,7 @@ class CreateEmployeeProfilePage extends StatefulWidget {
 
 class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
   List<String> list = ["ONLAIN", "FULLTIME", "PARTTIME"];
+  List<String> valuta = ["USD", "SUM", "RUBL"];
   late String dropdownValue; // Declare the variable here
   String categoryID = '';
   final TextEditingController categoryController = TextEditingController();
@@ -32,6 +33,7 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
     dropdownValue = list.first;
   }
 
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     bool isDarkMode =
@@ -138,53 +140,108 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
               const SizedBox(
                 height: 10,
               ),
-              DropdownButtonFormField<String>(
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "*required";
-                  }
-                  return null;
+              GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3),
+                itemBuilder: (context, index) {
+                  return Container();
                 },
-                decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 17, horizontal: 10),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                      color: kgreyColor.withOpacity(.2),
-                    ),
-                  ),
-                ),
-                value: dropdownValue,
-                style: TextStyle(
-                    fontFamily: "sfPro", color: isDarkMode ? white : black),
-                isExpanded: true,
-                icon: Transform.rotate(
-                    angle: 4.7,
-                    child: const Icon(Icons.arrow_back_ios_new_rounded)),
-                elevation: 16,
-                onChanged: (String? value) {
-                  // This is called when the user selects an item.
-                  setState(() {
-                    dropdownValue = value!;
-                  });
-                },
-                items: list.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: const TextStyle(fontFamily: "sfPro"),
-                    ),
-                  );
-                }).toList(),
               ),
+              // DropdownButtonFormField<String>(
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return "*required";
+              //     }
+              //     return null;
+              //   },
+              //   decoration: InputDecoration(
+              //     contentPadding:
+              //         const EdgeInsets.symmetric(vertical: 17, horizontal: 10),
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(15),
+              //       borderSide: BorderSide(
+              //         color: kgreyColor.withOpacity(.2),
+              //       ),
+              //     ),
+              //   ),
+              //   value: dropdownValue,
+              //   style: TextStyle(
+              //       fontFamily: "sfPro", color: isDarkMode ? white : black),
+              //   isExpanded: true,
+              //   icon: Transform.rotate(
+              //       angle: 4.7,
+              //       child: const Icon(Icons.arrow_back_ios_new_rounded)),
+              //   elevation: 16,
+              //   onChanged: (String? value) {
+              //     // This is called when the user selects an item.
+              //     setState(() {
+              //       dropdownValue = value!;
+              //     });
+              //   },
+              //   items: list.map<DropdownMenuItem<String>>((String value) {
+              //     return DropdownMenuItem<String>(
+              //       value: value,
+              //       child: Text(
+              //         value,
+              //         style: const TextStyle(fontFamily: "sfPro"),
+              //       ),
+              //     );
+              //   }).toList(),
+              // ),
               const SizedBox(
                 height: 10,
               ),
               WTextField(
                 controller: salaryController,
                 title: "Set your salary",
+                suffix: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 1),
+                    child: SizedBox(
+                      width: 240,
+                      height: 57,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: List.generate(
+                          valuta.length,
+                          (index) {
+                            final item = valuta[index];
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  currentIndex = index;
+                                });
+                              },
+                              child: Container(
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  color: currentIndex == index
+                                      ? kprimaryColor
+                                      : white,
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  item,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color:
+                                          currentIndex == index ? white : black,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "sfPro"),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 type: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -206,8 +263,8 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
                   : 16),
           child: wButton(() {
             if (formKey.currentState!.validate()) {
-              EmployeeRepo().createEmployeeProfile(descriptionController.text,
-                  dropdownValue, salaryController.text, categoryID, context);
+              // EmployeeRepo().createEmployeeProfile(descriptionController.text,
+              //     dropdownValue, salaryController.text, categoryID, context);
             }
           }, "Next"),
         ),

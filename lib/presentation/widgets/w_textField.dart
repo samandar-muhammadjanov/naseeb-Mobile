@@ -18,7 +18,8 @@ class WTextField extends StatelessWidget {
       this.onFieldSubmitted,
       this.type,
       this.formatter,
-      this.onChanged});
+      this.onChanged,
+      this.readOnly});
   final String title;
   final String? Function(String?)? validator;
   final Function()? onTap;
@@ -31,6 +32,7 @@ class WTextField extends StatelessWidget {
   final TextInputType? type;
   final List<TextInputFormatter>? formatter;
   final Function(String)? onChanged;
+  final bool? readOnly;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,6 +46,7 @@ class WTextField extends StatelessWidget {
           height: 14,
         ),
         TextFormField(
+          readOnly: readOnly ?? false,
           inputFormatters: formatter,
           keyboardType: type,
           textInputAction: TextInputAction.done,

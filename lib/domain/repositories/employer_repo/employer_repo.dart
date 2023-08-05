@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:naseeb/blocs/bloc_imports.dart';
 import 'package:naseeb/domain/models/get_employee_model.dart';
 import 'package:naseeb/domain/models/post_detail_model.dart';
 import 'package:naseeb/domain/models/post_model.dart';
@@ -70,17 +71,37 @@ class EmployerRepo {
 
     http.Response response =
         await http.Response.fromStream(await request.send());
-
+    final body = jsonDecode(response.body);
+    print(body);
     if (response.statusCode == 200) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const EmployerHomePage(
-              index: 2,
-            ),
-          ));
+      showCustomDialog(
+          context: context,
+          status: SvgPicture.asset("assets/svg/success.svg"),
+          title: "Success",
+          body: "Data Updated Successfully",
+          textButton: "Done",
+          onTap: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EmployerHomePage(
+                    index: 2,
+                  ),
+                ));
+          },
+          btnColor: MyColor.kSuccessColor);
     } else {
-      print(response.reasonPhrase);
+      showCustomDialog(
+          context: context,
+          status: Image.asset(
+            "assets/images/close.png",
+            width: 80,
+          ),
+          title: "Error!",
+          body: body["message"],
+          textButton: "Done",
+          onTap: () => Navigator.pop(context),
+          btnColor: MyColor.salary);
     }
   }
 
@@ -117,13 +138,15 @@ class EmployerRepo {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const EmployerHomePage(
-              index: 2,
-            ),
-          ));
+      BlocBuilder<EmployerBloc, EmployerState>(
+        builder: (context, state) {
+          if (state is AllPostsLoaded) {
+            context.read<EmployerBloc>()..add(GetAllPosts());
+            return SizedBox();
+          }
+          return SizedBox();
+        },
+      );
     } else {
       print(response.reasonPhrase);
     }

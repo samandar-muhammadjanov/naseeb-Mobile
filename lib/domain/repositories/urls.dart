@@ -21,3 +21,7 @@ const UPDATE_POST = "posters/update/";
 const CHANGE_ROLE = "user/check";
 const CREATE_EMPLOYEE_PROFILE = "employee/save";
 const CHECK_EMPLOYEE = "employee/exists_employee";
+const ADD_EXPERIENCE = "employee/experience_add";
+const ADD_EDUCATION = "employee/education_add";
+const ADD_LANGUAGE = "employee/languages_add";
+const ADD_CERTIFICATE = "employee/certificate_add";

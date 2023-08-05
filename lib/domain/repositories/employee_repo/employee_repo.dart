@@ -1,16 +1,22 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 import 'package:naseeb/domain/models/get_employee_detail_model.dart';
 import 'package:naseeb/domain/repositories/unic_repo/unic_repo.dart';
 import 'package:naseeb/domain/repositories/urls.dart';
 import 'package:naseeb/presentation/pages/employee/details/create_cv_page.dart';
 import 'package:naseeb/presentation/pages/employee/home_page.dart';
 import 'package:naseeb/presentation/pages/intro/create_employee_profile_page.dart';
+import 'package:naseeb/presentation/pages/intro/widgets/w_successOrError.dart';
+import 'package:naseeb/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EmployeeRepo {
@@ -19,8 +25,8 @@ class EmployeeRepo {
     return preferences;
   }
 
-  Future<void> createEmployeeProfile(
-      description, workType, salary, categoryId, BuildContext context) async {
+  Future<void> createEmployeeProfile(description, workType, salary, categoryId,
+      BuildContext context, nameCode) async {
     final prefs = await preference();
     final token = prefs.getString("accessToken");
     var headers = {
@@ -33,7 +39,7 @@ class EmployeeRepo {
       "description": description,
       "workType": workType,
       "categoryId": categoryId,
-      "salaryRequest": {"formOfService": "", "money": salary}
+      "salaryRequest": {"nameCode": nameCode, "money": salary}
     });
     request.headers.addAll(headers);
 
@@ -61,7 +67,7 @@ class EmployeeRepo {
         await http.Response.fromStream(await request.send());
     if (response.statusCode == 200) {
       GetEmployeeDetail employeeDetail =
-          getEmployeeDetailFromJson(response.body);
+          getEmployeeDetailFromJson(utf8.decode(response.bodyBytes));
 
       return employeeDetail;
     } else {
@@ -92,6 +98,206 @@ class EmployeeRepo {
       UnicRepo().changeRole('role_employee');
       Navigator.pushNamedAndRemoveUntil(
           context, EmployeeHomePage.routeName, (route) => false);
+    }
+  }
+
+  Future<void> addExperience(
+      {required String level,
+      required String begin,
+      required String end,
+      required String description,
+      required String company,
+      required String asWho,
+      required BuildContext context}) async {
+    final prefs = await preference();
+    final token = prefs.getString("accessToken");
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    var request = http.Request('POST', Uri.parse(BASE_URL + ADD_EXPERIENCE));
+    request.body = json.encode({
+      "level": level,
+      "begin": begin,
+      "end": end,
+      "description": description,
+      "company": company,
+      "asWho": asWho
+    });
+    request.headers.addAll(headers);
+
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+    final body = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      showCustomDialog(
+          context: context,
+          status: SvgPicture.asset("assets/svg/success.svg"),
+          title: "Success",
+          body: "Data Updated Successfully",
+          textButton: "Done",
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          btnColor: MyColor.kSuccessColor);
+    } else {
+      showCustomDialog(
+          context: context,
+          status: Image.asset(
+            "assets/images/close.png",
+            width: 80,
+          ),
+          title: "Error!",
+          body: body["message"],
+          textButton: "Done",
+          onTap: () => Navigator.pop(context),
+          btnColor: MyColor.salary);
+    }
+  }
+
+  Future<void> addEducation(
+      {required BuildContext context,
+      required String institution,
+      required String level,
+      required String description}) async {
+    final prefs = await preference();
+    final token = prefs.getString("accessToken");
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    var request = http.Request('POST', Uri.parse(BASE_URL + ADD_EDUCATION));
+    request.body = json.encode({
+      "institution": institution,
+      "level": level,
+      "description": description
+    });
+    request.headers.addAll(headers);
+
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+    final body = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      showCustomDialog(
+          context: context,
+          status: SvgPicture.asset("assets/svg/success.svg"),
+          title: "Success",
+          body: "Data Updated Successfully",
+          textButton: "Done",
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          btnColor: MyColor.kSuccessColor);
+    } else {
+      showCustomDialog(
+          context: context,
+          status: Image.asset(
+            "assets/images/close.png",
+            width: 80,
+          ),
+          title: "Error!",
+          body: body["message"],
+          textButton: "Done",
+          onTap: () => Navigator.pop(context),
+          btnColor: MyColor.salary);
+    }
+  }
+
+  Future<void> addLanguage(
+      BuildContext context, name, level, description) async {
+    print(name);
+    print(level);
+    print(description);
+    // final prefs = await preference();
+    // final token = prefs.getString("accessToken");
+    // var headers = {
+    //   'Content-Type': 'application/json',
+    //   'Authorization': 'Bearer $token'
+    // };
+    // var request = http.Request('POST', Uri.parse(BASE_URL + ADD_LANGUAGE));
+    // request.body = json.encode({
+    //   "name": name,
+    //   "level": level,
+    //   "description": description,
+    //   "certificateName": "null"
+    // });
+    // request.headers.addAll(headers);
+
+    // http.Response response =
+    //     await http.Response.fromStream(await request.send());
+    // final body = jsonDecode(response.body);
+    // print(body);
+    // if (response.statusCode == 200) {
+    //   showCustomDialog(
+    //       context: context,
+    //       status: SvgPicture.asset("assets/svg/success.svg"),
+    //       title: "Success",
+    //       body: "Data Updated Successfully",
+    //       textButton: "Done",
+    //       onTap: () {
+    //         Navigator.pop(context);
+    //         Navigator.pop(context);
+    //       },
+    //       btnColor: MyColor.kSuccessColor);
+    // } else {
+    //   showCustomDialog(
+    //       context: context,
+    //       status: Image.asset(
+    //         "assets/images/close.png",
+    //         width: 80,
+    //       ),
+    //       title: "Error!",
+    //       body: body["message"],
+    //       textButton: "Done",
+    //       onTap: () => Navigator.pop(context),
+    //       btnColor: MyColor.salary);
+    // }
+  }
+
+  Future<void> addCertificate(BuildContext context, date, name, path) async {
+    final prefs = await preference();
+    final token = prefs.getString("accessToken");
+    var headers = {'Authorization': 'Bearer $token'};
+    File file = File(path);
+    String mimeType = lookupMimeType(file.path) ?? 'application/octet-stream';
+    var request =
+        http.MultipartRequest('POST', Uri.parse(BASE_URL + ADD_CERTIFICATE));
+    request.fields.addAll({'date': date, 'name': name});
+    request.files.add(await http.MultipartFile.fromPath('ser', path));
+    request.headers.addAll(headers);
+
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+    final body = jsonDecode(response.body);
+    print(body);
+    if (response.statusCode == 200) {
+      showCustomDialog(
+          context: context,
+          status: SvgPicture.asset("assets/svg/success.svg"),
+          title: "Success",
+          body: "Data Updated Successfully",
+          textButton: "Done",
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          btnColor: MyColor.kSuccessColor);
+    } else {
+      showCustomDialog(
+          context: context,
+          status: Image.asset(
+            "assets/images/close.png",
+            width: 80,
+          ),
+          title: "Error!",
+          body: body["message"],
+          textButton: "Done",
+          onTap: () => Navigator.pop(context),
+          btnColor: MyColor.salary);
     }
   }
 }

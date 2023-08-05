@@ -168,14 +168,20 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                 ],
               ));
             } else if ((state.employees.data as List).isEmpty) {
-              return const Center(
-                child: Text(
-                  "Xodimlar ushbu radius yoki e'loningiz bo'yicha mavjud emas!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'sfPro'),
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset("assets/svg/notfound.svg"),
+                    const Text(
+                      "Xodimlar ushbu radius yoki e'loningiz bo'yicha mavjud emas!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'sfPro'),
+                    ),
+                  ],
                 ),
               );
             } else {
