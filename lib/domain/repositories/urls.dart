@@ -25,3 +25,5 @@ const ADD_EXPERIENCE = "employee/experience_add";
 const ADD_EDUCATION = "employee/education_add";
 const ADD_LANGUAGE = "employee/languages_add";
 const ADD_CERTIFICATE = "employee/certificate_add";
+const DELETE_LANGUAGE = "employee/languages/";
+const GET_POST_FOR_EMPLOYEE = "employee/search_posters/";

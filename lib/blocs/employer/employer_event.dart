@@ -17,6 +17,11 @@ class GetEmployeeById extends EmployerEvent {
 
 class GetAllPosts extends EmployerEvent {}
 
+class GetPostsForEmployee extends EmployerEvent {
+  final String radius;
+  GetPostsForEmployee(this.radius);
+}
+
 class GetPostDetail extends EmployerEvent {
   final String id;
   GetPostDetail(this.id);

@@ -28,6 +28,11 @@ class PostDetailLoaded extends EmployerState {
   PostDetailLoaded(this.post);
 }
 
+class PostsForEmployeeLoaded extends EmployerState {
+  final PostsForEmplyeeModel posts;
+  PostsForEmployeeLoaded(this.posts);
+}
+
 class EmployerError extends EmployerState {
   final String error;
   EmployerError(

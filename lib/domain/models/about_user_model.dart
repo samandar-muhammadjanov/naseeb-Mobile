@@ -48,7 +48,6 @@ class Data {
   String active;
   List<String> roles;
   String gender;
-  String language;
   DateTime bornYear;
   String description;
   Address address;
@@ -63,7 +62,6 @@ class Data {
     required this.active,
     required this.roles,
     required this.gender,
-    required this.language,
     required this.bornYear,
     required this.description,
     required this.address,
@@ -79,7 +77,6 @@ class Data {
     String? active,
     List<String>? roles,
     String? gender,
-    String? language,
     DateTime? bornYear,
     String? description,
     Address? address,
@@ -94,7 +91,6 @@ class Data {
         active: active ?? this.active,
         roles: roles ?? this.roles,
         gender: gender ?? this.gender,
-        language: language ?? this.language,
         bornYear: bornYear ?? this.bornYear,
         description: description ?? this.description,
         address: address ?? this.address,
@@ -110,7 +106,6 @@ class Data {
         active: json["active"],
         roles: List<String>.from(json["roles"].map((x) => x)),
         gender: json["gender"],
-        language: json["language"],
         bornYear: DateTime.parse(json["bornYear"]),
         description: json["description"],
         address: Address.fromJson(json["address"]),
@@ -126,7 +121,6 @@ class Data {
         "active": active,
         "roles": List<dynamic>.from(roles.map((x) => x)),
         "gender": gender,
-        "language": language,
         "bornYear":
             "${bornYear.year.toString().padLeft(4, '0')}-${bornYear.month.toString().padLeft(2, '0')}-${bornYear.day.toString().padLeft(2, '0')}",
         "description": description,

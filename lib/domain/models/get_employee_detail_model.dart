@@ -307,7 +307,7 @@ class RegisterResponse {
         active: json["active"],
         roles: List<String>.from(json["roles"].map((x) => x)),
         gender: json["gender"],
-        language: json["language"],
+        language: json["language"] ?? "",
         bornYear: DateTime.parse(json["bornYear"]),
         description: json["description"],
         address: Address.fromJson(json["address"]),
@@ -366,24 +366,24 @@ class Address {
 
 class SalaryResponse {
   int id;
-  String formOfService;
+  String nameCode;
   double money;
 
   SalaryResponse({
     required this.id,
-    required this.formOfService,
+    required this.nameCode,
     required this.money,
   });
 
   factory SalaryResponse.fromJson(Map<String, dynamic> json) => SalaryResponse(
         id: json["id"],
-        formOfService: json["formOfService"],
+        nameCode: json['nameCode'],
         money: json["money"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "formOfService": formOfService,
+        "nameCode": nameCode,
         "money": money,
       };
 }

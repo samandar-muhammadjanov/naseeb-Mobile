@@ -1,5 +1,4 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:naseeb/config/app_theme.dart';
@@ -19,9 +18,8 @@ class CreateEmployeeProfilePage extends StatefulWidget {
 }
 
 class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
-  List<String> list = ["ONLAIN", "FULLTIME", "PARTTIME"];
-  List<String> valuta = ["USD", "SUM", "RUBL"];
-  late String dropdownValue; // Declare the variable here
+  List<String> list = ["Online", "Full time", "Part time"];
+  List<String> valuta = ["USD", "SOM", "RUBL"];
   String categoryID = '';
   final TextEditingController categoryController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -30,10 +28,12 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
   @override
   void initState() {
     super.initState();
-    dropdownValue = list.first;
   }
 
   int currentIndex = 0;
+  int currentWork = 0;
+  String workType = '';
+  String valutaItem = '';
   @override
   Widget build(BuildContext context) {
     bool isDarkMode =
@@ -140,55 +140,41 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
               const SizedBox(
                 height: 10,
               ),
-              GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemBuilder: (context, index) {
-                  return Container();
-                },
+              Center(
+                child: Wrap(
+                  children: List.generate(list.length, (index) {
+                    final item = list[index];
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          currentWork = index;
+                          workType = item.split(" ").join().toUpperCase();
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: currentWork == index ? kprimaryColor : white,
+                            border: Border.all(
+                                color: currentWork == index
+                                    ? kprimaryColor
+                                    : kgreyColor),
+                            borderRadius: BorderRadius.circular(15)),
+                        margin: const EdgeInsets.all(5),
+                        alignment: Alignment.center,
+                        height: 59,
+                        width: MediaQuery.of(context).size.width * .433,
+                        child: Text(
+                          item,
+                          style: TextStyle(
+                              color: currentWork == index ? white : black,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "sfPro"),
+                        ),
+                      ),
+                    );
+                  }),
+                ),
               ),
-              // DropdownButtonFormField<String>(
-              //   validator: (value) {
-              //     if (value!.isEmpty) {
-              //       return "*required";
-              //     }
-              //     return null;
-              //   },
-              //   decoration: InputDecoration(
-              //     contentPadding:
-              //         const EdgeInsets.symmetric(vertical: 17, horizontal: 10),
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(15),
-              //       borderSide: BorderSide(
-              //         color: kgreyColor.withOpacity(.2),
-              //       ),
-              //     ),
-              //   ),
-              //   value: dropdownValue,
-              //   style: TextStyle(
-              //       fontFamily: "sfPro", color: isDarkMode ? white : black),
-              //   isExpanded: true,
-              //   icon: Transform.rotate(
-              //       angle: 4.7,
-              //       child: const Icon(Icons.arrow_back_ios_new_rounded)),
-              //   elevation: 16,
-              //   onChanged: (String? value) {
-              //     // This is called when the user selects an item.
-              //     setState(() {
-              //       dropdownValue = value!;
-              //     });
-              //   },
-              //   items: list.map<DropdownMenuItem<String>>((String value) {
-              //     return DropdownMenuItem<String>(
-              //       value: value,
-              //       child: Text(
-              //         value,
-              //         style: const TextStyle(fontFamily: "sfPro"),
-              //       ),
-              //     );
-              //   }).toList(),
-              // ),
               const SizedBox(
                 height: 10,
               ),
@@ -215,6 +201,7 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
                               onTap: () {
                                 setState(() {
                                   currentIndex = index;
+                                  valutaItem = item;
                                 });
                               },
                               child: Container(
@@ -263,8 +250,14 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
                   : 16),
           child: wButton(() {
             if (formKey.currentState!.validate()) {
-              // EmployeeRepo().createEmployeeProfile(descriptionController.text,
-              //     dropdownValue, salaryController.text, categoryID, context);
+              EmployeeRepo().createEmployeeProfile(
+                descriptionController.text,
+                workType,
+                salaryController.text,
+                categoryID,
+                context,
+                valutaItem,
+              );
             }
           }, "Next"),
         ),

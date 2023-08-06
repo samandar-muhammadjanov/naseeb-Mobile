@@ -39,6 +39,8 @@ class UnicRepo {
 
     request.headers.addAll(headers);
 
-    await request.send();
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+    print(response.body);
   }
 }

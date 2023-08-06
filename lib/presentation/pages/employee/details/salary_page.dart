@@ -65,18 +65,26 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     final item = widget.salary;
-    priceController.text = "${item.money.toStringAsFixed(0)}\$";
+    priceController.text = item.money.toStringAsFixed(0);
+    currentIndex = item.nameCode == valuta.first
+        ? 0
+        : item.nameCode == valuta[1]
+            ? 1
+            : 2;
   }
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController priceController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
+  int currentIndex = 0;
+  String valutaItem = '';
+  List<String> valuta = ["USD", "SOM", "RUBL"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: wButton(() => null, "Save", color: kgreyColor),
+        child: wButton(() => null, "Save", color: kprimaryColor),
       ),
       body: Form(
         key: formKey,
@@ -86,11 +94,60 @@ class _BodyState extends State<Body> {
           child: Column(
             children: [
               WTextField(
-                title: "Price",
                 controller: priceController,
+                title: "Set your salary",
+                suffix: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 1),
+                    child: SizedBox(
+                      width: 240,
+                      height: 57,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: List.generate(
+                          valuta.length,
+                          (index) {
+                            final item = valuta[index];
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  currentIndex = index;
+                                  valutaItem = item;
+                                });
+                              },
+                              child: Container(
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  color: currentIndex == index
+                                      ? kprimaryColor
+                                      : white,
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  item,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color:
+                                          currentIndex == index ? white : black,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "sfPro"),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                type: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Not valid field";
+                    return "*required";
                   }
                   return null;
                 },

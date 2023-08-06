@@ -624,7 +624,6 @@ class _WSalaryState extends State<WSalary> {
                   TextSpan(
                       text:
                           '${widget.item.salaryResponse.money.toStringAsFixed(0)}\$\n\n'),
-                  TextSpan(text: widget.item.salaryResponse.formOfService)
                 ],
               ),
               maxLines: (isFullVisible) ? null : 4,

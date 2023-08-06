@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:naseeb/domain/models/get_employee_detail_model.dart';
 import 'package:naseeb/domain/models/get_employee_model.dart';
 import 'package:naseeb/domain/models/post_detail_model.dart';
+import 'package:naseeb/domain/models/post_for_employee.dart';
 import 'package:naseeb/domain/models/post_model.dart';
 import 'package:naseeb/domain/repositories/employee_repo/employee_repo.dart';
 import 'package:naseeb/domain/repositories/employer_repo/employer_repo.dart';
@@ -57,6 +58,16 @@ class EmployerBloc extends Bloc<EmployerEvent, EmployerState> {
             e.toString(),
           ),
         );
+      }
+    });
+
+    on<GetPostsForEmployee>((event, emit) async {
+      try {
+        emit(EmployerLoading());
+        final posts = await EmployeeRepo().getPostsFormployee(event.radius);
+        emit(PostsForEmployeeLoaded(posts));
+      } catch (e) {
+        emit(EmployerError(e.toString()));
       }
     });
   }

@@ -211,8 +211,9 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
         final item = state.employees.data[index];
         final experienceYear = (item['experienceResponses'] as List).isEmpty
             ? ''
-            : (item['experienceResponses'][0]["end"] as DateTime).year -
-                (item['experienceResponses'][0]["begin"] as DateTime).year;
+            : DateTime.tryParse(item['experienceResponses'][0]["end"])!.year -
+                DateTime.tryParse(item['experienceResponses'][0]["begin"])!
+                    .year;
 
         return Container(
           padding: const EdgeInsets.all(16),
@@ -223,6 +224,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
             ),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
                 contentPadding: EdgeInsets.zero,
