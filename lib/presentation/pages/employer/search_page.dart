@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, unnecessary_this, avoid_single_cascade_in_expression_statements
+// ignore_for_file: deprecated_member_use, unnecessary_this, avoid_single_cascade_in_expression_statements, unnecessary_null_comparison
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -167,7 +167,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   )
                 ],
               ));
-            } else if ((state.employees.data as List).isEmpty) {
+            } else if (state.employees.data.isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -201,19 +201,16 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(16),
-      itemCount: state.employees.data == null
-          ? [].length
-          : (state.employees.data as List).length,
+      itemCount: state.employees.data.length,
       separatorBuilder: (context, index) => const SizedBox(
         height: 10,
       ),
       itemBuilder: (context, index) {
         final item = state.employees.data[index];
-        final experienceYear = (item['experienceResponses'] as List).isEmpty
+        final experienceYear = item.experienceResponses.isEmpty
             ? ''
-            : DateTime.tryParse(item['experienceResponses'][0]["end"])!.year -
-                DateTime.tryParse(item['experienceResponses'][0]["begin"])!
-                    .year;
+            : item.experienceResponses.first.end.year -
+                item.experienceResponses.first.begin.year;
 
         return Container(
           padding: const EdgeInsets.all(16),
@@ -234,11 +231,11 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: kgreyColor),
-                  child: item["registerResponse"]["responseFile"] != null
+                  child: item.registerResponse.responseFile != null
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
-                            item["registerResponse"]["responseFile"]["url"],
+                            item.registerResponse.responseFile["url"],
                             fit: BoxFit.cover,
                           ),
                         )
@@ -248,34 +245,58 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                         ),
                 ),
                 title: Text(
-                  "${item["registerResponse"]["firstName"]} ${item["registerResponse"]["lastName"]}",
+                  "${item.registerResponse.firstName} ${item.registerResponse.lastName}",
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       fontFamily: "sfPro"),
                 ),
                 subtitle: Text(
-                  item["categoryResponse"]["nameUz"],
+                  item.categoryResponse.nameUz,
                   style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: kgreyColor,
                       fontFamily: "sfPro"),
                 ),
-                trailing: IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    "assets/svg/bookmark.svg",
-                    color: kprimaryColor,
-                  ),
+                trailing: BlocBuilder<FavoritesBloc, FavoriteState>(
+                  builder: (context, state) {
+                    if (state is FavoritesLoaded) {
+                      bool isFavorite(int employeeId) {
+                        return state.favorites.employee.any((element) {
+                          return element.id == employeeId;
+                        });
+                      }
+
+                      return IconButton(
+                        onPressed: () {
+                          isFavorite(item.id)
+                              ? context
+                                  .read<FavoritesBloc>()
+                                  .add(RemoveFavoriteEmployee(item))
+                              : context
+                                  .read<FavoritesBloc>()
+                                  .add(AddFavoriteEmployee(item));
+                        },
+                        icon: SvgPicture.asset(
+                          !isFavorite(item.id)
+                              ? "assets/svg/bookmark.svg"
+                              : "assets/svg/bookmark-filled.svg",
+                          color: kprimaryColor,
+                        ),
+                      );
+                    } else {
+                      return SvgPicture.asset("assets/svg/bookmark.svg");
+                    }
+                  },
                 ),
               ),
               Row(
                 children: [
-                  (item["experienceResponses"] as List).isEmpty
+                  item.experienceResponses.isEmpty
                       ? const SizedBox()
                       : StatusIndicator(
                           background: fieldFocusColor,
-                          text: item["experienceResponses"][0]["asWho"],
+                          text: item.experienceResponses.first.asWho,
                           textColor: kprimaryColor,
                         ),
                   const SizedBox(
@@ -283,12 +304,12 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   ),
                   StatusIndicator(
                       background: MyColor.typeBk,
-                      text: item["workType"],
+                      text: item.workType,
                       textColor: MyColor.type),
                   const SizedBox(
                     width: 5,
                   ),
-                  (item["experienceResponses"] as List).isEmpty
+                  item.experienceResponses.isEmpty
                       ? const SizedBox()
                       : StatusIndicator(
                           background: MyColor.experienceBackground,
@@ -303,7 +324,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   StatusIndicator(
                       background: MyColor.salartBackground,
                       text:
-                          "\$${(item['salaryResponse']['money'] as double).toStringAsFixed(0)}",
+                          "\$${(item.salaryResponse.money as double).toStringAsFixed(0)}",
                       textColor: MyColor.salary),
                 ],
               ),
@@ -311,7 +332,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                 height: 15,
               ),
               Text(
-                item["description"],
+                item.description,
                 style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               ElevatedButton(
@@ -327,7 +348,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => InsideEmployeeProfilePage(
-                          id: item["id"].toString(),
+                          id: item.id.toString(),
                         ),
                       ));
                 },

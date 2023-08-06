@@ -1,6 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 part 'post_for_employee.g.dart';
+
 PostsForEmplyeeModel getPostsForEmplyeeFromJson(String str) =>
     PostsForEmplyeeModel.fromJson(json.decode(str));
 
@@ -33,7 +37,7 @@ class PostsForEmplyeeModel {
 }
 
 @HiveType(typeId: 0)
-class Datum {
+class Datum extends Equatable {
   @HiveField(0)
   int id;
   @HiveField(1)
@@ -93,10 +97,23 @@ class Datum {
         "responseFiles":
             List<dynamic>.from(responseFiles.map((x) => x.toJson())),
       };
+
+  @override
+  List<Object?> get props => [
+        id,
+        description,
+        fixedTime,
+        amountMoney,
+        addressDto,
+        createdDate,
+        updateDate,
+        categoryDto,
+        responseFiles
+      ];
 }
 
 @HiveType(typeId: 1)
-class AddressDto {
+class AddressDto extends Equatable {
   @HiveField(0)
   int id;
   @HiveField(1)
@@ -131,10 +148,13 @@ class AddressDto {
         "latitude": latitude,
         "longitude": longitude,
       };
+
+  @override
+  List<Object?> get props => [id, region, city, latitude, longitude];
 }
 
 @HiveType(typeId: 2)
-class CategoryDto {
+class CategoryDto extends Equatable {
   @HiveField(0)
   int id;
   @HiveField(1)
@@ -164,10 +184,13 @@ class CategoryDto {
         "nameRu": nameRu,
         "active": active,
       };
+
+  @override
+  List<Object?> get props => [id, nameUz, nameRu, active];
 }
 
 @HiveType(typeId: 3)
-class ResponseFile {
+class ResponseFile extends Equatable {
   @HiveField(0)
   String name;
   @HiveField(1)
@@ -197,4 +220,7 @@ class ResponseFile {
         "type": type,
         "size": size,
       };
+
+  @override
+  List<Object?> get props => [name, url, type, size];
 }

@@ -159,9 +159,10 @@ class Body extends StatelessWidget {
                 trailing: BlocBuilder<FavoritesBloc, FavoriteState>(
                   builder: (context, state) {
                     if (state is FavoritesLoaded) {
-                      bool isFavorite(int newsId) {
-                        return state.favorites.posts
-                            .any((element) => element.id == newsId);
+                      bool isFavorite(int postId) {
+                        return state.favorites.posts.any((element) {
+                          return element.id == postId;
+                        });
                       }
 
                       return IconButton(
@@ -173,7 +174,6 @@ class Body extends StatelessWidget {
                               : context
                                   .read<FavoritesBloc>()
                                   .add(AddFavoritePost(item));
-                          print(isFavorite(item.id));
                         },
                         icon: SvgPicture.asset(
                           !isFavorite(item.id)

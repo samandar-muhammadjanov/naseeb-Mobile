@@ -50,6 +50,16 @@ class Body extends StatelessWidget {
   final FavoritesLoaded state;
   @override
   Widget build(BuildContext context) {
+    if (state.favorites.posts.isEmpty) {
+      return const Center(
+        child: Text(
+          "Sizda saqlangan e'lonlar mavjud emas",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'sfPro'),
+        ),
+      );
+    }
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(16),
@@ -58,6 +68,13 @@ class Body extends StatelessWidget {
         height: 10,
       ),
       itemBuilder: (context, index) {
+        final item = state.favorites.posts[index];
+        bool isFavorite(int postId) {
+          return state.favorites.posts.any((element) {
+            return element.id == postId;
+          });
+        }
+
         return Container(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
           decoration: BoxDecoration(
@@ -70,36 +87,46 @@ class Body extends StatelessWidget {
                     context, InsidePostForEmployeePage.routeName),
                 contentPadding: EdgeInsets.zero,
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    isFavorite(item.id)
+                        ? context
+                            .read<FavoritesBloc>()
+                            .add(RemoveFavoritePost(item))
+                        : context
+                            .read<FavoritesBloc>()
+                            .add(AddFavoritePost(item));
+                  },
                   icon: SvgPicture.asset(
-                    "assets/svg/bookmark-filled.svg",
+                    !isFavorite(item.id)
+                        ? "assets/svg/bookmark.svg"
+                        : "assets/svg/bookmark-filled.svg",
                     color: kprimaryColor,
                   ),
                 ),
-                title: const Text(
-                  "Mexanik kerak",
-                  style: TextStyle(
+                title: Text(
+                  item.description,
+                  style: const TextStyle(
                       fontWeight: FontWeight.w700, fontFamily: "sfPro"),
                 ),
-                subtitle: const Text(
-                  "500 000 so'm",
-                  style: TextStyle(
+                subtitle: Text(
+                  item.amountMoney.toStringAsFixed(0),
+                  style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: kgreyColor,
                       fontFamily: "sfPro"),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15), color: kgreyColor),
-                child: const Icon(
-                  Icons.image,
-                  color: white,
-                  size: 40,
-                ),
-              ),
+              if (item.responseFiles.isNotEmpty)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    item.responseFiles.first.url,
+                    height: 180,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              else
+                const SizedBox(),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kprimaryColor,

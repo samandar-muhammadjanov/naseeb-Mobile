@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => FavoritesBloc(
-                    localstorageRepository: LocalstorageRepository())
+                    localstorageRepository: LocalstorageRepository(),
+                    employeeLocalstorageRepository:
+                        EmployeeLocalstorageRepository())
                   ..add(
                     StartFavorites(),
                   ),
