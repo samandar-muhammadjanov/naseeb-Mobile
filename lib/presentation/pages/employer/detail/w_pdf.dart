@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:naseeb/config/app_theme.dart';
-import 'package:naseeb/domain/models/get_employee_detail_model.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class WPdf extends StatelessWidget {
-  const WPdf({super.key, this.data});
-  final EFile? data;
+  const WPdf({super.key, required this.data});
+  final dynamic data;
 
   @override
   Widget build(BuildContext context) {
-    final size = data!.size > 1000000
-        ? "${(data!.size / 1048576).toStringAsFixed(2)} Mb"
-        : data!.size > 1000
-            ? "${(data!.size / 1024).toStringAsFixed(2)} Kb"
-            : "${(data!.size).toStringAsFixed(2)} B";
+    final size = data["size"] > 1000000
+        ? "${(data["size"] / 1048576).toStringAsFixed(2)} Mb"
+        : data["size"] > 1000
+            ? "${(data["size"] / 1024).toStringAsFixed(2)} Kb"
+            : "${(data["size"]).toStringAsFixed(2)} B";
     bool isDarkMode =
         ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
     return InkWell(
@@ -50,7 +49,7 @@ class WPdf extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sertifikat - ${data!.name}',
+                    'Sertifikat - ${data["name"]}',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -59,7 +58,7 @@ class WPdf extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '$size. ${DateFormat('dd MMM yyyy').format(data!.date)}',
+                    '$size. ${DateFormat('dd MMM yyyy').format(DateTime.parse(data["date"]))}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,

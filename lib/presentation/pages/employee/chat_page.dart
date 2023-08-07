@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
@@ -21,19 +22,16 @@ class _EmployeeChatPageState extends State<EmployeeChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            "Chats",
-            style: TextStyle(
-                fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
-          ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "chats".tr(),
+          style: const TextStyle(
+              fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
         ),
-        body: StreamBuilder(
-            stream: channel.stream,
-            builder: (context, snapshot) {
-              return Text(snapshot.hasData ? "Data" : "No Data");
-            }));
+      ),
+      body: const Body(),
+    );
   }
 }
 
@@ -57,7 +55,7 @@ class Body extends StatelessWidget {
                     color: kgreyColor,
                   ),
                 ),
-                hintText: "Search...",
+                hintText: '${"search".tr()}...',
                 hintStyle: const TextStyle(
                     color: kgreyColor, fontSize: 16, fontFamily: "sfPro"),
                 border: OutlineInputBorder(

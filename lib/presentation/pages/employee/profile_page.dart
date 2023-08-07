@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, deprecated_member_use
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
@@ -49,8 +50,8 @@ class EmployeeProfilePage extends StatelessWidget {
                         Icons.rotate_left_outlined,
                         size: 40,
                       ),
-                      title: const Text(
-                        "Switch to Employer",
+                      title: Text(
+                        "switchToEmployer".tr(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontFamily: "sfPro"),
                       ),
@@ -66,8 +67,8 @@ class EmployeeProfilePage extends StatelessWidget {
           )
         ],
         centerTitle: true,
-        title: const Text(
-          "Profile",
+        title: Text(
+          "profile".tr(),
           style: TextStyle(
               fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
         ),
@@ -90,45 +91,6 @@ class EmployeeProfilePage extends StatelessWidget {
           },
         ),
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(16.0),
-      //   child: GestureDetector(
-      //     onTap: () {
-      //       Navigator.pushNamed(context, CreateCVPage.routeName);
-      //     },
-      //     child: DottedBorder(
-      //       borderType: BorderType.RRect,
-      //       radius: const Radius.circular(12),
-      //       strokeWidth: 2,
-      //       color: kprimaryColor,
-      //       child: Container(
-      //         height: 249,
-      //         width: double.infinity,
-      //         decoration: BoxDecoration(
-      //           color: fieldFocusColor.withOpacity(isDarkMode ? .2 : 1),
-      //           borderRadius: BorderRadius.circular(12),
-      //         ),
-      //         alignment: Alignment.center,
-      //         child: Column(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             SvgPicture.asset("assets/svg/add_portfolio.svg"),
-      //             const SizedBox(
-      //               height: 20,
-      //             ),
-      //             const Text(
-      //               "Create CV/Resume",
-      //               style: TextStyle(
-      //                   fontSize: 18,
-      //                   fontWeight: FontWeight.w600,
-      //                   fontFamily: "sfPro"),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 
@@ -201,8 +163,8 @@ class EmployeeProfilePage extends StatelessWidget {
                     Icons.account_circle_outlined,
                     size: 30,
                   ),
-                  title: const Text(
-                    "Profile Settings",
+                  title: Text(
+                    "profileSettings".tr(),
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -226,9 +188,9 @@ class EmployeeProfilePage extends StatelessWidget {
                     Icons.settings,
                     size: 30,
                   ),
-                  title: const Text(
-                    "App Settings",
-                    style: TextStyle(
+                  title: Text(
+                    "appSettings".tr(),
+                    style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         fontFamily: "sfPro"),
@@ -251,9 +213,9 @@ class EmployeeProfilePage extends StatelessWidget {
                     size: 30,
                     color: MyColor.salary,
                   ),
-                  title: const Text(
-                    "Log Out",
-                    style: TextStyle(
+                  title: Text(
+                    "logout".tr(),
+                    style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: MyColor.salary,

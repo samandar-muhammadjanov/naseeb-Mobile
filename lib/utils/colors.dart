@@ -10,6 +10,7 @@ const Color lightGreyText = Color(0xFF9CA4AB);
 const Color lightGrey = Color(0XFFE9E9E9);
 const Color lightBlue = Color(0xFFEBF5FC);
 const Color fieldFocusColor = Color(0xffEEF8FF);
+const Color darkModeColor = Color(0xff2b2d3a);
 
 class MyColor {
   static const kSuccessColor = Color(0xff00A98A);

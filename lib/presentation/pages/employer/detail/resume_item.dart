@@ -303,9 +303,9 @@ class _WEducationState extends State<WEducation> {
                           fontWeight: FontWeight.w400,
                           fontFamily: "sfPro"),
                       children: [
-                        TextSpan(text: '${item.institution}\n'),
+                        TextSpan(text: '${item["institution"]}\n'),
                         TextSpan(
-                            text: 'Specialization - ${item.description}\n'),
+                            text: 'Specialization - ${item["description"]}\n'),
                         const TextSpan(
                           text: '2-kurs • 2020 - 2024\n\n',
                           style: TextStyle(color: kgreyColor),
@@ -408,12 +408,8 @@ class _WLanguageState extends State<WLanguage> {
                 widget.item.languagesResponse.length,
                 (index) {
                   final item = widget.item.languagesResponse[index];
-                  final lang = item.name == "UZB"
-                      ? "Uzbek"
-                      : item.name == "ENG"
-                          ? "English"
-                          : "Russian";
-                  return Text("$lang - ${item.level}");
+
+                  return Text("${item["name"]} - ${item["level"]}");
                 },
               ),
             ),
@@ -504,10 +500,10 @@ class _WCertificateState extends State<WCertificate> {
                           fontWeight: FontWeight.w400,
                           fontFamily: "sfPro"),
                       children: [
-                        TextSpan(text: '${item.name}\n'),
+                        TextSpan(text: '${item["name"]}\n'),
                         TextSpan(
                           text:
-                              '${DateFormat("dd MMMM yyyy").format(item.date)} year',
+                              '${DateFormat("dd MMMM yyyy").format(DateTime.parse(item["date"]))} year',
                           style: const TextStyle(color: kgreyColor),
                         ),
                       ],
@@ -518,45 +514,6 @@ class _WCertificateState extends State<WCertificate> {
                 ],
               );
             }),
-          ),
-          const SizedBox(height: 10),
-          Visibility(
-              visible: isFullVisible,
-              child: const Text(
-                'descri[tiopn',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              )),
-          Visibility(
-            visible: !isFullVisible,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  isFullVisible = true;
-                });
-              },
-              child: const Text(
-                'See More',
-                style: TextStyle(
-                    color: kprimaryColor, fontSize: 14, fontFamily: "sfPro"),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: isFullVisible,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  isFullVisible = false;
-                });
-              },
-              child: const Text(
-                'Hide More',
-                style: TextStyle(
-                    color: kprimaryColor, fontSize: 14, fontFamily: "sfPro"),
-              ),
-            ),
           ),
         ],
       ),
@@ -575,8 +532,14 @@ class _WSalaryState extends State<WSalary> {
   bool isFullVisible = false;
   @override
   Widget build(BuildContext context) {
+    final item = widget.item.salaryResponse;
     bool isDarkMode =
         ThemeModelInheritedNotifier.of(context).theme == AppTheme.darkTheme;
+    final money = item.nameCode == "UZS"
+        ? "so'm"
+        : item.nameCode == "USD"
+            ? "\$"
+            : "₽";
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -623,41 +586,10 @@ class _WSalaryState extends State<WSalary> {
                 children: [
                   TextSpan(
                       text:
-                          '${widget.item.salaryResponse.money.toStringAsFixed(0)}\$\n\n'),
+                          '${widget.item.salaryResponse.money.toStringAsFixed(0)} $money\n'),
                 ],
               ),
               maxLines: (isFullVisible) ? null : 4,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Visibility(
-            visible: !isFullVisible,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  isFullVisible = true;
-                });
-              },
-              child: const Text(
-                'See More',
-                style: TextStyle(
-                    color: kprimaryColor, fontSize: 14, fontFamily: "sfPro"),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: isFullVisible,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  isFullVisible = false;
-                });
-              },
-              child: const Text(
-                'Hide More',
-                style: TextStyle(
-                    color: kprimaryColor, fontSize: 14, fontFamily: "sfPro"),
-              ),
             ),
           ),
         ],

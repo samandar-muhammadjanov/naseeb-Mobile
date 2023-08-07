@@ -325,7 +325,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                   StatusIndicator(
                       background: MyColor.salartBackground,
                       text:
-                          "\$${(item.salaryResponse.money as double).toStringAsFixed(0)}",
+                          "\$${(item.salaryResponse.money).toStringAsFixed(0)}",
                       textColor: MyColor.salary),
                 ],
               ),

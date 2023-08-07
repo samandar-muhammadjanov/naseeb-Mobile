@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:naseeb/app/app.dart';
 import 'package:naseeb/config/theme_service.dart';
@@ -8,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   final themeService = await ThemeService.instance;
   var initTheme = themeService.initial;
   await Hive.initFlutter();
@@ -30,9 +32,19 @@ void main() async {
   var isEmployee = (prefs.getBool('isEmployee') == null)
       ? false
       : prefs.getBool('isEmployee');
-  runApp(MyApp(
-    isLogined: isLoggedIn,
-    isEmployee: isEmployee,
-    theme: initTheme,
+  runApp(EasyLocalization(
+    supportedLocales: const [
+      Locale("uz", "UZ"),
+      Locale("ru", "RU"),
+      Locale("en", "US"),
+    ],
+    path: "assets/translation",
+    saveLocale: true,
+    fallbackLocale: const Locale("uz", "UZ"),
+    child: MyApp(
+      isLogined: isLoggedIn,
+      isEmployee: isEmployee,
+      theme: initTheme,
+    ),
   ));
 }

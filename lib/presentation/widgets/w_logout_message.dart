@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:naseeb/config/app_theme.dart';
@@ -29,16 +30,17 @@ showLogOutMessage(BuildContext context) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Are you absolutely sure?",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                Text(
+                  "logoutMessageOne".tr(),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "Logging out will end your current session, and you'll need to log in again to access your account.",
-                  style: TextStyle(
+                Text(
+                  "logoutMessageTwo".tr(),
+                  style: const TextStyle(
                     color: kgreyColor,
                   ),
                 ),
@@ -58,9 +60,9 @@ showLogOutMessage(BuildContext context) {
                             color: lightGrey,
                             borderRadius: BorderRadius.circular(6),
                           ),
-                          child: const Text(
-                            "Cansel",
-                            style: TextStyle(
+                          child: Text(
+                            "cansel".tr(),
+                            style: const TextStyle(
                                 color: kgreyColor, fontWeight: FontWeight.bold),
                           )),
                     ),
@@ -83,9 +85,9 @@ showLogOutMessage(BuildContext context) {
                           color: MyColor.salartBackground,
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        child: const Text(
-                          "Log Out",
-                          style: TextStyle(
+                        child: Text(
+                          "logout".tr(),
+                          style: const TextStyle(
                               color: MyColor.salary,
                               fontWeight: FontWeight.bold),
                         ),

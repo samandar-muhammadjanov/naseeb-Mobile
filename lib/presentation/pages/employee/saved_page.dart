@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
@@ -15,9 +16,9 @@ class EmployeeSavedPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Saved Posts",
-          style: TextStyle(
+        title: Text(
+          "savedPost".tr(),
+          style: const TextStyle(
               fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
         ),
       ),
@@ -51,11 +52,11 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (state.favorites.posts.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
-          "Sizda saqlangan e'lonlar mavjud emas",
+          "haventSaved".tr(),
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'sfPro'),
         ),
       );
@@ -150,9 +151,9 @@ class Body extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text(
-                  'View Post',
-                  style: TextStyle(
+                child: Text(
+                  'viewPost'.tr(),
+                  style: const TextStyle(
                     fontSize: 10,
                     fontFamily: "sfPro",
                     fontWeight: FontWeight.w500,

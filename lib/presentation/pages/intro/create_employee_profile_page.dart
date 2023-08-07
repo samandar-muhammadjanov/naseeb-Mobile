@@ -29,7 +29,7 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
   void initState() {
     super.initState();
     setState(() {
-      workType = list.first == "Online" ? "onlain" : list.first;
+      workType = list.first == "Online" ? "ONLAIN" : list.first;
       valutaItem = valuta.first;
     });
   }

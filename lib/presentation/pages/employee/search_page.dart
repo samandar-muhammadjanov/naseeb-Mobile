@@ -7,6 +7,7 @@ import 'package:naseeb/presentation/pages/employee/details/indside_post_page.dar
 import 'package:naseeb/presentation/widgets/w_loading.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:naseeb/utils/utils.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class EmployeeSearchPage extends StatefulWidget {
   const EmployeeSearchPage({super.key});
@@ -29,9 +30,9 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text(
-            "Search",
-            style: TextStyle(
+          title: Text(
+            "search".tr(),
+            style: const TextStyle(
                 fontWeight: FontWeight.w700, fontSize: 18, fontFamily: 'sfPro'),
           ),
           bottom: PreferredSize(
@@ -39,11 +40,11 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: Text(
-                    "Select Radius (km)",
-                    style: TextStyle(
+                    "slcRadius".tr(),
+                    style: const TextStyle(
                         fontSize: 16,
                         color: kgreyColor,
                         fontWeight: FontWeight.w700,
@@ -233,9 +234,9 @@ class Body extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const Text(
-                    'View Post',
-                    style: TextStyle(
+                  child: Text(
+                    'viewPost'.tr(),
+                    style: const TextStyle(
                       fontSize: 10,
                       fontFamily: "sfPro",
                       fontWeight: FontWeight.w500,

@@ -181,6 +181,7 @@ class _BodyState extends State<Body> {
                 onChanged: (val) {
                   setState(() {
                     isUntilNow = val!;
+                    endController.clear();
                   });
                 },
                 child: const Text(
@@ -198,12 +199,14 @@ class _BodyState extends State<Body> {
                 WTextField(
                   title: "End",
                   controller: endController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Not valid field";
-                    }
-                    return null;
-                  },
+                  validator: isUntilNow
+                      ? null
+                      : (value) {
+                          if (value!.isEmpty) {
+                            return "Not valid field";
+                          }
+                          return null;
+                        },
                   suffix: IconButton(
                       onPressed: () {
                         showDate(

@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
 import 'package:naseeb/config/app_route.dart';
@@ -38,6 +39,10 @@ class MyApp extends StatelessWidget {
               )
             ],
             child: MaterialApp(
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              debugShowCheckedModeBanner: false,
               title: 'Naseeb',
               theme: themee,
               onGenerateRoute: AppRoute().onGenerateRoute,

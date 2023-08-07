@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -27,8 +28,8 @@ class CreateCVPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Profile Settings",
+        title: Text(
+          "profileSettings".tr(),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -65,37 +66,37 @@ class CreateCVPage extends StatelessWidget {
     List<Map<String, dynamic>> items = [
       {
         "icon": 'assets/svg/main_info.svg',
-        "title": "Main information",
+        "title": "mainInfo".tr(),
         "routeName": MainInformationPage()
       },
       {
         "icon": 'assets/svg/work_experience.svg',
-        "title": "Work experience",
+        "title": "workEx".tr(),
         "routeName": WorkExperiencePage()
       },
       {
         "icon": 'assets/svg/education.svg',
-        "title": "Education",
+        "title": "education".tr(),
         "routeName": EducationPage()
       },
       {
         "icon": 'assets/svg/language.svg',
-        "title": "Language",
+        "title": "language".tr(),
         "routeName": LanguagePage()
       },
       {
         "icon": 'assets/svg/certificate.svg',
-        "title": "Certificates",
+        "title": "certificate".tr(),
         "routeName": CertificatesPage()
       },
       {
         "icon": 'assets/svg/salary.svg',
-        "title": "Salary",
+        "title": "salary".tr(),
         "routeName": SalaryPage()
       },
       {
         "icon": 'assets/svg/category.svg',
-        "title": "Category",
+        "title": "category".tr(),
         "routeName": CategoryPage(),
       },
     ];
@@ -133,8 +134,8 @@ class CreateCVPage extends StatelessWidget {
                   fontFamily: "sfPro",
                 ),
               ),
-              const Text(
-                'Complete your profile',
+              Text(
+                'complateUrProfile'.tr(),
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
