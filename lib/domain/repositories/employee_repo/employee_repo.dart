@@ -37,7 +37,10 @@ class EmployeeRepo {
       "description": description,
       "workType": workType,
       "categoryId": categoryId,
-      "salaryRequest": {"nameCode": nameCode, "money": salary}
+      "salaryRequest": {
+        "nameCode": nameCode == "ONLINE" ? "ONLAIN" : nameCode,
+        "money": salary
+      }
     });
     request.headers.addAll(headers);
 
@@ -47,10 +50,27 @@ class EmployeeRepo {
     print(body);
     Hive.box("authData").put("employeeId", body["data"]["id"]);
     if (response.statusCode == 200) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, CreateCVPage.routeName, (route) => false);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateCVPage(
+            isFromBegin: true,
+          ),
+        ),
+        (route) => false,
+      );
     } else {
-      print(response.reasonPhrase);
+      showCustomDialog(
+          context: context,
+          status: Image.asset(
+            "assets/images/close.png",
+            width: 80,
+          ),
+          title: "Error!",
+          body: body["message"],
+          textButton: "Done",
+          onTap: () => Navigator.pop(context),
+          btnColor: MyColor.salary);
     }
   }
 

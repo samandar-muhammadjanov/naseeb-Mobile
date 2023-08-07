@@ -28,6 +28,8 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
   @override
   void initState() {
     super.initState();
+    workType = list.first;
+    valutaItem = valuta.first;
   }
 
   int currentIndex = 0;

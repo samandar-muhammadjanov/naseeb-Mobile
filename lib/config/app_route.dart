@@ -6,6 +6,7 @@ import 'package:naseeb/presentation/pages/employer/detail/inside_employee_profil
 import 'package:naseeb/presentation/pages/employer/detail/inside_post_page.dart';
 import 'package:naseeb/presentation/pages/employer/detail/profile_settings_page.dart';
 import 'package:naseeb/presentation/pages/intro/create_employee_profile_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/about_app_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/create_cv_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/education_page.dart';
@@ -21,7 +22,9 @@ import 'package:naseeb/presentation/pages/intro/onboarding_page.dart';
 import 'package:naseeb/presentation/pages/intro/registration_page.dart';
 import 'package:naseeb/presentation/pages/intro/select_role_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/app_settings_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/help_page.dart';
 import 'package:naseeb/presentation/pages/single_screens/map_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/privacy_policy_page.dart';
 
 class AppRoute {
   Route? onGenerateRoute(RouteSettings routeSettings) {
@@ -117,6 +120,18 @@ class AppRoute {
       case CreateEmployeeProfilePage.routeName:
         return MaterialPageRoute(
           builder: (context) => const CreateEmployeeProfilePage(),
+        );
+      case HelpScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const HelpScreen(),
+        );
+      case AboutAppScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const AboutAppScreen(),
+        );
+      case PrivacyPolicyPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const PrivacyPolicyPage(),
         );
       default:
         break;

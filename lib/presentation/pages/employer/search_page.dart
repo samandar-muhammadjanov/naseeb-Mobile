@@ -348,7 +348,7 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => InsideEmployeeProfilePage(
-                          id: item.id.toString(),
+                          state: item,
                         ),
                       ));
                 },

@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:naseeb/domain/models/post_for_employee.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class InsidePostForEmployeePage extends StatelessWidget {
-  const InsidePostForEmployeePage({super.key});
+  const InsidePostForEmployeePage({super.key, this.item});
   static const routeName = "/employee/post";
+  final Datum? item;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,33 +51,33 @@ class InsidePostForEmployeePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15), color: kgreyColor),
-              child: const Icon(
-                Icons.image,
-                color: white,
-                size: 40,
-              ),
-            ),
+            if (item!.responseFiles.isNotEmpty)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  item!.responseFiles.first.url,
+                  height: 180,
+                  fit: BoxFit.cover,
+                ),
+              )
+            else
+              const SizedBox(),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
-            const Text(
-              'Mexanik Kerak',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "sfPro"),
+            Text(
+              item!.description,
+              style: TextStyle(fontFamily: "sfPro", fontSize: 20),
             ),
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              'Pariatur irure anim esse in excepteur do qui aliquip qui qui. Velit tempor cupidatat veniam consectetur reprehenderit sit magna tempor. Eiusmod est elit incididunt sunt dolor occaecat cillum duis id proident culpa. Aliquip exercitation exercitation magna eiusmod dolore elit commodo anim deserunt dolor nulla. Fugiat ipsum sint est minim nostrud labore aliqua magna exercitation minim et. Dolor ullamco voluptate nisi occaecat ut. Commodo amet sint amet culpa elit aliqua culpa do.',
-              style: TextStyle(fontFamily: "sfPro"),
+            Text(
+              "Amount: " + item!.amountMoney.toStringAsFixed(0),
+              style: TextStyle(
+                  fontFamily: "sfPro",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
             ),
             const SizedBox(
               height: 10,
@@ -95,8 +97,8 @@ class InsidePostForEmployeePage extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15), color: kgreyColor),
               ),
-              title: const Text(
-                "Jasur Nigmanov",
+              title: Text(
+                "${item!.id} Nigmanov",
                 style:
                     TextStyle(fontWeight: FontWeight.w700, fontFamily: "sfPro"),
               ),

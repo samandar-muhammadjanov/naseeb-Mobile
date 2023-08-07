@@ -193,8 +193,13 @@ class Body extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6)),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                      context, InsideEmployeeProfilePage.routeName);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InsideEmployeeProfilePage(
+                          state: item,
+                        ),
+                      ));
                 },
                 child: const Text(
                   'View Profile',

@@ -220,8 +220,14 @@ class Body extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6)),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(
-                        context, InsidePostForEmployeePage.routeName);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InsidePostForEmployeePage(
+                          item: item,
+                        ),
+                      ),
+                    );
                   },
                   child: const Text(
                     'View Post',

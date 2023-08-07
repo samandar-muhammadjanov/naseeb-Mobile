@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/config/theme_service.dart';
+import 'package:naseeb/presentation/pages/single_screens/about_app_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/help_page.dart';
+import 'package:naseeb/presentation/pages/single_screens/privacy_policy_page.dart';
 import 'package:naseeb/utils/colors.dart';
 
 class AppSettingsPage extends StatefulWidget {
@@ -93,12 +96,15 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               onChanged: (value) {},
             ),
           ),
-          const ListTile(
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, HelpScreen.routeName);
+            },
+            leading: const Icon(
               Icons.support_agent_rounded,
             ),
             minLeadingWidth: 0,
-            title: Text(
+            title: const Text(
               "Help",
               style: TextStyle(
                   fontSize: 16,
@@ -106,12 +112,15 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   fontFamily: "sfPro"),
             ),
           ),
-          const ListTile(
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, AboutAppScreen.routeName);
+            },
+            leading: const Icon(
               Icons.info_outline_rounded,
             ),
             minLeadingWidth: 0,
-            title: Text(
+            title: const Text(
               "About App",
               style: TextStyle(
                   fontSize: 16,
@@ -119,12 +128,15 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   fontFamily: "sfPro"),
             ),
           ),
-          const ListTile(
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, PrivacyPolicyPage.routeName);
+            },
+            leading: const Icon(
               Icons.privacy_tip_outlined,
             ),
             minLeadingWidth: 0,
-            title: Text(
+            title: const Text(
               "Privacy Policy",
               style: TextStyle(
                   fontSize: 16,

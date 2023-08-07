@@ -10,14 +10,17 @@ import 'package:naseeb/presentation/pages/employee/details/education_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/language_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/salary_page.dart';
 import 'package:naseeb/presentation/pages/employee/details/work_experience_page.dart';
+import 'package:naseeb/presentation/pages/employee/home_page.dart';
+import 'package:naseeb/presentation/widgets/w_button.dart';
 import 'package:naseeb/presentation/widgets/w_loading.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'main_information_page.dart';
 
 class CreateCVPage extends StatelessWidget {
-  CreateCVPage({super.key});
+  CreateCVPage({super.key, this.isFromBegin});
   static const routeName = "routeName";
+  final bool? isFromBegin;
   var box = Hive.box("authData").get("employeeId");
   @override
   Widget build(BuildContext context) {
@@ -189,7 +192,17 @@ class CreateCVPage extends StatelessWidget {
               trailing: SvgPicture.asset("assets/svg/Add.svg"),
             );
           },
-        )
+        ),
+        if (isFromBegin ?? false) ...[
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: wButton(() {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, EmployeeHomePage.routeName, (route) => false);
+            }, "Done"),
+          )
+        ]
       ],
     );
   }

@@ -2,9 +2,9 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:naseeb/config/app_theme.dart';
+import 'package:naseeb/domain/models/get_employee_model.dart';
 import 'package:naseeb/presentation/pages/employer/detail/w_pdf.dart';
 import 'package:naseeb/utils/colors.dart';
-import '../../../../domain/models/get_employee_detail_model.dart';
 
 class WMainInformation extends StatefulWidget {
   const WMainInformation({
@@ -18,7 +18,7 @@ class WMainInformation extends StatefulWidget {
   final String title;
   final String subtitle;
   final String body;
-  final Data state;
+  final EmployeeDatum state;
   @override
   State<WMainInformation> createState() => _WMainInformationState();
 }
@@ -123,7 +123,7 @@ class _WMainInformationState extends State<WMainInformation> {
 
 class WWorkExperience extends StatefulWidget {
   const WWorkExperience({super.key, required this.item});
-  final Data item;
+  final EmployeeDatum item;
   @override
   State<WWorkExperience> createState() => _WWorkExperienceState();
 }
@@ -242,7 +242,7 @@ class _WWorkExperienceState extends State<WWorkExperience> {
 
 class WEducation extends StatefulWidget {
   const WEducation({super.key, required this.item});
-  final Data item;
+  final EmployeeDatum item;
   @override
   State<WEducation> createState() => _WEducationState();
 }
@@ -355,7 +355,7 @@ class _WEducationState extends State<WEducation> {
 
 class WLanguage extends StatefulWidget {
   const WLanguage({super.key, required this.item});
-  final Data item;
+  final EmployeeDatum item;
   @override
   State<WLanguage> createState() => _WLanguageState();
 }
@@ -457,7 +457,7 @@ class _WLanguageState extends State<WLanguage> {
 
 class WCertificate extends StatefulWidget {
   const WCertificate({super.key, required this.item});
-  final Data item;
+  final EmployeeDatum item;
   @override
   State<WCertificate> createState() => _WCertificateState();
 }
@@ -566,7 +566,7 @@ class _WCertificateState extends State<WCertificate> {
 
 class WSalary extends StatefulWidget {
   const WSalary({super.key, required this.item});
-  final Data item;
+  final EmployeeDatum item;
   @override
   State<WSalary> createState() => _WSalaryState();
 }
