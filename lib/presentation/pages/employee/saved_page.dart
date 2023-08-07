@@ -69,6 +69,11 @@ class Body extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final item = state.favorites.posts[index];
+        final money = item.amountMoney.nameCode == "UZS"
+            ? "so'm"
+            : item.amountMoney.nameCode == "USD"
+                ? "\$"
+                : "₽";
         bool isFavorite(int postId) {
           return state.favorites.posts.any((element) {
             return element.id == postId;
@@ -109,7 +114,7 @@ class Body extends StatelessWidget {
                       fontWeight: FontWeight.w700, fontFamily: "sfPro"),
                 ),
                 subtitle: Text(
-                  item.amountMoney.toStringAsFixed(0),
+                  "${item.amountMoney.money.toStringAsFixed(0)} $money",
                   style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: kgreyColor,
@@ -136,8 +141,14 @@ class Body extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6)),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                      context, InsidePostForEmployeePage.routeName);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InsidePostForEmployeePage(
+                        item: item,
+                      ),
+                    ),
+                  );
                 },
                 child: const Text(
                   'View Post',

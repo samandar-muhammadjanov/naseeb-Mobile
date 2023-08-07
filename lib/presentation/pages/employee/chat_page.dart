@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/utils/colors.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class EmployeeChatPage extends StatefulWidget {
   const EmployeeChatPage({super.key});
@@ -13,9 +14,10 @@ class EmployeeChatPage extends StatefulWidget {
 }
 
 class _EmployeeChatPageState extends State<EmployeeChatPage> {
-  // final channel = WebSocketChannel.connect(
-  //   Uri.parse('http://176.57.189.202:8082/ws'),
-  // );
+  final channel = WebSocketChannel.connect(
+    Uri.parse('ws://176.57.189.202:8082/chat'),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +29,11 @@ class _EmployeeChatPageState extends State<EmployeeChatPage> {
                 fontWeight: FontWeight.w700, fontSize: 18, fontFamily: "sfPro"),
           ),
         ),
-        body: Body());
+        body: StreamBuilder(
+            stream: channel.stream,
+            builder: (context, snapshot) {
+              return Text(snapshot.hasData ? "Data" : "No Data");
+            }));
   }
 }
 

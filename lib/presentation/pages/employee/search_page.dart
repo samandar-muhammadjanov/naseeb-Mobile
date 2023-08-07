@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -107,6 +105,7 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
         ),
         body: BlocBuilder<EmployerBloc, EmployerState>(
           builder: (context, state) {
+            print(state);
             if (state is PostsForEmployeeLoaded) {
               return Body(
                 state: state,
@@ -142,6 +141,11 @@ class Body extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final item = state.posts.data[index];
+        final money = item.amountMoney.nameCode == "UZS"
+            ? "so'm"
+            : item.amountMoney.nameCode == "USD"
+                ? "\$"
+                : "₽";
         return Container(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
           decoration: BoxDecoration(
@@ -193,7 +197,7 @@ class Body extends StatelessWidget {
                       fontWeight: FontWeight.w700, fontFamily: "sfPro"),
                 ),
                 subtitle: Text(
-                  item.amountMoney.toStringAsFixed(0),
+                  "${item.amountMoney.money.toStringAsFixed(0)} $money",
                   style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: kgreyColor,

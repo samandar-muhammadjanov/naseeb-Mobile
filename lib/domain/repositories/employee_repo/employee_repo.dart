@@ -348,7 +348,7 @@ class EmployeeRepo {
         await http.Response.fromStream(await request.send());
 
     if (response.statusCode == 200) {
-      PostsForEmplyeeModel posts = getPostsForEmplyeeFromJson(response.body);
+      PostsForEmplyeeModel posts = postsForEmplyeeModelFromJson(response.body);
       return posts;
     } else {
       return throw Exception(response.body);

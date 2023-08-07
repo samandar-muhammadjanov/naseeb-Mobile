@@ -1,14 +1,15 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 part 'post_for_employee.g.dart';
 
-PostsForEmplyeeModel getPostsForEmplyeeFromJson(String str) =>
+PostsForEmplyeeModel postsForEmplyeeModelFromJson(String str) =>
     PostsForEmplyeeModel.fromJson(json.decode(str));
 
-String getPostsForEmplyeeToJson(PostsForEmplyeeModel data) =>
+String postsForEmplyeeModelToJson(PostsForEmplyeeModel data) =>
     json.encode(data.toJson());
 
 class PostsForEmplyeeModel {
@@ -45,7 +46,7 @@ class Datum extends Equatable {
   @HiveField(2)
   DateTime fixedTime;
   @HiveField(3)
-  double amountMoney;
+  AmountMoney amountMoney;
   @HiveField(4)
   AddressDto addressDto;
   @HiveField(5)
@@ -55,7 +56,9 @@ class Datum extends Equatable {
   @HiveField(7)
   CategoryDto categoryDto;
   @HiveField(8)
-  List<ResponseFile> responseFiles;
+  RegisterResponsePost registerResponse;
+  @HiveField(9)
+  List<dynamic> responseFiles;
 
   Datum({
     required this.id,
@@ -66,6 +69,7 @@ class Datum extends Equatable {
     required this.createdDate,
     required this.updateDate,
     required this.categoryDto,
+    required this.registerResponse,
     required this.responseFiles,
   });
 
@@ -73,13 +77,14 @@ class Datum extends Equatable {
         id: json["id"],
         description: json["description"],
         fixedTime: DateTime.parse(json["fixedTime"]),
-        amountMoney: json["amountMoney"]?.toDouble(),
+        amountMoney: AmountMoney.fromJson(json["amountMoney"]),
         addressDto: AddressDto.fromJson(json["addressDTO"]),
         createdDate: DateTime.parse(json["createdDate"]),
         updateDate: DateTime.parse(json["updateDate"]),
         categoryDto: CategoryDto.fromJson(json["categoryDTO"]),
-        responseFiles: List<ResponseFile>.from(
-            json["responseFiles"].map((x) => ResponseFile.fromJson(x))),
+        registerResponse:
+            RegisterResponsePost.fromJson(json["registerResponse"]),
+        responseFiles: List<dynamic>.from(json["responseFiles"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -87,15 +92,15 @@ class Datum extends Equatable {
         "description": description,
         "fixedTime":
             "${fixedTime.year.toString().padLeft(4, '0')}-${fixedTime.month.toString().padLeft(2, '0')}-${fixedTime.day.toString().padLeft(2, '0')}",
-        "amountMoney": amountMoney,
+        "amountMoney": amountMoney.toJson(),
         "addressDTO": addressDto.toJson(),
         "createdDate":
             "${createdDate.year.toString().padLeft(4, '0')}-${createdDate.month.toString().padLeft(2, '0')}-${createdDate.day.toString().padLeft(2, '0')}",
         "updateDate":
             "${updateDate.year.toString().padLeft(4, '0')}-${updateDate.month.toString().padLeft(2, '0')}-${updateDate.day.toString().padLeft(2, '0')}",
         "categoryDTO": categoryDto.toJson(),
-        "responseFiles":
-            List<dynamic>.from(responseFiles.map((x) => x.toJson())),
+        "registerResponse": registerResponse.toJson(),
+        "responseFiles": List<dynamic>.from(responseFiles.map((x) => x)),
       };
 
   @override
@@ -108,6 +113,7 @@ class Datum extends Equatable {
         createdDate,
         updateDate,
         categoryDto,
+        registerResponse,
         responseFiles
       ];
 }
@@ -154,6 +160,37 @@ class AddressDto extends Equatable {
 }
 
 @HiveType(typeId: 2)
+class AmountMoney extends Equatable {
+  @HiveField(1)
+  int id;
+  @HiveField(2)
+  String nameCode;
+  @HiveField(3)
+  double money;
+
+  AmountMoney({
+    required this.id,
+    required this.nameCode,
+    required this.money,
+  });
+
+  factory AmountMoney.fromJson(Map<String, dynamic> json) => AmountMoney(
+        id: json["id"],
+        nameCode: json["nameCode"],
+        money: json["money"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "nameCode": nameCode,
+        "money": money,
+      };
+
+  @override
+  List<Object?> get props => [id, nameCode, money];
+}
+
+@HiveType(typeId: 3)
 class CategoryDto extends Equatable {
   @HiveField(0)
   int id;
@@ -189,38 +226,93 @@ class CategoryDto extends Equatable {
   List<Object?> get props => [id, nameUz, nameRu, active];
 }
 
-@HiveType(typeId: 3)
-class ResponseFile extends Equatable {
+@HiveType(typeId: 10)
+class RegisterResponsePost extends Equatable {
   @HiveField(0)
-  String name;
+  int id;
   @HiveField(1)
-  String url;
+  String firstName;
   @HiveField(2)
-  String type;
+  String lastName;
   @HiveField(3)
-  int size;
+  String email;
+  @HiveField(4)
+  String phone;
+  @HiveField(5)
+  String active;
+  @HiveField(6)
+  List<String> roles;
+  @HiveField(7)
+  String gender;
+  @HiveField(8)
+  DateTime bornYear;
+  @HiveField(9)
+  String description;
+  @HiveField(10)
+  AddressDto address;
+  @HiveField(11)
+  dynamic responseFile;
 
-  ResponseFile({
-    required this.name,
-    required this.url,
-    required this.type,
-    required this.size,
+  RegisterResponsePost({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
+    required this.active,
+    required this.roles,
+    required this.gender,
+    required this.bornYear,
+    required this.description,
+    required this.address,
+    required this.responseFile,
   });
 
-  factory ResponseFile.fromJson(Map<String, dynamic> json) => ResponseFile(
-        name: json["name"],
-        url: json["url"],
-        type: json["type"],
-        size: json["size"],
+  factory RegisterResponsePost.fromJson(Map<String, dynamic> json) =>
+      RegisterResponsePost(
+        id: json["id"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        email: json["email"],
+        phone: json["phone"],
+        active: json["active"],
+        roles: List<String>.from(json["roles"].map((x) => x)),
+        gender: json["gender"],
+        bornYear: DateTime.parse(json["bornYear"]),
+        description: json["description"],
+        address: AddressDto.fromJson(json["address"]),
+        responseFile: json["responseFile"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "url": url,
-        "type": type,
-        "size": size,
+        "id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "phone": phone,
+        "active": active,
+        "roles": List<dynamic>.from(roles.map((x) => x)),
+        "gender": gender,
+        "bornYear":
+            "${bornYear.year.toString().padLeft(4, '0')}-${bornYear.month.toString().padLeft(2, '0')}-${bornYear.day.toString().padLeft(2, '0')}",
+        "description": description,
+        "address": address.toJson(),
+        "responseFile": responseFile,
       };
 
   @override
-  List<Object?> get props => [name, url, type, size];
+  List<Object?> get props => [
+        id,
+        firstName,
+        lastName,
+        email,
+        phone,
+        active,
+        roles,
+        gender,
+        bornYear,
+        description,
+        address,
+        responseFile
+      ];
 }

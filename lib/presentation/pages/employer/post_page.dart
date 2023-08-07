@@ -126,6 +126,12 @@ class _PostPageState extends State<PostPage> {
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final item = state.posts.data[index];
+              final money = item.amountMoney.nameCode == "UZS"
+                  ? "so'm"
+                  : item.amountMoney.nameCode == "USD"
+                      ? "\$"
+                      : "₽";
+
               return Container(
                 padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 decoration: BoxDecoration(
@@ -180,7 +186,7 @@ class _PostPageState extends State<PostPage> {
                             fontFamily: "sfPro", fontWeight: FontWeight.w700),
                       ),
                       subtitle: Text(
-                        "${item.amountMoney}\$",
+                        "${item.amountMoney.money.toStringAsFixed(0)} $money",
                         style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             color: kgreyColor,

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
+import 'package:naseeb/domain/models/address_model.dart';
 import 'package:naseeb/domain/repositories/urls.dart';
 import 'package:naseeb/presentation/pages/employer/home_page.dart';
 import 'package:naseeb/presentation/pages/intro/verify_phone_page.dart';
@@ -82,7 +83,7 @@ class AuthRepo {
       birthDate,
       description,
       role,
-      dynamic address,
+      AddressModel address,
       BuildContext context) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST', Uri.parse(BASE_URL + REGISTER));
@@ -109,8 +110,11 @@ class AuthRepo {
         await http.Response.fromStream(await request.send());
     final body = jsonDecode(response.body);
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    print(body);
+    print(role);
     if (response.statusCode == 201) {
       isLogined = true;
+      print(body["data"]["token"]);
       await preferences.setBool("isLogined", isLogined);
       await preferences.setString("accessToken", body['data']['token']);
       await preferences.setInt("userId", body["data"]["user"]["id"]);

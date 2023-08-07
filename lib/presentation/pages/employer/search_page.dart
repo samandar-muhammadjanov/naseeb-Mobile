@@ -117,56 +117,57 @@ class _EmployerSearchPageState extends State<EmployerSearchPage> {
           } else if (state is EmployerLoading) {
             return buildLoading();
           } else if (state is EmployerLoaded) {
-            if (state.employees.data == null) {
+            if (state.employees.message == "Posters inactive or not found") {
               return Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Sizda e'lon mavjud emas avval\ne'lon joylashtiring",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'sfPro'),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: DottedBorder(
-                      borderType: BorderType.RRect,
-                      radius: const Radius.circular(15),
-                      color: kprimaryColor,
-                      strokeWidth: 2,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushReplacementNamed(
-                              context, AddPostPage.routeName);
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: fieldFocusColor
-                                  .withOpacity(isDarkMode ? .2 : 1),
-                              borderRadius: BorderRadius.circular(15)),
-                          width: double.infinity,
-                          child: const Text(
-                            "Add Post",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: kprimaryColor,
-                                fontFamily: "sfPro"),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Sizda e'lon mavjud emas avval\ne'lon joylashtiring",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'sfPro'),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: DottedBorder(
+                        borderType: BorderType.RRect,
+                        radius: const Radius.circular(15),
+                        color: kprimaryColor,
+                        strokeWidth: 2,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, AddPostPage.routeName);
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: fieldFocusColor
+                                    .withOpacity(isDarkMode ? .2 : 1),
+                                borderRadius: BorderRadius.circular(15)),
+                            width: double.infinity,
+                            child: const Text(
+                              "Add Post",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: kprimaryColor,
+                                  fontFamily: "sfPro"),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ));
+                    )
+                  ],
+                ),
+              );
             } else if (state.employees.data.isEmpty) {
               return Center(
                 child: Column(

@@ -46,7 +46,7 @@ class EmployerRepo {
   }
 
   Future<void> addPost(description, time, amount, categoryId,
-      AddressModel address, BuildContext context, List images) async {
+      AddressModel address, BuildContext context, List images, nameCode) async {
     final prefs = await preference();
     final token = prefs.getString("accessToken");
     var headers = {
@@ -57,7 +57,10 @@ class EmployerRepo {
     request.body = json.encode({
       "description": description,
       "fixedTime": time,
-      "amountMoney": amount,
+      "amountMoney": {
+        "nameCode": nameCode,
+        "money": amount,
+      },
       "categoryId": categoryId,
       "address": {
         "region": address.region,

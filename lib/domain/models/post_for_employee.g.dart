@@ -20,19 +20,20 @@ class DatumAdapter extends TypeAdapter<Datum> {
       id: fields[0] as int,
       description: fields[1] as String,
       fixedTime: fields[2] as DateTime,
-      amountMoney: fields[3] as double,
+      amountMoney: fields[3] as AmountMoney,
       addressDto: fields[4] as AddressDto,
       createdDate: fields[5] as DateTime,
       updateDate: fields[6] as DateTime,
       categoryDto: fields[7] as CategoryDto,
-      responseFiles: (fields[8] as List).cast<ResponseFile>(),
+      registerResponse: fields[8] as RegisterResponsePost,
+      responseFiles: (fields[9] as List).cast<dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Datum obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -50,6 +51,8 @@ class DatumAdapter extends TypeAdapter<Datum> {
       ..writeByte(7)
       ..write(obj.categoryDto)
       ..writeByte(8)
+      ..write(obj.registerResponse)
+      ..writeByte(9)
       ..write(obj.responseFiles);
   }
 
@@ -110,9 +113,49 @@ class AddressDtoAdapter extends TypeAdapter<AddressDto> {
           typeId == other.typeId;
 }
 
-class CategoryDtoAdapter extends TypeAdapter<CategoryDto> {
+class AmountMoneyAdapter extends TypeAdapter<AmountMoney> {
   @override
   final int typeId = 2;
+
+  @override
+  AmountMoney read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return AmountMoney(
+      id: fields[1] as int,
+      nameCode: fields[2] as String,
+      money: fields[3] as double,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, AmountMoney obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(1)
+      ..write(obj.id)
+      ..writeByte(2)
+      ..write(obj.nameCode)
+      ..writeByte(3)
+      ..write(obj.money);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AmountMoneyAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class CategoryDtoAdapter extends TypeAdapter<CategoryDto> {
+  @override
+  final int typeId = 3;
 
   @override
   CategoryDto read(BinaryReader reader) {
@@ -153,36 +196,60 @@ class CategoryDtoAdapter extends TypeAdapter<CategoryDto> {
           typeId == other.typeId;
 }
 
-class ResponseFileAdapter extends TypeAdapter<ResponseFile> {
+class RegisterResponsePostAdapter extends TypeAdapter<RegisterResponsePost> {
   @override
-  final int typeId = 3;
+  final int typeId = 10;
 
   @override
-  ResponseFile read(BinaryReader reader) {
+  RegisterResponsePost read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ResponseFile(
-      name: fields[0] as String,
-      url: fields[1] as String,
-      type: fields[2] as String,
-      size: fields[3] as int,
+    return RegisterResponsePost(
+      id: fields[0] as int,
+      firstName: fields[1] as String,
+      lastName: fields[2] as String,
+      email: fields[3] as String,
+      phone: fields[4] as String,
+      active: fields[5] as String,
+      roles: (fields[6] as List).cast<String>(),
+      gender: fields[7] as String,
+      bornYear: fields[8] as DateTime,
+      description: fields[9] as String,
+      address: fields[10] as AddressDto,
+      responseFile: fields[11] as dynamic,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ResponseFile obj) {
+  void write(BinaryWriter writer, RegisterResponsePost obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(12)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.url)
+      ..write(obj.firstName)
       ..writeByte(2)
-      ..write(obj.type)
+      ..write(obj.lastName)
       ..writeByte(3)
-      ..write(obj.size);
+      ..write(obj.email)
+      ..writeByte(4)
+      ..write(obj.phone)
+      ..writeByte(5)
+      ..write(obj.active)
+      ..writeByte(6)
+      ..write(obj.roles)
+      ..writeByte(7)
+      ..write(obj.gender)
+      ..writeByte(8)
+      ..write(obj.bornYear)
+      ..writeByte(9)
+      ..write(obj.description)
+      ..writeByte(10)
+      ..write(obj.address)
+      ..writeByte(11)
+      ..write(obj.responseFile);
   }
 
   @override
@@ -191,7 +258,7 @@ class ResponseFileAdapter extends TypeAdapter<ResponseFile> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ResponseFileAdapter &&
+      other is RegisterResponsePostAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

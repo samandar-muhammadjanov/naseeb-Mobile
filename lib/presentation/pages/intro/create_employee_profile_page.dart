@@ -19,7 +19,7 @@ class CreateEmployeeProfilePage extends StatefulWidget {
 
 class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
   List<String> list = ["Online", "Full time", "Part time"];
-  List<String> valuta = ["USD", "SOM", "RUBL"];
+  List<String> valuta = ['UZS', 'USD', 'RUB'];
   String categoryID = '';
   final TextEditingController categoryController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -28,8 +28,10 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
   @override
   void initState() {
     super.initState();
-    workType = list.first;
-    valutaItem = valuta.first;
+    setState(() {
+      workType = list.first == "Online" ? "onlain" : list.first;
+      valutaItem = valuta.first;
+    });
   }
 
   int currentIndex = 0;

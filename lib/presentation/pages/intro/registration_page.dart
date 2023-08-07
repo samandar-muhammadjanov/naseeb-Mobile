@@ -201,7 +201,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 birthDateController.text,
                 descriptionController.text,
                 role,
-                widget.address,
+                widget.address!,
                 context);
           }
         }, "Continue"),

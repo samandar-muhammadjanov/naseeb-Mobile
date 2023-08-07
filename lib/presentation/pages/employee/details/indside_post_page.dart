@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:naseeb/blocs/bloc_imports.dart';
 import 'package:naseeb/domain/models/post_for_employee.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/utils/colors.dart';
@@ -15,12 +16,36 @@ class InsidePostForEmployeePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              "assets/svg/bookmark.svg",
-              color: kprimaryColor,
-            ),
+          BlocBuilder<FavoritesBloc, FavoriteState>(
+            builder: (context, state) {
+              if (state is FavoritesLoaded) {
+                bool isFavorite(int postId) {
+                  return state.favorites.posts.any((element) {
+                    return element.id == postId;
+                  });
+                }
+
+                return IconButton(
+                  onPressed: () {
+                    isFavorite(item!.id)
+                        ? context
+                            .read<FavoritesBloc>()
+                            .add(RemoveFavoritePost(item!))
+                        : context
+                            .read<FavoritesBloc>()
+                            .add(AddFavoritePost(item!));
+                  },
+                  icon: SvgPicture.asset(
+                    !isFavorite(item!.id)
+                        ? "assets/svg/bookmark.svg"
+                        : "assets/svg/bookmark-filled.svg",
+                    color: kprimaryColor,
+                  ),
+                );
+              } else {
+                return SvgPicture.asset("assets/svg/bookmark.svg");
+              }
+            },
           )
         ],
         centerTitle: true,
@@ -31,7 +56,7 @@ class InsidePostForEmployeePage extends StatelessWidget {
           decoration: const BoxDecoration(
               color: fieldFocusColor,
               borderRadius: BorderRadius.all(Radius.circular(6))),
-          child: const Center(
+          child: Center(
             child: Text(
               "Active job",
               style: TextStyle(
@@ -73,7 +98,7 @@ class InsidePostForEmployeePage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "Amount: " + item!.amountMoney.toStringAsFixed(0),
+              "Amount: " + item!.amountMoney.money.toStringAsFixed(0),
               style: TextStyle(
                   fontFamily: "sfPro",
                   fontSize: 16,

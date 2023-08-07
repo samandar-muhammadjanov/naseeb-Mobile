@@ -47,6 +47,7 @@ class _AddPostPageState extends State<AddPostPage> {
   void initState() {
     super.initState();
     setState(() {
+      valutaItem = valuta.first;
       descriptionController.text = widget.description ?? "";
       amountController.text = widget.amount ?? "";
       timeController.text = widget.time ?? "";
@@ -72,6 +73,10 @@ class _AddPostPageState extends State<AddPostPage> {
       this.images = images;
     });
   }
+
+  List<String> valuta = ['UZS', 'USD', 'RUB'];
+  int currentIndex = 0;
+  String valutaItem = '';
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
@@ -116,8 +121,56 @@ class _AddPostPageState extends State<AddPostPage> {
               height: 10,
             ),
             WTextField(
-              title: "Amount",
               controller: amountController,
+              title: "Set your salary",
+              suffix: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 1),
+                  child: SizedBox(
+                    width: 240,
+                    height: 57,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: List.generate(
+                        valuta.length,
+                        (index) {
+                          final item = valuta[index];
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                currentIndex = index;
+                                valutaItem = item;
+                              });
+                            },
+                            child: Container(
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: currentIndex == index
+                                    ? kprimaryColor
+                                    : white,
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                item,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color:
+                                        currentIndex == index ? white : black,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "sfPro"),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               type: TextInputType.number,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -322,7 +375,8 @@ class _AddPostPageState extends State<AddPostPage> {
                       categoryID,
                       widget.address!,
                       context,
-                      images);
+                      images,
+                      valutaItem);
                 }
               },
               style: ElevatedButton.styleFrom(

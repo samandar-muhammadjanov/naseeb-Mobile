@@ -13,7 +13,6 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DatumAdapter());
   Hive.registerAdapter(AddressDtoAdapter());
-  Hive.registerAdapter(ResponseFileAdapter());
   Hive.registerAdapter(CategoryDtoAdapter());
   Hive.registerAdapter(CategoryResponseAdapter());
   Hive.registerAdapter(ExperienceResponseAdapter());
@@ -21,6 +20,8 @@ void main() async {
   Hive.registerAdapter(AddressAdapter());
   Hive.registerAdapter(SalaryResponseAdapter());
   Hive.registerAdapter(EmployeeDatumAdapter());
+  Hive.registerAdapter(AmountMoneyAdapter());
+  Hive.registerAdapter(RegisterResponsePostAdapter());
   Hive.openBox('authData');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   var isLoggedIn =
