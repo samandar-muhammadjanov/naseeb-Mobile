@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -28,7 +29,7 @@ class _SelectRolePageState extends State<SelectRolePage> {
           children: [
             const Spacer(),
             Text(
-              "Choose Job Type",
+              "chooseJob".tr(),
               style: TextStyle(
                   color: isDarkMode ? white : const Color(0xff1F1F39),
                   fontSize: 28,
@@ -74,7 +75,7 @@ class _SelectRolePageState extends State<SelectRolePage> {
                               height: 26,
                             ),
                             Text(
-                              "Find a job",
+                              "findJob".tr(),
                               style: TextStyle(
                                   color: isDarkMode
                                       ? white
@@ -86,10 +87,10 @@ class _SelectRolePageState extends State<SelectRolePage> {
                             const SizedBox(
                               height: 6,
                             ),
-                            const Text(
-                              "Find your dream\njobs",
+                            Text(
+                              "findDreamJob".tr(),
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: kgreyColor,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "sfPro"),
@@ -129,7 +130,7 @@ class _SelectRolePageState extends State<SelectRolePage> {
                               height: 26,
                             ),
                             Text(
-                              "Find a employee",
+                              "findEmployee".tr(),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: isDarkMode
@@ -142,9 +143,9 @@ class _SelectRolePageState extends State<SelectRolePage> {
                             const SizedBox(
                               height: 6,
                             ),
-                            const Expanded(
-                              child: Text("Find eployees\n",
-                                  style: TextStyle(
+                            Expanded(
+                              child: Text("findEmployee".tr(),
+                                  style: const TextStyle(
                                       color: kgreyColor,
                                       fontWeight: FontWeight.w400,
                                       fontFamily: "sfPro")),

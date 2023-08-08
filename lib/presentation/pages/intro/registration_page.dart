@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable, deprecated_member_use
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -84,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         centerTitle: true,
         title: Text(
-          "Registration",
+          "registration".tr(),
           style: TextStyle(
               color: isDarkMode ? white : const Color(0xff1F1F39),
               fontSize: 28,
@@ -101,22 +102,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               WTextField(
-                title: 'Enter Your First Name',
+                title: 'enterurfirstname'.tr(),
                 controller: firstNameController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Enter Your First Name";
+                    return "enterurfirstname".tr();
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 10),
               WTextField(
-                title: "Enter Your Last Name",
+                title: "enterurlastname".tr(),
                 controller: lastNameController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Enter Your Last Name";
+                    return "enterurlastname".tr();
                   }
                   return null;
                 },
@@ -127,24 +128,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
               selectBirthDate(context),
               const SizedBox(height: 10),
               WTextField(
-                title: "Enter Your Phone Number",
+                title: "enterurphonenumber".tr(),
                 controller: phoneController,
                 formatter: [maskFormatter],
                 type: TextInputType.phone,
                 validator: (value) {
                   if (value!.isEmpty || value.length < 10) {
-                    return "Enter About Yourself";
+                    return "enterurphonenumber".tr();
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 10),
               WTextField(
-                title: "Enter About Yourself",
+                title: "enterabouturself".tr(),
                 maxLines: 5,
                 validator: (value) {
                   if (value!.isEmpty || value.length < 10) {
-                    return "Enter About Yourself";
+                    return "enterabouturself".tr();
                   }
                   return null;
                 },
@@ -155,7 +156,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
               WTextField(
                 controller: addressController,
-                title: "Enter Your Address",
+                title: "enteruraddress".tr(),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Not valid address";
@@ -204,7 +205,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 widget.address!,
                 context);
           }
-        }, "Continue"),
+        }, "continue".tr()),
       ),
     );
   }
@@ -213,9 +214,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Enter your Birth Date',
-          style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
+        Text(
+          'enterurbirthdate'.tr(),
+          style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
         ),
         const SizedBox(
           height: 14,
@@ -237,7 +238,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           controller: birthDateController,
           keyboardType: TextInputType.datetime,
           decoration: InputDecoration(
-            hintText: 'yil/oy/kun',
+            hintText: 'datehint'.tr(),
             hintStyle: const TextStyle(fontFamily: "sfPro"),
             suffixIcon: IconButton(
                 onPressed: () {
@@ -267,9 +268,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Enter your Gender',
-          style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
+        Text(
+          'selecturgender'.tr(),
+          style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
         ),
         const SizedBox(
           height: 14,
@@ -293,7 +294,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   child: Center(
                     child: Text(
-                      "Male",
+                      "male".tr(),
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -323,7 +324,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       borderRadius: BorderRadius.circular(15)),
                   child: Center(
                     child: Text(
-                      "Female",
+                      "female".tr(),
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
@@ -22,8 +23,8 @@ class WorkExperiencePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Work Experience",
+        title: Text(
+          "workEx".tr(),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -105,7 +106,7 @@ class _BodyState extends State<Body> {
                 description: descriptionjobController.text,
                 context: context);
           }
-        }, "Save", color: kprimaryColor),
+        }, "save".tr(), color: kprimaryColor),
       ),
       body: Form(
         key: formKey,
@@ -115,7 +116,7 @@ class _BodyState extends State<Body> {
           child: Column(
             children: [
               WTextField(
-                title: "Enter your level",
+                title: "enterUrLevel".tr(),
                 controller: levelController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -128,7 +129,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Enter your job",
+                title: "enterUrJob".tr(),
                 controller: jobController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -141,7 +142,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Enter company name",
+                title: "enterUrCompany".tr(),
                 controller: companyController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -154,7 +155,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Begin",
+                title: "begin".tr(),
                 controller: beginController,
                 suffix: IconButton(
                     onPressed: () {
@@ -184,8 +185,8 @@ class _BodyState extends State<Body> {
                     endController.clear();
                   });
                 },
-                child: const Text(
-                  "Until now",
+                child: Text(
+                  "untilNow".tr(),
                   style: TextStyle(
                     fontFamily: "sfPro",
                     fontSize: 16,
@@ -197,7 +198,7 @@ class _BodyState extends State<Body> {
                   height: 5,
                 ),
                 WTextField(
-                  title: "End",
+                  title: "end".tr(),
                   controller: endController,
                   validator: isUntilNow
                       ? null
@@ -223,7 +224,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Enter description",
+                title: "postDctn".tr(),
                 controller: descriptionjobController,
                 validator: (value) {
                   if (value!.isEmpty) {

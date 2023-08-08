@@ -10,8 +10,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:naseeb/config/app_theme.dart';
 import 'package:naseeb/domain/repositories/auth_repo/auth_repo.dart';
 import 'package:naseeb/utils/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../employer/home_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -34,13 +33,7 @@ class _AuthPageState extends State<AuthPage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () async {
-            // SystemNavigator.pop();
-            SharedPreferences preferences =
-                await SharedPreferences.getInstance();
-            await preferences.setString("accessToken",
-                "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IndlYmRpZ2l0YWx1emJla2lzdGFuMUBnbWFpbC5jb20iLCJzdWIiOiJ3ZWJkaWdpdGFsdXpiZWtpc3RhbjFAZ21haWwuY29tIiwiaWF0IjoxNjkwNjEyMTcyLCJleHAiOjM1ODI3NzIxNzJ9.SZ9r9LInqEjckfmcJGdM8BAy14prQnMLxGBsv4bmVW8");
-            Navigator.pushNamedAndRemoveUntil(
-                context, EmployerHomePage.routeName, (route) => false);
+            SystemNavigator.pop();
           },
           icon: SvgPicture.asset(
             "assets/svg/Arrow---Left.svg",
@@ -57,7 +50,7 @@ class _AuthPageState extends State<AuthPage> {
             children: [
               Center(
                 child: Text(
-                  "Authentication",
+                  "auth".tr(),
                   style: TextStyle(
                       color: isDarkMode ? white : const Color(0xff1F1F39),
                       fontSize: 28,
@@ -68,9 +61,9 @@ class _AuthPageState extends State<AuthPage> {
               const SizedBox(
                 height: 27,
               ),
-              const Text(
-                'Enter your email',
-                style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
+              Text(
+                'enterEmail'.tr(),
+                style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               const SizedBox(
                 height: 14,
@@ -116,9 +109,9 @@ class _AuthPageState extends State<AuthPage> {
                         ? const SpinKitPulse(
                             color: white,
                           )
-                        : const Text(
-                            "Continue",
-                            style: TextStyle(
+                        : Text(
+                            "continue".tr(),
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: white,

@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,8 +40,8 @@ class _MainInformationPageState extends State<MainInformationPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Main informations",
+        title: Text(
+          "mainInfo".tr(),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -98,7 +99,6 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     final item = widget.state.user.data;
-    // TODO: implement initState
     super.initState();
     isMale = item.gender == "MALE" ? true : false;
     firstNameController.text = item.firstName;
@@ -141,7 +141,7 @@ class _BodyState extends State<Body> {
               UserRepo().uploadUserPhoto(image!.path);
             }
           },
-          "Save",
+          "save".tr(),
           color: isChanged ? kprimaryColor : kgreyColor,
         ),
       ),
@@ -192,8 +192,8 @@ class _BodyState extends State<Body> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                const Text(
-                                  "Choose photo from \nyour gallery",
+                                Text(
+                                  "choosePhoto".tr(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: white,
@@ -208,8 +208,8 @@ class _BodyState extends State<Body> {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                'Your Gender',
+              Text(
+                'urGender'.tr(),
                 style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               const SizedBox(
@@ -236,7 +236,7 @@ class _BodyState extends State<Body> {
                         ),
                         child: Center(
                           child: Text(
-                            "Male",
+                            "male".tr(),
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -267,7 +267,7 @@ class _BodyState extends State<Body> {
                             borderRadius: BorderRadius.circular(15)),
                         child: Center(
                           child: Text(
-                            "Female",
+                            "female".tr(),
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -284,7 +284,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Your First Name",
+                title: "urFirtsName".tr(),
                 controller: firstNameController,
                 onChanged: (p0) {
                   setState(() {
@@ -296,7 +296,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Your Last Name",
+                title: "urLastName".tr(),
                 controller: lastNameController,
                 onChanged: (p0) {
                   setState(() {
@@ -308,7 +308,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Your Birth Date",
+                title: "urBirthDate".tr(),
                 controller: dateController,
                 suffix: IconButton(
                     onPressed: () {
@@ -330,7 +330,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Your Phone Number",
+                title: "urPhoneNumber".tr(),
                 controller: phoneController,
                 type: TextInputType.phone,
                 onChanged: (p0) {
@@ -343,7 +343,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Your Address",
+                title: "urAddress".tr(),
                 controller: addressController,
                 suffix: IconButton(
                     onPressed: () {
@@ -366,7 +366,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Your Description",
+                title: "urDescription".tr(),
                 onChanged: (p0) {
                   setState(() {
                     isChanged = true;

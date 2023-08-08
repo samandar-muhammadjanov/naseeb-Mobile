@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:naseeb/config/app_theme.dart';
@@ -48,10 +49,10 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
         appBar: AppBar(
           title: Center(
             child: Text(
-              "Create Employee Profile",
+              "createEmployeeProfile".tr(),
               style: TextStyle(
                   color: isDarkMode ? white : const Color(0xff1F1F39),
-                  fontSize: 28,
+                  fontSize: 25,
                   fontWeight: FontWeight.w700,
                   fontFamily: "sfPro"),
             ),
@@ -63,7 +64,7 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               WTextField(
-                title: "Descript what do you do",
+                title: "descriptWhatDoUDo".tr(),
                 maxLines: 5,
                 controller: descriptionController,
                 validator: (value) {
@@ -76,8 +77,8 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "Select category",
+              Text(
+                "selectCategory".tr(),
                 style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               const SizedBox(
@@ -137,8 +138,8 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                "Select job type",
+              Text(
+                "selectJobType".tr(),
                 style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               const SizedBox(
@@ -184,7 +185,7 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
               ),
               WTextField(
                 controller: salaryController,
-                title: "Set your salary",
+                title: "setSalary".tr(),
                 suffix: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(15),
@@ -263,7 +264,7 @@ class _CreateEmployeeProfilePageState extends State<CreateEmployeeProfilePage> {
                 valutaItem,
               );
             }
-          }, "Next"),
+          }, "continue".tr()),
         ),
       ),
     );

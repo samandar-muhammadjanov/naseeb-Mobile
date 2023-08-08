@@ -201,7 +201,7 @@ class CreateCVPage extends StatelessWidget {
             child: wButton(() {
               Navigator.pushNamedAndRemoveUntil(
                   context, EmployeeHomePage.routeName, (route) => false);
-            }, "Done"),
+            }, "done".tr()),
           )
         ]
       ],

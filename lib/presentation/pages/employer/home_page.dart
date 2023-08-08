@@ -70,6 +70,8 @@ class _EmployerHomePageState extends State<EmployerHomePage> {
               });
             },
             currentIndex: currentIndex,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             selectedFontSize: 12,
             unselectedFontSize: 12,
             selectedItemColor: kprimaryColor,

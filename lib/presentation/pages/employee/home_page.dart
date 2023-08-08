@@ -61,6 +61,8 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
             unselectedFontSize: 12,
             selectedItemColor: kprimaryColor,
             unselectedItemColor: kgreyColor,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
             items: items),
       ),

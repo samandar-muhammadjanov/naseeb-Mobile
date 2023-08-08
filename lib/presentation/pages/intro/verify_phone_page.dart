@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/config/app_theme.dart';
@@ -47,7 +48,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
             children: [
               Center(
                 child: Text(
-                  "Verify Phone",
+                  "verifyPhone".tr(),
                   style: TextStyle(
                       color: isDarkMode ? white : const Color(0xff1F1F39),
                       fontSize: 28,
@@ -59,7 +60,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                 height: 14,
               ),
               Text(
-                "Code is sent to ${widget.phoneNumber}",
+                "codeSent".tr(namedArgs: {"email": widget.phoneNumber}),
                 style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
               ),
               const SizedBox(
@@ -120,16 +121,16 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                   height: 30,
                   child: Center(
                     child: RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
+                      text: TextSpan(
+                        style: const TextStyle(
                             color: kgreyColor,
                             fontSize: 16,
                             fontFamily: 'sfPro'),
                         children: [
-                          TextSpan(text: "Didn't recieve code? "),
+                          TextSpan(text: "${"notRecievedCode".tr()} "),
                           TextSpan(
-                              text: "Resend Code",
-                              style: TextStyle(color: kprimaryColor))
+                              text: "resendCode".tr(),
+                              style: const TextStyle(color: kprimaryColor))
                         ],
                       ),
                     ),
@@ -142,7 +143,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage> {
                   AuthRepo.codeVerify(widget.phoneNumber, codeController.text,
                       context, widget.user);
                 }
-              }, "Verify and Continue")
+              }, "verifyAndContinue".tr())
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
@@ -19,8 +20,8 @@ class EducationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Education",
+        title: Text(
+          "education".tr(),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -94,7 +95,7 @@ class _BodyState extends State<Body> {
                 level: degree.text,
                 description: spelizaation.text);
           }
-        }, "Save", color: kprimaryColor),
+        }, "save".tr(), color: kprimaryColor),
       ),
       body: Form(
         key: formKey,
@@ -104,7 +105,7 @@ class _BodyState extends State<Body> {
           child: Column(
             children: [
               WTextField(
-                title: "University/college",
+                title: "univer".tr(),
                 controller: university,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -117,7 +118,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Degree",
+                title: "degree".tr(),
                 controller: degree,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -130,7 +131,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Specialization",
+                title: "specialization".tr(),
                 controller: spelizaation,
                 validator: (value) {
                   if (value!.isEmpty) {

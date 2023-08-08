@@ -209,7 +209,7 @@ class Body extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
-                    item.responseFiles.first.url,
+                    item.responseFiles.first["url"],
                     height: 180,
                     fit: BoxFit.cover,
                   ),

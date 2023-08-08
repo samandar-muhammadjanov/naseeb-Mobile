@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -22,8 +23,8 @@ class LanguagePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Language",
+        title: Text(
+          "language".tr(),
           style: TextStyle(
               fontSize: 18, fontWeight: FontWeight.w700, fontFamily: "sfPro"),
         ),
@@ -108,7 +109,7 @@ class _BodyState extends State<Body> {
               },
             );
           }
-        }, isChanged ? "Save" : "Add", color: kprimaryColor),
+        }, "add".tr(), color: kprimaryColor),
       ),
       body: widget.language.isEmpty
           ? const Center(
@@ -173,8 +174,8 @@ class _BodyState extends State<Body> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Language",
+            Text(
+              "language".tr(),
               style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
             ),
             const SizedBox(
@@ -226,8 +227,8 @@ class _BodyState extends State<Body> {
             const SizedBox(
               height: 20,
             ),
-            const Text(
-              "Level",
+            Text(
+              "level".tr(),
               style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
             ),
             const SizedBox(
@@ -280,7 +281,7 @@ class _BodyState extends State<Body> {
               height: 20,
             ),
             WTextField(
-              title: "Enter description",
+              title: "postDctn".tr(),
               maxLines: 5,
               controller: description,
               validator: (value) {
@@ -306,8 +307,8 @@ class _BodyState extends State<Body> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   shadowColor: isDarkMode ? black : white),
-              child: const Text(
-                "Save",
+              child: Text(
+                "save".tr(),
                 style: TextStyle(
                     fontFamily: 'sfPro',
                     fontSize: 18,
