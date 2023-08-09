@@ -18,6 +18,14 @@ class _EmployeeChatPageState extends State<EmployeeChatPage> {
   final channel = WebSocketChannel.connect(
     Uri.parse('ws://176.57.189.202:8082/chat'),
   );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    channel.stream.listen((event) {
+      print(event);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
@@ -16,8 +17,8 @@ class SalaryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Salary",
+        title: Text(
+          "salary".tr(),
           style: TextStyle(
               fontSize: 18, fontWeight: FontWeight.w700, fontFamily: "sfPro"),
         ),
@@ -77,14 +78,14 @@ class _BodyState extends State<Body> {
   TextEditingController priceController = TextEditingController();
   int currentIndex = 0;
   String valutaItem = '';
-  List<String> valuta = ["USD", "SOM", "RUBL"];
+  List<String> valuta = ["UZS", "USD", "RUB"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: wButton(() => null, "Save", color: kprimaryColor),
+        child: wButton(() => null, "save".tr(), color: kprimaryColor),
       ),
       body: Form(
         key: formKey,
@@ -95,7 +96,7 @@ class _BodyState extends State<Body> {
             children: [
               WTextField(
                 controller: priceController,
-                title: "Set your salary",
+                title: "setSalary".tr(),
                 suffix: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(15),

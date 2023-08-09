@@ -94,11 +94,6 @@ class CreateCVPage extends StatelessWidget {
         "title": "salary".tr(),
         "routeName": SalaryPage()
       },
-      {
-        "icon": 'assets/svg/category.svg',
-        "title": "category".tr(),
-        "routeName": CategoryPage(),
-      },
     ];
 
     double? persentOfComplation = item.languagesResponse.isEmpty &&

@@ -25,7 +25,7 @@ class LanguagePage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "language".tr(),
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 18, fontWeight: FontWeight.w700, fontFamily: "sfPro"),
         ),
       ),
@@ -176,7 +176,7 @@ class _BodyState extends State<Body> {
           children: [
             Text(
               "language".tr(),
-              style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
+              style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
             ),
             const SizedBox(
               height: 10,
@@ -228,8 +228,8 @@ class _BodyState extends State<Body> {
               height: 20,
             ),
             Text(
-              "level".tr(),
-              style: TextStyle(color: kgreyColor, fontFamily: "sfPro"),
+              "enterUrLevel".tr(),
+              style: const TextStyle(color: kgreyColor, fontFamily: "sfPro"),
             ),
             const SizedBox(
               height: 10,
@@ -309,7 +309,7 @@ class _BodyState extends State<Body> {
                   shadowColor: isDarkMode ? black : white),
               child: Text(
                 "save".tr(),
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'sfPro',
                     fontSize: 18,
                     fontWeight: FontWeight.bold),

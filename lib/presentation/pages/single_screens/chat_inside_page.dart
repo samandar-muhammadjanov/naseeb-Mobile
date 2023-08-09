@@ -1,14 +1,42 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:convert';
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/config/app_theme.dart';
+import 'package:naseeb/presentation/widgets/w_loading.dart';
 import 'package:naseeb/utils/colors.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/io.dart';
 
-class ChatInsidePage extends StatelessWidget {
+class ChatInsidePage extends StatefulWidget {
   const ChatInsidePage({super.key});
   static const routeName = "/employee/chat/1";
+
+  @override
+  State<ChatInsidePage> createState() => _ChatInsidePageState();
+}
+
+class _ChatInsidePageState extends State<ChatInsidePage> {
+  var channel = IOWebSocketChannel.connect(
+    Uri.parse("ws://176.57.189.202:8082/sockjs"),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    channel.sink.add(jsonEncode({
+      "chatId": 1,
+      "senderId": 1,
+      "recipientId": 2,
+      "senderName": "Jon",
+      "recipientName": "Jdsad",
+      "content": "hi"
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDarkMode =
@@ -45,6 +73,18 @@ class ChatInsidePage extends StatelessWidget {
           ),
         ),
       ),
+      body: Center(
+        child: StreamBuilder(
+          stream: channel.stream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Text('Connected: ${snapshot.data}');
+            } else {
+              return const Text('Not Connected');
+            }
+          },
+        ),
+      ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(
             left: 16.0,
@@ -73,7 +113,9 @@ class ChatInsidePage extends StatelessWidget {
               width: 10,
             ),
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                channel.sink.add('Hello, SockJS Server!');
+              },
               elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),

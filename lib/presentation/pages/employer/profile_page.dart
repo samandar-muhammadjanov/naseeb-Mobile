@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, deprecated_member_use
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/blocs/bloc_imports.dart';
@@ -44,8 +45,8 @@ class EmployerProfilePage extends StatelessWidget {
                           Icons.rotate_left_outlined,
                           size: 40,
                         ),
-                        title: const Text(
-                          "Switch to Employee",
+                        title: Text(
+                          "switchToEmployee".tr(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),

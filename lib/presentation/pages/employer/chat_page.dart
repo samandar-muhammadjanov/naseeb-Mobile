@@ -4,10 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:naseeb/presentation/pages/single_screens/chat_inside_page.dart';
 import 'package:naseeb/utils/colors.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
-class EmployerChatPage extends StatelessWidget {
+class EmployerChatPage extends StatefulWidget {
   const EmployerChatPage({super.key});
 
+  @override
+  State<EmployerChatPage> createState() => _EmployerChatPageState();
+}
+
+class _EmployerChatPageState extends State<EmployerChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +56,9 @@ class EmployerChatPage extends StatelessWidget {
               children: [
                 ListTile(
                   onTap: () {
+                    IOWebSocketChannel.connect(
+                      Uri.parse("ws://176.57.189.202:8082/chat"),
+                    );
                     Navigator.pushNamed(context, ChatInsidePage.routeName);
                   },
                   contentPadding: const EdgeInsets.all(16),

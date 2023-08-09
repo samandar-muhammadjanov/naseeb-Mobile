@@ -12,6 +12,7 @@ import 'package:naseeb/presentation/widgets/w_loading.dart';
 import 'package:naseeb/presentation/widgets/w_textField.dart';
 import 'package:naseeb/utils/colors.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CertificatesPage extends StatelessWidget {
   CertificatesPage({super.key});
@@ -22,9 +23,9 @@ class CertificatesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Certificates",
-          style: TextStyle(
+        title: Text(
+          "certificate".tr(),
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             fontFamily: "sfPro",
@@ -125,7 +126,7 @@ class _BodyState extends State<Body> {
               isFileEmpty = false;
             });
           }
-        }, "Save", color: kprimaryColor),
+        }, "save".tr(), color: kprimaryColor),
       ),
       body: Form(
         key: formKey,
@@ -136,7 +137,7 @@ class _BodyState extends State<Body> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               WTextField(
-                title: "Certificate name",
+                title: "certificateName".tr(),
                 controller: name,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -149,7 +150,7 @@ class _BodyState extends State<Body> {
                 height: 20,
               ),
               WTextField(
-                title: "Date",
+                title: "date".tr(),
                 suffix: IconButton(
                     onPressed: () {
                       showDate(
@@ -171,8 +172,8 @@ class _BodyState extends State<Body> {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                "Files",
+              Text(
+                "file".tr(),
                 style: TextStyle(
                   color: kgreyColor,
                   fontFamily: "sfPro",
@@ -222,7 +223,7 @@ class _BodyState extends State<Body> {
                                   width: 10,
                                 ),
                                 Text(
-                                  "Upload your certificate",
+                                  "uploadCertificate".tr(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontFamily: "sfPro",
