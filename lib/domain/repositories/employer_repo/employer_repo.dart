@@ -36,8 +36,9 @@ class EmployerRepo {
 
     http.Response response =
         await http.Response.fromStream(await request.send());
-
-    if (response.statusCode == 200 || response.statusCode == 400) {
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 200 || response.statusCode == 404) {
       GetEmployee getEmployees = getEmployeeFromJson(response.body);
       return getEmployees;
     } else {

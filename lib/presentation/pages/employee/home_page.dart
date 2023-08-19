@@ -31,19 +31,19 @@ class _EmployeeHomePageState extends State<EmployeeHomePage> {
           icon: SvgPicture.asset("assets/svg/bookmark.svg",
               color: currentIndex == 1 ? kprimaryColor : kgreyColor),
           label: "Saved"),
-      BottomNavigationBarItem(
-          icon: SvgPicture.asset("assets/svg/Chat.svg",
-              color: currentIndex == 2 ? kprimaryColor : kgreyColor),
-          label: "Chat"),
+      // BottomNavigationBarItem(
+      //     icon: SvgPicture.asset("assets/svg/Chat.svg",
+      //         color: currentIndex == 2 ? kprimaryColor : kgreyColor),
+      //     label: "Chat"),
       BottomNavigationBarItem(
           icon: SvgPicture.asset("assets/svg/profile.svg",
-              color: currentIndex == 3 ? kprimaryColor : kgreyColor),
+              color: currentIndex == 2 ? kprimaryColor : kgreyColor),
           label: "Profile"),
     ];
     List pages = [
       const EmployeeSearchPage(),
       const EmployeeSavedPage(),
-      const EmployeeChatPage(),
+      // const EmployeeChatPage(),
       const EmployeeProfilePage()
     ];
     return Scaffold(

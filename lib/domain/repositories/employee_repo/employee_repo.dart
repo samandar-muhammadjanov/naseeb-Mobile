@@ -49,7 +49,7 @@ class EmployeeRepo {
     final body = jsonDecode(response.body);
     print(body);
     Hive.box("authData").put("employeeId", body["data"]["id"]);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

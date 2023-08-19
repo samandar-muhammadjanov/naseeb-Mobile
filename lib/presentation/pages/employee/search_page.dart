@@ -106,8 +106,19 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
         ),
         body: BlocBuilder<EmployerBloc, EmployerState>(
           builder: (context, state) {
-            print(state);
             if (state is PostsForEmployeeLoaded) {
+              if (state.posts.data.isEmpty) {
+                return const Center(
+                  child: Text(
+                    "Kategoriyangizga mos e'lon mavjud emas!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'sfPro'),
+                  ),
+                );
+              }
               return Body(
                 state: state,
               );

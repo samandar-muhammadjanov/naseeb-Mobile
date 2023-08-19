@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-const BASE_URL = 'http://176.57.189.202:8082/api/';
+const BASE_URL = 'http://192.168.0.97:8082/api/';
 
 const CODE_SEND = 'auth/email_code_send';
 const CODE_VERIFY = 'auth/check_code';

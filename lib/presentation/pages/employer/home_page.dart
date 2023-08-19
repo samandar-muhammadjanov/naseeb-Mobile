@@ -42,13 +42,13 @@ class _EmployerHomePageState extends State<EmployerHomePage> {
               color: currentIndex == 1 ? kprimaryColor : kgreyColor),
           label: "Saved"),
       const BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add Post"),
-      BottomNavigationBarItem(
-          icon: SvgPicture.asset("assets/svg/Chat.svg",
-              color: currentIndex == 3 ? kprimaryColor : kgreyColor),
-          label: "Chat"),
+      // BottomNavigationBarItem(
+      //     icon: SvgPicture.asset("assets/svg/Chat.svg",
+      //         color: currentIndex == 3 ? kprimaryColor : kgreyColor),
+      //     label: "Chat"),
       BottomNavigationBarItem(
           icon: SvgPicture.asset("assets/svg/profile.svg",
-              color: currentIndex == 4 ? kprimaryColor : kgreyColor),
+              color: currentIndex == 3 ? kprimaryColor : kgreyColor),
           label: "Profile"),
     ];
 
@@ -56,7 +56,7 @@ class _EmployerHomePageState extends State<EmployerHomePage> {
       const EmployerSearchPage(),
       const EmployerSavedPage(),
       const PostPage(),
-      const EmployerChatPage(),
+      // const EmployerChatPage(),
       const EmployerProfilePage()
     ];
     return Scaffold(

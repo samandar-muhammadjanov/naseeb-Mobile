@@ -32,21 +32,23 @@ class _EmployerChatPageState extends State<EmployerChatPage> {
           children: [
             TextField(
               decoration: InputDecoration(
-                  prefixIcon: IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      "assets/svg/search.svg",
-                      color: kgreyColor,
-                    ),
+                prefixIcon: IconButton(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    "assets/svg/search.svg",
+                    color: kgreyColor,
                   ),
-                  hintText: "Search...",
-                  hintStyle: const TextStyle(
-                      color: kgreyColor, fontSize: 16, fontFamily: "sfPro"),
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: kgreyColor.withOpacity(.2),
-                      ),
-                      borderRadius: BorderRadius.circular(15))),
+                ),
+                hintText: "Search...",
+                hintStyle: const TextStyle(
+                    color: kgreyColor, fontSize: 16, fontFamily: "sfPro"),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: kgreyColor.withOpacity(.2),
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -56,9 +58,6 @@ class _EmployerChatPageState extends State<EmployerChatPage> {
               children: [
                 ListTile(
                   onTap: () {
-                    IOWebSocketChannel.connect(
-                      Uri.parse("ws://176.57.189.202:8082/chat"),
-                    );
                     Navigator.pushNamed(context, ChatInsidePage.routeName);
                   },
                   contentPadding: const EdgeInsets.all(16),

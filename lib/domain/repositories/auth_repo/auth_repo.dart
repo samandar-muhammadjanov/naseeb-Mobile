@@ -24,7 +24,7 @@ class AuthRepo {
         await http.Response.fromStream(await request.send());
     final body = jsonDecode(response.body);
     print(body);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       Navigator.push(
         context,
         MaterialPageRoute(
